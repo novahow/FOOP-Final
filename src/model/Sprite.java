@@ -3,6 +3,7 @@ package model;
 import java.awt.*;
 
 public abstract class Sprite {
+    protected World world;
     protected Point location = new Point();
     protected Direction face = Direction.RIGHT;
 
@@ -10,6 +11,14 @@ public abstract class Sprite {
 
     public abstract void render(Graphics g);
 
+    public Wrold getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
+    
     public Point getLocation() {
         return location;
     }
