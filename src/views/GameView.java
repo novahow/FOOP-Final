@@ -5,18 +5,26 @@ import controller.GameLoop;
 import model.Direction;
 import model.Sprite;
 import model.World;
+import model.Homepage;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 import java.util.Collection;
 
+/**
+ * @author - johnny850807@gmail.com (Waterball)
+ */
 public class GameView extends JFrame {
     public static final int HEIGHT = 500;
     public static final int WIDTH = 500;
-    // public static final int P1 = 1;
-    // public static final int P2 = 2;
+    public static final int P1 = 1;
+    public static final int P2 = 2;
     private final Canvas canvas = new Canvas();
     private final Game game;
 
@@ -100,16 +108,41 @@ public class GameView extends JFrame {
                         break;
                 }
             }
+
+
+
+        });
+        addMouseListener(new MouseInputAdapter(){
+            @Override
+            public void mousePressed(MouseEvent e) {
+                game.clickButton(e.getX(), e.getY(), 0);
+                //System.out.printf("clicked at %d %d\n", e.getX(), e.getY());
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                game.clickButton(e.getX(), e.getY(), 1);
+                //System.out.printf("released %d %d\n", e.getX(), e.getY());
+            }
         });
     }
 
     public static class Canvas extends JPanel implements GameLoop.View {
         private World world;
+        private Homepage home;
+        int state;
 
         @Override
         public void render(World world) {
             this.world = world;
             repaint(); // ask the JPanel to repaint, it will invoke paintComponent(g) after a while.
+            state = 0;
+        }
+
+        @Override
+        public void render(Homepage home) {
+            this.home = home;
+            repaint();
+            state = 1;
         }
 
         @Override
@@ -118,8 +151,12 @@ public class GameView extends JFrame {
             // Now, let's paint
             g.setColor(Color.WHITE); // paint background with all white
             g.fillRect(0, 0, GameView.WIDTH, GameView.HEIGHT);
-
-            world.render(g); // ask the world to paint itself and paint the sprites on the canvas
+            if(state == 0) {
+                world.render(g); // ask the world to paint itself and paint the sprites on the canvas
+            }
+            else {
+                home.render(g);
+            }
         }
     }
 }

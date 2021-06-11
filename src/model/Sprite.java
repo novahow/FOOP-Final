@@ -2,6 +2,9 @@ package model;
 
 import java.awt.*;
 
+/**
+ * @author - johnny850807@gmail.com (Waterball)
+ */
 public abstract class Sprite {
     protected World world;
     protected Point location = new Point();
@@ -11,14 +14,16 @@ public abstract class Sprite {
 
     public abstract void render(Graphics g);
 
-    public Wrold getWorld() {
+    public abstract void onDamaged(Rectangle damageArea, int damage);
+
+    public World getWorld() {
         return world;
     }
 
     public void setWorld(World world) {
         this.world = world;
     }
-    
+
     public Point getLocation() {
         return location;
     }
@@ -54,14 +59,16 @@ public abstract class Sprite {
     }
 
     public Rectangle getArea(Dimension offset, Dimension size) {
-        switch (face) {
-            case Direction.LEFT :
-                Rectangle range = getRange();
-                return new Rectangle();
-            case Direction.RIGHT :
-                Rectangle range = getRange();
-                return new Rectangle();
+        if (face == Direction.LEFT) {
+            Rectangle range = getRange();
+            return new Rectangle(new Point(location.x + range.width - offset.width - size.width,
+                    offset.height + location.y), size);
         }
+        return new Rectangle(new Point(offset.width + location.x,
+                offset.height + location.y), size);
+    }
 
+    public boolean isAlive() {
+        return world != null;
     }
 }

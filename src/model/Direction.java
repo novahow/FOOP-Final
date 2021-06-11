@@ -2,6 +2,9 @@ package model;
 
 import java.awt.*;
 
+/**
+ * @author - johnny850807@gmail.com (Waterball)
+ */
 public enum Direction {
     UP, DOWN, LEFT, RIGHT;
 

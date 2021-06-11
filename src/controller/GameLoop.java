@@ -1,7 +1,11 @@
 package controller;
 
 import model.World;
+import model.Homepage;
 
+/**
+ * @author - johnny850807@gmail.com (Waterball)
+ */
 public abstract class GameLoop {
     private boolean running;
     private View view;
@@ -11,10 +15,18 @@ public abstract class GameLoop {
     }
 
     public void start() {
+        //new Thread(this::homeLoop).start();
         new Thread(this::gameLoop).start();
     }
 
-    private void gameLoop() {
+    private void gameLoop() {        
+        Homepage home = getHome();
+        while(home.isRunning()) {
+            //home.update();
+            view.render(home);
+            delay(10);
+            home = getHome();
+        }
         running = true;
         while (running) {
             World world = getWorld();
@@ -25,10 +37,12 @@ public abstract class GameLoop {
     }
 
     protected abstract World getWorld();
+    protected abstract Homepage getHome();
 
     public void stop() {
         running = false;
     }
+
     private void delay(long ms) {
         try {
             Thread.sleep(ms);
@@ -37,8 +51,9 @@ public abstract class GameLoop {
         }
     }
 
-    public interface View {
 
+    public interface View {
         void render(World world);
+        void render(Homepage home);
     }
 }

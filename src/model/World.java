@@ -8,6 +8,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
 
+/**
+ * @author - johnny850807@gmail.com (Waterball)
+ */
 public class World {
     private final List<Sprite> sprites = new CopyOnWriteArrayList<>();
     private final CollisionHandler collisionHandler;
