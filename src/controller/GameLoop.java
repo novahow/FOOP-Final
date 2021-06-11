@@ -26,7 +26,8 @@ public abstract class GameLoop {
             view.render(home);
             delay(10);
             home = getHome();
-        }
+        } 
+        // home.nextRound is the round clicked by the user
         running = true;
         while (running) {
             World world = getWorld();
