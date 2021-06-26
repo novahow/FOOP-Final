@@ -45,8 +45,22 @@ public class World {
     }
 
     public void move(Sprite from, Dimension offset) {
+        int dx = offset.width, dy = offset.height;
+        if (from.getX() + dx < 0) {
+            dx = -from.getX();
+        }
+        if (from.getX() + from.getBody().width + dx > 800) {
+            dx = 800 - from.getX() - from.getBody().width;
+        }
+        if (from.getY() + dy < 0) {
+            dy = -from.getY();
+        }
+        if (from.getY() + from.getBody().height + dy > 600) {
+            dy = 600 - from.getY() - from.getBody().height;
+        }
+        System.out.printf("%d %d\n", dx, dy);
         Point originalLocation = new Point(from.getLocation());
-        from.getLocation().translate(offset.width, offset.height);
+        from.getLocation().translate(dx, dy);
 
         Rectangle body = from.getBody();
         // collision detection
