@@ -30,9 +30,9 @@ public class Homepage {
     public Homepage() {
         running = true;
         buttons = new ArrayList<button>();
-        buttons.add(new button(Color.GRAY, Color.lightGray, 125, 250, 50, 50));
-        buttons.add(new button(Color.GRAY, Color.lightGray, 225, 250, 50, 50));
-        buttons.add(new button(Color.GRAY, Color.lightGray, 325, 250, 50, 50));
+        buttons.add(new button(Color.GRAY, Color.lightGray, 300, 420, 150, 100));
+        buttons.add(new button(Color.GRAY, Color.lightGray, 525, 420, 150, 100));
+        buttons.add(new button(Color.GRAY, Color.lightGray, 750, 420, 150, 100));
     }
     
     public void leave(int res) {
@@ -68,10 +68,10 @@ public class Homepage {
     public void render(Graphics g) {
         //System.out.println("rendering");
         g.setColor(Color.RED);
-        g.fillRect(100, 100, 300, 100);
+        g.fillRect(300, 100, 600, 200);
         g.setColor(Color.BLACK);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 50)); 
-        g.drawString("Welcome", 140, 163);
+        g.drawString("Welcome", 480, 220);
         Integer cnt = 0;
         // String num = "123";
         for(button b: buttons) {
@@ -84,7 +84,7 @@ public class Homepage {
             g.fillRect(b.x, b.y, b.dx, b.dy);
             g.setColor(Color.BLACK);
             String a = cnt.toString();
-            g.drawString(a, b.x + 12, b.y + b.dy - 5);
+            g.drawString(a, b.x + 60, b.y + b.dy - 30);
             cnt += 1;
         }
         return;

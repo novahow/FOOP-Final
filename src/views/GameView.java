@@ -19,8 +19,8 @@ import java.awt.event.MouseEvent;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class GameView extends JFrame {
-    public static final int HEIGHT = 500;
-    public static final int WIDTH = 500;
+    public static final int HEIGHT = 800;
+    public static final int WIDTH = 1200;
     public static final int P1 = 1;
     public static final int P2 = 2;
     private final Canvas canvas = new Canvas();
