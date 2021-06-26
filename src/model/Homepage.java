@@ -69,6 +69,11 @@ public class Homepage {
         //System.out.println("rendering");
         g.setColor(Color.RED);
         g.fillRect(100, 100, 300, 100);
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 50)); 
+        g.drawString("Welcome", 140, 163);
+        Integer cnt = 0;
+        // String num = "123";
         for(button b: buttons) {
             if(b.state == 0) {
                 g.setColor(b.origColor);
@@ -77,6 +82,10 @@ public class Homepage {
                 g.setColor(b.clickedColor);
             }
             g.fillRect(b.x, b.y, b.dx, b.dy);
+            g.setColor(Color.BLACK);
+            String a = cnt.toString();
+            g.drawString(a, b.x + 12, b.y + b.dy - 5);
+            cnt += 1;
         }
         return;
     }

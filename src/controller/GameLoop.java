@@ -20,7 +20,10 @@ public abstract class GameLoop {
     }
 
     private void gameLoop() {        
+        // Homepage home = getHome();
+        while(true) {
         Homepage home = getHome();
+        System.out.println(home.isRunning());
         while(home.isRunning()) {
             //home.update();
             view.render(home);
@@ -29,16 +32,20 @@ public abstract class GameLoop {
         } 
         // home.nextRound is the round clicked by the user
         running = true;
-        while (running) {
-            World world = getWorld();
+        World world = getWorld();
+        while (world.isRunning() && running) {
+            // World world = getWorld();
             world.update();
             view.render(world);
             delay(15);
+        }
+        restart();
         }
     }
 
     protected abstract World getWorld();
     protected abstract Homepage getHome();
+    protected abstract void restart();
 
     public void stop() {
         running = false;

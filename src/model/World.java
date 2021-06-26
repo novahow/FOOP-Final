@@ -40,6 +40,10 @@ public class World {
         sprite.setWorld(null);
     }
 
+    public boolean isRunning() {
+        return (sprites.size() == 2);
+    }
+
     public void move(Sprite from, Dimension offset) {
         Point originalLocation = new Point(from.getLocation());
         from.getLocation().translate(offset.width, offset.height);

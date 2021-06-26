@@ -5,16 +5,40 @@ import model.Direction;
 import model.Homepage;
 import model.World;
 
+import controller.Game;
+import knight.Attacking;
+import knight.Knight;
+import knight.KnightCollisionHandler;
+import knight.Walking;
+import model.HealthPointSprite;
+import model.World;
+import views.GameView;
+
+import java.awt.*;
+import java.io.File;
+
+import static media.AudioPlayer.addAudioByFilePath;
+
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class Game extends GameLoop {
-    private final Knight p1;
-    private final Knight p2;
-    private final World world;
+    private Knight p1;
+    private Knight p2;
+    private World world;
     private Homepage homepage;
 
     public Game(World world, Knight p1, Knight p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.world = world;
+        this.homepage = new Homepage();
+    }
+    @Override
+    protected void restart() {
+        Knight p1 = new Knight(100, new Point(0, 0));
+        Knight p2 = new Knight(150, new Point(300, 300));
+        World world = new World(new KnightCollisionHandler(), p1, p2);
         this.p1 = p1;
         this.p2 = p2;
         this.world = world;
