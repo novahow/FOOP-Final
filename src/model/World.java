@@ -49,14 +49,14 @@ public class World {
         if (from.getX() + dx < 0) {
             dx = -from.getX();
         }
-        if (from.getX() + from.getBody().width + dx > 800) {
-            dx = 800 - from.getX() - from.getBody().width;
+        if (from.getX() + from.getBody().width + dx > 1200) {
+            dx = 1200 - from.getX() - from.getBody().width;
         }
         if (from.getY() + dy < 0) {
             dy = -from.getY();
         }
-        if (from.getY() + from.getBody().height + dy > 600) {
-            dy = 600 - from.getY() - from.getBody().height;
+        if (from.getY() + from.getBody().height + dy > 800) {
+            dy = 800 - from.getY() - from.getBody().height;
         }
         System.out.printf("%d %d\n", dx, dy);
         Point originalLocation = new Point(from.getLocation());
