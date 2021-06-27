@@ -2,6 +2,7 @@ package model;
 import java.util.ArrayList; 
 
 import java.awt.*;
+import javax.swing.ImageIcon;
 //import java.util.Collection;
 //import java.util.List;
 //import java.util.concurrent.CopyOnWriteArrayList;
@@ -67,6 +68,10 @@ public class Homepage {
 
     public void render(Graphics g) {
         //System.out.println("rendering");
+        ImageIcon i = new ImageIcon("assets/back.gif");
+        Image bg = i.getImage();
+        // int x = sprites.get(0).getX();
+        g.drawImage(bg, 0, 0, 1200, 800, null);
         g.setColor(Color.RED);
         g.fillRect(300, 100, 600, 200);
         g.setColor(Color.BLACK);
