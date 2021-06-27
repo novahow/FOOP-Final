@@ -54,7 +54,7 @@ public class World {
     public void move(Sprite from, Dimension offset) {
         for (Sprite to : sprites)
             if (to != from && from.getBody().intersects(to.getBody()))
-                if (offset.width * (to.getBody().getX() - from.getBody().getX()) > 0)
+                if (collisionBlock(from, to, offset))
                     return;
         // float f = (float)(offset.width) / (float)(20);
         // bar.setF(f);
