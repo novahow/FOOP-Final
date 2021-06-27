@@ -32,6 +32,11 @@ public class Obstacle extends Sprite {
         g.fillRect(getX(), getY(), (int)shape.size.getWidth(), 50);
     }
 
+    @Override
+    public void gravity() {
+        return ;
+    }
+
     public void update() {}
 
     public void setX(int x) {

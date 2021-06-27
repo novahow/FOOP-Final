@@ -29,14 +29,23 @@ public class World {
     }
 
     public void update() {
-        if (!isjump) {
-            int incre = gt / 20;
-            gravity(sprites.get(0),incre);
-            gravity(sprites.get(1), incre);
-            gt += 1;
+        for (int i = 0; i < sprites.size(); i ++) {
+            if (i == 0) {
+                if (!isjump) {
+                    gravity(sprites.get(0));
+                }
+            }
+            else {
+                gravity(sprites.get(i));
+            }
         }
-        else
-            gt = 0;
+        // if (!isjump) {
+        //     int incre = gt / 20;
+        //     gravity(sprites.get(0), incre);
+        //     gt += 1;
+        // }
+        // else
+        //     gt = 0;
         for (Sprite sprite : sprites) {
             sprite.update();
         }
@@ -46,17 +55,18 @@ public class World {
         isjump = tmp;
     }
 
-    public void gravity(Sprite from, int incre) {
+    public void gravity(Sprite from) {
         for (Sprite to : sprites)
             if (to != from && from.getBody().intersects(to.getBody()))
                 if (to.getBody().getY() > from.getBody().getY())
                     return;
-        int dy = 1 + incre;
-        if (from.getY() + dy > 535) {
-            dy = 535 - from.getY();
-        }
-        Point originalLocation = new Point(from.getLocation());
-            from.getLocation().translate(0, dy);
+        from.gravity();
+        // int dy = 1 + incre;
+        // if (from.getY() + dy > 535) {
+        //     dy = 535 - from.getY();
+        // }
+        // Point originalLocation = new Point(from.getLocation());
+        // from.getLocation().translate(0, dy);
     }
 
     public void addSprites(Sprite... sprites) {

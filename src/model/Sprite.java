@@ -9,6 +9,7 @@ public abstract class Sprite {
     protected World world;
     protected Point location = new Point();
     protected Direction face = Direction.RIGHT;
+    protected int gt = 0;
 
     public abstract void update();
 
@@ -18,6 +19,26 @@ public abstract class Sprite {
 
     public World getWorld() {
         return world;
+    }
+
+    public void setGT(int i) {
+        this.gt = i; 
+    }
+
+    public int getGT() {
+        return gt;
+    }
+
+    public void gravity() {
+        int incre = gt / 20;
+        setGT(getGT() + 1);
+        int dy = 1 + incre;
+        if (getY() + dy > 535) {
+            dy = 535 - getY();
+            setGT(0);
+        }
+        Point originalLocation = new Point(getLocation());
+        getLocation().translate(0, dy);
     }
 
     public void setWorld(World world) {
