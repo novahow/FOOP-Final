@@ -1,6 +1,7 @@
 package knight;
 
 import model.CollisionHandler;
+import model.Obstacle;
 import model.Sprite;
 
 import java.awt.*;
@@ -16,11 +17,10 @@ public class KnightCollisionHandler implements CollisionHandler {
             int offsetLeft = to.getX() - body.x;
             int offsetRight = body.x + body.width - to.getX();
             if (offsetLeft < 0) {
-                to.setLocation(new Point(to.getX() - (to.getRange().width + offsetLeft) / 3, to.getY()));
+                from.setLocation(new Point(from.getX() - (from.getRange().width + offsetLeft) / 3, from.getY()));
             } else {
-                to.setLocation(new Point(to.getX() + offsetRight / 3, to.getY()));
+                from.setLocation(new Point(from.getX() + offsetRight / 3, from.getY()));
             }
-
         }
     }
 }

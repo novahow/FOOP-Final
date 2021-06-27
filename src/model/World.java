@@ -45,12 +45,14 @@ public class World {
     }
 
     public boolean isRunning() {
-        return (sprites.size() == 2);
+        return (sprites.size() >= 2);
     }
 
     public void move(Sprite from, Dimension offset) {
-        List<Integer> A = new ArrayList<Integer>();
-        int cnt = 0;
+        for (Sprite to : sprites)
+            if (to != from && from.getBody().intersects(to.getBody()))
+                if (offset.width * (to.getBody().getX() - from.getBody().getX()) > 0)
+                    return;
         int x = getSprites().get(0).getX();
         if (x == 600 && p.nextGaussian() > 0.5 && offset.width > 0) {
             int y = r1.nextInt(500);
@@ -65,22 +67,17 @@ public class World {
             }
             Obstacle o = new Obstacle(1200, y, r1.nextInt(50) + 50);
             ob.add(o);
+            addSprite(o);
         }
         for (Obstacle o : ob) {
             if (from.getX() >= 600 && offset.width > 0) {
+                // move(o, new Dimension(-offset.width, 0));
                 o.setX(o.getX() - offset.width);
             }
             if (o.getX() < 0) {
-                A.add(cnt);
+                removeSprite(o);
             }
-            cnt += 1;
         }
-        List<Obstacle> nb = new ArrayList<Obstacle>();
-        for (int i = 0; i < ob.size(); i ++) {
-            if (!A.contains(i))
-                nb.add(ob.get(i));
-        }
-        ob = nb;
         int dx = offset.width, dy = offset.height;
         if (from.getX() + dx < 0) {
             dx = -from.getX();
@@ -124,9 +121,9 @@ public class World {
         Image bg = i.getImage();
         int x = sprites.get(0).getX();
         g.drawImage(bg, 0, 0, 1200, 800, null);
-        for (Obstacle o : ob) {
-            o.render(g);
-        }
+        // for (Obstacle o : ob) {
+        //     o.render(g);
+        // }
         for (Sprite sprite : sprites) {
             sprite.render(g);
         }

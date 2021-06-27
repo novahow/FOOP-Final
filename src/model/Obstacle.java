@@ -2,27 +2,44 @@ package model;
 
 import java.awt.*;
 
-public class Obstacle {
-    private int x;
-    private int y;
-    private int size;
+public class Obstacle extends Sprite {
+    private final SpriteShape shape;
 
     public Obstacle(int x, int y, int size) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
+        setLocation(new Point(x, y));
+        shape = new SpriteShape(new Dimension(size, 50),
+                new Dimension(0, 0), new Dimension(size, 50));
     }
 
-    public int getX() {
-        return x;
+    @Override
+    public Rectangle getRange() {
+        return new Rectangle(location, shape.size);
     }
 
-    public void setX(int x) {
-        this.x = x;
+    @Override
+    public Dimension getBodyOffset() {
+        return shape.bodyOffset;
     }
 
+    @Override
+    public Dimension getBodySize() {
+        return shape.bodySize;
+    }
+
+    @Override
     public void render(Graphics g) {
         g.setColor(Color.BLACK);
-        g.fillRect(x, y, size, 50);
+        g.fillRect(getX(), getY(), (int)shape.size.getWidth(), 50);
     }
+
+    public void update() {}
+
+    public void setX(int x) {
+        Point location = getLocation();
+        int y = (int)location.getY();
+        location.move(x, y);
+        setLocation(location);
+    }
+
+    public void onDamaged(Rectangle damageArea, int damage) {}
 }
