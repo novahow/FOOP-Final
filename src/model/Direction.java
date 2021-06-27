@@ -19,13 +19,13 @@ public enum Direction {
             case RIGHT:
                 return new Dimension(6, 0);
             case JUMPUP:
-                return new Dimension(0, -20);
+                return new Dimension(0, -25);
             case JUMPDOWN:
-                return new Dimension(0, 20);
+                return new Dimension(0, 25);
             case BIGLEFT:
-                return new Dimension(-20, 0);
+                return new Dimension(-12, 0);
             case BIGRIGHT:
-                return new Dimension(20, 0);
+                return new Dimension(12, 0);
             default:
                 throw new IllegalStateException("Impossible");
         }

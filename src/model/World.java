@@ -51,6 +51,11 @@ public class World {
         return (sprites.size() > 0 && !end);
     }
 
+    private boolean collisionBlock(Sprite from, Sprite to, Dimension offset) {
+        return offset.width * (to.getBody().getX() - from.getBody().getX()) > 0 ||
+                (offset.height > 0 && to.getBody().getY() > from.getBody().getY());
+    }
+    
     public void move(Sprite from, Dimension offset) {
         for (Sprite to : sprites)
             if (to != from && from.getBody().intersects(to.getBody()))

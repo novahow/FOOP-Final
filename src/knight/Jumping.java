@@ -26,8 +26,7 @@ public class Jumping extends CyclicSequence {
             System.out.println(states.size());
             if(currentPosition*2 < states.size()) {
                 knight.getWorld().move(knight, Direction.JUMPUP.translate());
-            }
-            else {
+            } else {
                 knight.getWorld().move(knight, Direction.JUMPDOWN.translate());
             }
             for (Direction direction : knight.getDirections()) {

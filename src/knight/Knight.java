@@ -46,8 +46,8 @@ public class Knight extends HealthPointSprite {
                 new Walking(this, imageStatesFromFolder("assets/walking", imageRenderer)));
         State attacking = new WaitingPerFrame(3,
                 new Attacking(this, fsm, imageStatesFromFolder("assets/attack", imageRenderer)));
-        State jumping = new WaitingPerFrame(5, 
-                new Jumping(this, fsm, imageStatesFromFolder("assets/walking", imageRenderer)));
+        State jumping = new WaitingPerFrame(4, 
+                new Jumping(this, fsm, imageStatesFromFolder("assets/jumping", imageRenderer)));
 
         fsm.setInitialState(idle);
         fsm.addTransition(from(idle).when(WALK).to(walking));
