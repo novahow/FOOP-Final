@@ -4,6 +4,7 @@ import knight.Knight;
 import model.Direction;
 import model.Homepage;
 import model.World;
+import model.RoleSelect;
 
 import controller.Game;
 import knight.Attacking;
@@ -27,12 +28,14 @@ public class Game extends GameLoop {
     private Knight p2;
     private World world;
     private Homepage homepage;
+    private RoleSelect roleselect;
 
     public Game(World world, Knight p1, Knight p2) {
         this.p1 = p1;
         this.p2 = p2;
         this.world = world;
         this.homepage = new Homepage();
+        this.roleselect = new RoleSelect();
     }
     @Override
     protected void restart() {
@@ -43,6 +46,7 @@ public class Game extends GameLoop {
         this.p2 = p2;
         this.world = world;
         this.homepage = new Homepage();
+        this.roleselect = new RoleSelect();
     }
 
     public void moveKnight(int playerNumber, Direction direction) {
@@ -75,15 +79,22 @@ public class Game extends GameLoop {
         return homepage;
     }
 
+    @Override 
+    protected RoleSelect getRoleSelect() {
+        return roleselect;
+    }
+
     public void clickButton(int x, int y, int release) {
         int res = homepage.clickButton(x, y, release);
-        if(release == 1) {
-            if(res == -1) {
-                System.out.printf("Clicked on nowhere\n");
-            }
-            else {
-                System.out.printf("Clicked on box %d\n", res);
-                homepage.leave(res);
+        if(homepage.isRunning()){
+            if(release == 1) {
+                if(res == -1) {
+                    System.out.printf("Clicked on nowhere\n");
+                }
+                else {
+                    System.out.printf("Clicked on box %d\n", res);
+                    homepage.leave(res);
+                }
             }
         }
     }

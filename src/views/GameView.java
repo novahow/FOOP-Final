@@ -6,6 +6,7 @@ import model.Direction;
 import model.Sprite;
 import model.World;
 import model.Homepage;
+import model.RoleSelect;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -130,6 +131,7 @@ public class GameView extends JFrame {
     public static class Canvas extends JPanel implements GameLoop.View {
         private World world;
         private Homepage home;
+        private RoleSelect roleselect;
         int state;
 
         @Override
@@ -147,6 +149,19 @@ public class GameView extends JFrame {
         }
 
         @Override
+        public void addPanel(RoleSelect roleselect){
+            this.add(roleselect);
+            this.setLayout(new GridBagLayout());
+        }
+
+        @Override
+        public void render(RoleSelect roleselect){
+            roleselect.setVisible(true);
+            repaint();
+            state = 2;
+        }
+
+        @Override
         protected void paintComponent(Graphics g /*paintbrush*/) {
             super.paintComponent(g);
             // Now, let's paint
@@ -155,7 +170,7 @@ public class GameView extends JFrame {
             if(state == 0) {
                 world.render(g); // ask the world to paint itself and paint the sprites on the canvas
             }
-            else {
+            else if(state == 1){
                 home.render(g);
             }
         }

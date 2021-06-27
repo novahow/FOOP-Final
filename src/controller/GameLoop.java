@@ -2,6 +2,7 @@ package controller;
 
 import model.World;
 import model.Homepage;
+import model.RoleSelect;
 
 /**
  * @author - johnny850807@gmail.com (Waterball)
@@ -21,14 +22,23 @@ public abstract class GameLoop {
 
     private void gameLoop() {        
         // Homepage home = getHome();
+        view.addPanel(getRoleSelect());
         while(true) {
             Homepage home = getHome();
+            RoleSelect roleselect = getRoleSelect();
             System.out.println(home.isRunning());
             while(home.isRunning()) {
                 //home.update();
                 view.render(home);
                 delay(10);
                 home = getHome();
+            } 
+
+            while(roleselect.isRunning() && !home.isRunning()) {
+                //home.update();
+                view.render(roleselect);
+                delay(10);
+                roleselect = getRoleSelect();
             } 
             // home.nextRound is the round clicked by the user
             running = true;
@@ -46,6 +56,7 @@ public abstract class GameLoop {
     protected abstract World getWorld();
     protected abstract Homepage getHome();
     protected abstract void restart();
+    protected abstract RoleSelect getRoleSelect();
 
     public void stop() {
         running = false;
@@ -63,5 +74,7 @@ public abstract class GameLoop {
     public interface View {
         void render(World world);
         void render(Homepage home);
+        void addPanel(RoleSelect roleselect);
+        void render(RoleSelect roleselect);
     }
 }
