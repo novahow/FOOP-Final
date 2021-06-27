@@ -23,6 +23,6 @@ public class Obstacle {
 
     public void render(Graphics g) {
         g.setColor(Color.BLACK);
-        g.fillRect(x, y, size, size);
+        g.fillRect(x, y, size, 50);
     }
 }

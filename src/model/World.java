@@ -63,7 +63,7 @@ public class World {
             else {
                 y = 0;
             }
-            Obstacle o = new Obstacle(1200, y, 50);
+            Obstacle o = new Obstacle(1200, y, r1.nextInt(50) + 50);
             ob.add(o);
         }
         for (Obstacle o : ob) {
