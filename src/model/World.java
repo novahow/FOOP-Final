@@ -48,7 +48,7 @@ public class World {
 
     public boolean isRunning() {
         end = bar.isEnd();
-        return (sprites.size() == 2 && !end);
+        return (sprites.size() > 0 && !end);
     }
 
     public void move(Sprite from, Dimension offset) {
@@ -56,11 +56,11 @@ public class World {
             if (to != from && from.getBody().intersects(to.getBody()))
                 if (offset.width * (to.getBody().getX() - from.getBody().getX()) > 0)
                     return;
-        float f = (float)(offset.width) / (float)(20);
-        bar.setF(f);
-        System.out.println(end);
+        // float f = (float)(offset.width) / (float)(20);
+        // bar.setF(f);
+        // System.out.println(end);
         int x = getSprites().get(0).getX();
-        if (x == 600 && p.nextGaussian() > 0.5 && offset.width > 0) {
+        if (x == 600 && p.nextGaussian() < 0.001 && offset.width > 0) {
             int y = r1.nextInt(500);
             if (y > 350) {
                 y = 400;
