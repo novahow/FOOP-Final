@@ -17,8 +17,10 @@ public class World {
     private final List<Sprite> sprites = new CopyOnWriteArrayList<>();
     private final CollisionHandler collisionHandler;
     private List<Obstacle> ob = new ArrayList<Obstacle>();
+    private final ProcessBar bar = new ProcessBar(100);
     Random r1 = new Random(10);
     Random p = new Random(5);
+    private boolean end = false;
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
         addSprites(sprites);
@@ -45,10 +47,14 @@ public class World {
     }
 
     public boolean isRunning() {
-        return (sprites.size() == 2);
+        end = bar.isEnd();
+        return (sprites.size() == 2 && !end);
     }
 
     public void move(Sprite from, Dimension offset) {
+        float f = (float)(offset.width) / (float)(20);
+        bar.setF(f);
+        System.out.println(end);
         List<Integer> A = new ArrayList<Integer>();
         int cnt = 0;
         int x = getSprites().get(0).getX();
@@ -57,11 +63,8 @@ public class World {
             if (y > 350) {
                 y = 400;
             }
-            else if (y > 150) {
-                y = 200;
-            }
             else {
-                y = 0;
+                y = 200;
             }
             Obstacle o = new Obstacle(1200, y, r1.nextInt(50) + 50);
             ob.add(o);
@@ -94,7 +97,7 @@ public class World {
         if (from.getY() + dy > 535) {
             dy = 535 - from.getY();
         }
-        System.out.printf("%d %d\n", dx, dy);
+        // System.out.printf("%d %d\n", dx, dy);
         Point originalLocation = new Point(from.getLocation());
         from.getLocation().translate(dx, dy);
 
@@ -127,6 +130,7 @@ public class World {
         for (Obstacle o : ob) {
             o.render(g);
         }
+        bar.render(g);
         for (Sprite sprite : sprites) {
             sprite.render(g);
         }
