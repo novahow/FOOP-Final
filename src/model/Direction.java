@@ -6,7 +6,7 @@ import java.awt.*;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public enum Direction {
-    UP, DOWN, LEFT, RIGHT;
+    UP, DOWN, LEFT, RIGHT, JUMPUP, JUMPDOWN;
 
     public Dimension translate() {
         switch (this) {
@@ -18,6 +18,10 @@ public enum Direction {
                 return new Dimension(-6, 0);
             case RIGHT:
                 return new Dimension(6, 0);
+            case JUMPUP:
+                return new Dimension(0, -40);
+            case JUMPDOWN:
+                return new Dimension(0, 40);
             default:
                 throw new IllegalStateException("Impossible");
         }

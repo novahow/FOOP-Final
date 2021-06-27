@@ -28,7 +28,7 @@ public class Knight extends HealthPointSprite {
     private final int damage;
 
     public enum Event {
-        WALK, STOP, ATTACK, DAMAGED
+        WALK, STOP, ATTACK, DAMAGED, JUMP
     }
 
     public Knight(int damage, Point location) {
@@ -46,12 +46,16 @@ public class Knight extends HealthPointSprite {
                 new Walking(this, imageStatesFromFolder("assets/walking", imageRenderer)));
         State attacking = new WaitingPerFrame(3,
                 new Attacking(this, fsm, imageStatesFromFolder("assets/attack", imageRenderer)));
+        State jumping = new WaitingPerFrame(5, 
+                new Jumping(this, fsm, imageStatesFromFolder("assets/walking", imageRenderer)));
 
         fsm.setInitialState(idle);
         fsm.addTransition(from(idle).when(WALK).to(walking));
         fsm.addTransition(from(walking).when(STOP).to(idle));
         fsm.addTransition(from(idle).when(ATTACK).to(attacking));
         fsm.addTransition(from(walking).when(ATTACK).to(attacking));
+        fsm.addTransition(from(idle).when(JUMP).to(jumping));
+        fsm.addTransition(from(walking).when(JUMP).to(jumping));
     }
 
     public void attack() {
@@ -70,6 +74,10 @@ public class Knight extends HealthPointSprite {
             this.directions.add(direction);
             fsm.trigger(WALK);
         }
+    }
+
+    public void jump() {
+        fsm.trigger(JUMP);
     }
 
     public void stop(Direction direction) {

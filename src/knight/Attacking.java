@@ -70,6 +70,12 @@ public class Attacking extends Sequence {
     }
 
     @Override
+    public String toString() {
+        return "Attacking";
+    }
+
+    
+    @Override
     protected void onSequenceEnd() {
         currentPosition = 0;
         stateMachine.reset();
