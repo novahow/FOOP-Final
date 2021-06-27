@@ -129,7 +129,7 @@ public class World {
         // System.out.printf("%d %d\n", dx, dy);
         Point originalLocation = new Point(from.getLocation());
         from.getLocation().translate(dx, dy);
-
+        // System.out.printf("%d %d\n", from.getX(), from.getY());
         Rectangle body = from.getBody();
         // collision detection
         for (Sprite to : sprites) {
