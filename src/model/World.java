@@ -21,15 +21,42 @@ public class World {
     Random r1 = new Random(10);
     Random p = new Random(5);
     private boolean end = false;
+    private boolean isjump = false;
+    private int gt = 0;
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
         addSprites(sprites);
     }
 
     public void update() {
+        if (!isjump) {
+            int incre = gt / 20;
+            gravity(sprites.get(0),incre);
+            gravity(sprites.get(1), incre);
+            gt += 1;
+        }
+        else
+            gt = 0;
         for (Sprite sprite : sprites) {
             sprite.update();
         }
+    }
+
+    public void setjump(boolean tmp) {
+        isjump = tmp;
+    }
+
+    public void gravity(Sprite from, int incre) {
+        for (Sprite to : sprites)
+            if (to != from && from.getBody().intersects(to.getBody()))
+                if (to.getBody().getY() > from.getBody().getY())
+                    return;
+        int dy = 1 + incre;
+        if (from.getY() + dy > 535) {
+            dy = 535 - from.getY();
+        }
+        Point originalLocation = new Point(from.getLocation());
+            from.getLocation().translate(0, dy);
     }
 
     public void addSprites(Sprite... sprites) {

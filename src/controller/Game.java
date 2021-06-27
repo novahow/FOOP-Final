@@ -50,18 +50,22 @@ public class Game extends GameLoop {
     }
 
     public void moveKnight(int playerNumber, Direction direction) {
+        world.setjump(false);
         getPlayer(playerNumber).move(direction);
     }
 
     public void stopKnight(int playerNumber, Direction direction) {
+        world.setjump(false);
         getPlayer(playerNumber).stop(direction);
     }
 
     public void attack(int playerNumber) {
+        world.setjump(false);
         getPlayer(playerNumber).attack();
     }
 
     public void jump(int playerNumber) {
+        world.setjump(true);
         getPlayer(playerNumber).jump();
     }
 
