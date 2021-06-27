@@ -23,10 +23,19 @@ public class Jumping extends CyclicSequence {
     public void update() {
         if (knight.isAlive()) {
             super.update();
-            if (currentPosition * 2 < states.size()) {
+            // System.out.println(currentPosition);
+            if(currentPosition*2 <= states.size() && currentPosition != 0) {
                 knight.getWorld().move(knight, Direction.JUMPUP.translate());
             } else {
                 knight.getWorld().move(knight, Direction.JUMPDOWN.translate());
+            }
+            for (Direction direction : knight.getDirections()) {
+                if(direction == Direction.LEFT) {
+                    knight.getWorld().move(knight, Direction.BIGLEFT.translate());
+                }
+                else {
+                    knight.getWorld().move(knight, Direction.BIGRIGHT.translate());
+                }
             }
         }
     }

@@ -21,15 +21,52 @@ public class World {
     Random r1 = new Random(10);
     Random p = new Random(5);
     private boolean end = false;
+    private boolean isjump = false;
+    private int gt = 0;
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
         addSprites(sprites);
     }
 
     public void update() {
+        for (int i = 0; i < sprites.size(); i ++) {
+            if (i == 0) {
+                if (!isjump) {
+                    gravity(sprites.get(0));
+                }
+            }
+            else {
+                gravity(sprites.get(i));
+            }
+        }
+        // if (!isjump) {
+        //     int incre = gt / 20;
+        //     gravity(sprites.get(0), incre);
+        //     gt += 1;
+        // }
+        // else
+        //     gt = 0;
         for (Sprite sprite : sprites) {
             sprite.update();
         }
+    }
+
+    public void setjump(boolean tmp) {
+        isjump = tmp;
+    }
+
+    public void gravity(Sprite from) {
+        for (Sprite to : sprites)
+            if (to != from && from.getBody().intersects(to.getBody()))
+                if (to.getBody().getY() > from.getBody().getY())
+                    return;
+        from.gravity();
+        // int dy = 1 + incre;
+        // if (from.getY() + dy > 535) {
+        //     dy = 535 - from.getY();
+        // }
+        // Point originalLocation = new Point(from.getLocation());
+        // from.getLocation().translate(0, dy);
     }
 
     public void addSprites(Sprite... sprites) {
@@ -102,7 +139,7 @@ public class World {
         // System.out.printf("%d %d\n", dx, dy);
         Point originalLocation = new Point(from.getLocation());
         from.getLocation().translate(dx, dy);
-
+        // System.out.printf("%d %d\n", from.getX(), from.getY());
         Rectangle body = from.getBody();
         // collision detection
         for (Sprite to : sprites) {
