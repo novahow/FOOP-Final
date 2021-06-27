@@ -17,7 +17,7 @@ public abstract class Sequence implements State {
     public Sequence(List<? extends State> states) {
         this.states = states;
     }
-
+    
     @Override
     public void update() {
         currentPosition++;

@@ -39,6 +39,7 @@ public class FiniteStateMachine implements StateMachine {
 
     @Override
     public void update() {
+        //System.out.println(currentState().toString());
         currentState().update();
     }
 
