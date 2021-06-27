@@ -25,8 +25,8 @@ public class Main {
         addAudioByFilePath(HealthPointSprite.AUDIO_DIE, new File("assets/audio/die.wav"));
 
         // initialization procedure
-        Knight p1 = new Knight(100, new Point(0, 0));
-        Knight p2 = new Knight(150, new Point(300, 300));
+        Knight p1 = new Knight(100, new Point(0, 534));
+        Knight p2 = new Knight(150, new Point(300, 0));
         World world = new World(new KnightCollisionHandler(), p1, p2);  // model
         Game game = new Game(world, p1, p2);  // controller
         GameView view = new GameView(game);  // view

@@ -36,7 +36,7 @@ public class Game extends GameLoop {
     }
     @Override
     protected void restart() {
-        Knight p1 = new Knight(100, new Point(0, 0));
+        Knight p1 = new Knight(100, new Point(0, 300));
         Knight p2 = new Knight(150, new Point(300, 300));
         World world = new World(new KnightCollisionHandler(), p1, p2);
         this.p1 = p1;
