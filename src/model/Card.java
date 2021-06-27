@@ -22,8 +22,16 @@ public class Card{
         this.charNum = charNum;
 
         System.out.printf("%s\n", this.filename);
-        JLabel container = new JLabel();
-        container.setLayout(new GridLayout(1, 2));
+        ImageIcon imageIcon = new ImageIcon("./assets/Sprites/cardB.png"); // load the image to a imageIcon
+        Image image = imageIcon.getImage(); // transform it 
+        Image newimg = image.getScaledInstance(300, 300,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+        // imageIcon = new ImageIcon(newimg);  // transform it back
+        MyLabel container = new MyLabel(new ImageIcon(newimg));
+        container.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        GridLayout temp = new GridLayout(2, 1);
+        temp.setVgap(20);
+        container.setLayout(temp);
+
         BufferedImage img = null;
 
         try {
@@ -32,38 +40,32 @@ public class Card{
         catch (IOException e) {
             e.printStackTrace();
         }
-        
         // test.setMinimumSize(new Dimension(150, 100));
-        Image dimg = img.getScaledInstance(150, 300,
-        Image.SCALE_SMOOTH);
-        JLabel test = new JLabel(new ImageIcon(dimg), JLabel.RIGHT);
-        test.setHorizontalTextPosition(JLabel.RIGHT);
-        
+        Image dimg = img.getScaledInstance(150, 100,
+            Image.SCALE_SMOOTH);
+        JLabel test = new JLabel(new ImageIcon(dimg), JLabel.CENTER);
+        // test.setHorizontalTextPosition(JLabel.CENTER);
+        // test.setBorder(BorderFactory.createLineBorder(Color.black));
+        test.setVerticalAlignment(SwingConstants.TOP);
         container.add(test);
         JLabel box2 = new JLabel();
+        JLabel textLabel = new JLabel();
+        GridLayout temp2 = new GridLayout(1, 1); 
+        temp2.setVgap(10);
         // box2.setBorder(BorderFactory.createLineBorder(Color.black));
-        box2.add(new JLabel("<html>Name: " + name + "<br>Skill: " + skill + "</html>"));
+        textLabel.setFont(textLabel.getFont ().deriveFont (20.0f));
+        textLabel.setText("<html>Name: " + name + "<br>Skill: " + skill + "</html>");
         box2.setBackground(Color.lightGray);
-        box2.setOpaque(true);
-        box2.setLayout(new GridBagLayout());
-        box2.setHorizontalTextPosition(JLabel.CENTER);
-        box2.setVerticalTextPosition(JLabel.CENTER);
+        // box2.setOpaque(true);
+        textLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+        textLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        // textLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+        box2.setLayout(temp2);
+        box2.add(textLabel);
         container.add((box2));
-        container.setBorder(BorderFactory.createLineBorder(Color.blue));
         cardBox = container;
-        // cardBox.setAlignmentX((float)0.5);
-        // cardBox.setAlignmentY((float)0.5);
         cardBox.setVisible(true);
-        /*cardBox.addMouseListener(new MouseAdapter()  
-        {  
-            public void mouseClicked(MouseEvent e)  
-            {  
-                System.out.printf("char = %d\n", charNum);
-                // return charNum;
-            }  
-        }); */
-        // cardBox.setPreferredSize(new Dimension(330, 220));
-        // super.add(box);
+        
     }
 
     public JLabel getCard(){
@@ -81,5 +83,19 @@ public class Card{
 
     public int getNum(){
         return charNum;
+    }
+
+    public class MyLabel extends JLabel{
+        public MyLabel(ImageIcon img){
+            super(img);
+        }
+
+        @Override
+        public void paintComponent(Graphics g){
+            super.paintComponent(g);
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+            g.drawString(name, 120, 175);
+        }
     }
 }
