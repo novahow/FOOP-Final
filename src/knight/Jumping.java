@@ -23,10 +23,9 @@ public class Jumping extends CyclicSequence {
     public void update() {
         if (knight.isAlive()) {
             super.update();
-            if(currentPosition*2 < states.size()) {
+            if (currentPosition * 2 < states.size()) {
                 knight.getWorld().move(knight, Direction.JUMPUP.translate());
-            }
-            else {
+            } else {
                 knight.getWorld().move(knight, Direction.JUMPDOWN.translate());
             }
         }
