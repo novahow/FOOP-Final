@@ -30,7 +30,7 @@ public class Main {
         Knight p1 = new Knight(100, new Point(0, 534));
         // Knight p2 = new Knight(150, new Point(300, 0));
         // testing
-        Enemy e = new Enemy(20, new Point(300, 534), p1);
+        Enemy e = new Enemy(100, new Point(300, 534), p1);
         Zombie z1 = new Zombie(0, 30, new Point(500, 0));
         Zombie z2 = new Zombie(1, 30, new Point(600, 0));
         World world = new World(new SpriteCollisionHandler(), p1, e, z1, z2);  // model
