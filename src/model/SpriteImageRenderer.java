@@ -1,25 +1,23 @@
-package knight;
+package model;
 
 import fsm.ImageRenderer;
-import model.Direction;
 
 import java.awt.*;
-
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
-public class KnightImageRenderer implements ImageRenderer {
-    protected Knight knight;
+public class SpriteImageRenderer implements ImageRenderer {
+    protected Sprite sprite;
 
-    public KnightImageRenderer(Knight knight) {
-        this.knight = knight;
+    public SpriteImageRenderer(Sprite sprite) {
+        this.sprite = sprite;
     }
 
     @Override
     public void render(Image image, Graphics g) {
-        Direction face = knight.getFace();
-        Rectangle range = knight.getRange();
-        Rectangle body = knight.getBody();
+        Direction face = sprite.getFace();
+        Rectangle range = sprite.getRange();
+        Rectangle body = sprite.getBody();
         if (face == Direction.LEFT) {
             g.drawImage(image, range.x + range.width, range.y, -range.width, range.height, null);
         } else {

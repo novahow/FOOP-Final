@@ -1,4 +1,4 @@
-package knight;
+package sprite_state;
 
 import fsm.CyclicSequence;
 import fsm.ImageState;

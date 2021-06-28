@@ -1,15 +1,13 @@
-package knight;
-
-import model.CollisionHandler;
-import model.Obstacle;
-import model.Sprite;
+package model;
 
 import java.awt.*;
+
+import knight.Knight;
 
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
-public class KnightCollisionHandler implements CollisionHandler {
+public class SpriteCollisionHandler implements CollisionHandler {
     @Override
     public void handle(Point originalLocation, Sprite from, Sprite to) {
         if (from instanceof Knight && to instanceof Knight) {

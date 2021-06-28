@@ -1,40 +1,39 @@
-package knight;
+package sprite_state;
 
-import fsm.Sequence;
-import fsm.State;
 import fsm.StateMachine;
 import fsm.CyclicSequence;
 import fsm.ImageState;
 import model.Direction;
 
 import java.util.List;
+import model.Sprite;
 
 public class Jumping extends CyclicSequence {
-    private final Knight knight;
+    private final Sprite sprite;
     private final StateMachine stateMachine;
 
-    public Jumping(Knight knight, StateMachine stateMachine, List<ImageState> states) {
+    public Jumping(Sprite sprite, StateMachine stateMachine, List<ImageState> states) {
         super(states);
         this.stateMachine = stateMachine;
-        this.knight = knight;
+        this.sprite = sprite;
     }
 
     @Override
     public void update() {
-        if (knight.isAlive()) {
+        if (sprite.isAlive()) {
             super.update();
             // System.out.println(currentPosition);
             if(currentPosition*2 <= states.size() && currentPosition != 0) {
-                knight.getWorld().move(knight, Direction.JUMPUP.translate());
+                sprite.getWorld().move(sprite, Direction.JUMPUP.translate());
             } else {
-                knight.getWorld().move(knight, Direction.JUMPDOWN.translate());
+                sprite.getWorld().move(sprite, Direction.JUMPDOWN.translate());
             }
-            for (Direction direction : knight.getDirections()) {
+            for (Direction direction : sprite.getDirections()) {
                 if(direction == Direction.LEFT) {
-                    knight.getWorld().move(knight, Direction.BIGLEFT.translate());
+                    sprite.getWorld().move(sprite, Direction.BIGLEFT.translate());
                 }
                 else {
-                    knight.getWorld().move(knight, Direction.BIGRIGHT.translate());
+                    sprite.getWorld().move(sprite, Direction.BIGRIGHT.translate());
                 }
             }
         }

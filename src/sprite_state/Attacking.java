@@ -1,4 +1,4 @@
-package knight;
+package sprite_state;
 
 import fsm.Sequence;
 import fsm.State;
@@ -18,19 +18,19 @@ import java.util.Set;
 public class Attacking extends Sequence {
     public static final String AUDIO_SWORD_CLASH_1 = "sword-clash1";
     public static final String AUDIO_SWORD_CLASH_2 = "sword-clash2";
-    private final Knight knight;
+    private final Sprite sprite;
     private final StateMachine stateMachine;
     private final Set<Integer> damagingStateNumbers = new HashSet<>(List.of(6));
 
-    public Attacking(Knight knight, StateMachine stateMachine, List<? extends State> states) {
+    public Attacking(Sprite sprite, StateMachine stateMachine, List<? extends State> states) {
         super(states);
-        this.knight = knight;
+        this.sprite = sprite;
         this.stateMachine = stateMachine;
     }
 
     @Override
     public void update() {
-        if (knight.isAlive()) {
+        if (sprite.isAlive()) {
             super.update();
             if (damagingStateNumbers.contains(currentPosition)) {
                 effectDamage();
@@ -47,13 +47,13 @@ public class Attacking extends Sequence {
     }
 
     private void effectDamage() {
-        World world = knight.getWorld();
+        World world = sprite.getWorld();
         Rectangle damageArea = damageArea();
         var sprites = world.getSprites(damageArea);
         boolean hasClash = false;
         for (Sprite sprite : sprites) {
-            if (knight != sprite) {
-                sprite.onDamaged(damageArea, knight.getDamage());
+            if (this.sprite != sprite) {
+                sprite.onDamaged(damageArea, this.sprite.getDamage());
                 hasClash = true;
             }
         }
@@ -65,7 +65,7 @@ public class Attacking extends Sequence {
     }
 
     private Rectangle damageArea() {
-        return knight.getArea(new Dimension(87, 70),
+        return sprite.getArea(new Dimension(87, 70),
                 new Dimension(55, 88));
     }
 

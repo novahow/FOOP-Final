@@ -1,10 +1,11 @@
 import controller.Game;
-import knight.Attacking;
 import knight.Knight;
-import knight.KnightCollisionHandler;
-import knight.Walking;
+import zombie.Zombie;
 import model.HealthPointSprite;
+import model.SpriteCollisionHandler;
 import model.World;
+import sprite_state.Attacking;
+import sprite_state.Walking;
 import views.GameView;
 
 import java.awt.*;
@@ -27,7 +28,9 @@ public class Main {
         // initialization procedure
         Knight p1 = new Knight(100, new Point(0, 534));
         Knight p2 = new Knight(150, new Point(300, 0));
-        World world = new World(new KnightCollisionHandler(), p1, p2);  // model
+        Zombie z1 = new Zombie(0, 30, new Point(500, 0));
+        Zombie z2 = new Zombie(1, 30, new Point(600, 0));
+        World world = new World(new SpriteCollisionHandler(), p1, p2, z1);  // model
         Game game = new Game(world, p1, p2);  // controller
         GameView view = new GameView(game);  // view
         game.start();  // run the game and the game loop

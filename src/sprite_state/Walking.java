@@ -1,10 +1,11 @@
-package knight;
+package sprite_state;
 
 import fsm.CyclicSequence;
 import fsm.ImageState;
 import model.Direction;
 
 import java.util.List;
+import model.Sprite;
 
 /**
  * @author - johnny850807@gmail.com (Waterball)
@@ -12,9 +13,9 @@ import java.util.List;
 public class Walking extends CyclicSequence {
     public static final String AUDIO_STEP1 = "step1";
     public static final String AUDIO_STEP2 = "step2";
-    private final Knight knight;
+    private final Sprite knight;
 
-    public Walking(Knight knight, List<ImageState> states) {
+    public Walking(Sprite knight, List<ImageState> states) {
         super(states);
         this.knight = knight;
     }

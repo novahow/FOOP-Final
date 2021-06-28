@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Set;
 import java.awt.*;
 
 /**
@@ -91,5 +92,12 @@ public abstract class Sprite {
 
     public boolean isAlive() {
         return world != null;
+    }
+
+    public Set<Direction> getDirections() {
+        return null;
+    }
+    public int getDamage() {
+        return 0;
     }
 }
