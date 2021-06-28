@@ -60,13 +60,8 @@ public class RoleSelect extends JPanel {
         for(Card e: cards){
             e.setVisible(true);
             e.addListener(mouselisten);
-            // System.out.printf("size = %d %d\n",
-            //     e.getCard().getPreferredSize().height, 
-            //     e.getCard().getPreferredSize().width);
         }
         setPreferredSize(new Dimension(width, height));
-        
-
         // super.setVisible(true);
     }
 
@@ -95,6 +90,9 @@ public class RoleSelect extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(new ImageIcon("./assets/Sprites/Sel.jpg").getImage(), 0, 0, width, height, null);
+    }
+
+    public int getIndex(){
+        return clickedNum;
     }
 }

@@ -4,6 +4,7 @@ import model.World;
 import model.Homepage;
 import model.RoleSelect;
 import model.Pause;
+import javax.swing.*;
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
@@ -13,6 +14,8 @@ public abstract class GameLoop {
 
     public void setView(View view) {
         this.view = view;
+        this.view.addPanel(getHome());
+        this.view.addPanel(getRoleSelect());
     }
 
     public void start() {
@@ -22,32 +25,26 @@ public abstract class GameLoop {
     }
 
     private void gameLoop() {        
-        // Homepage home = getHome();
         view.addPanel(getRoleSelect());
         while(running) {
             Homepage home = getHome();
             RoleSelect roleselect = getRoleSelect();
-            //System.out.println(home.isRunning());
+            home.restart();
             while(home.isRunning()) {
-                //home.update();
-                System.out.println("fuck");
                 view.render(home);
                 delay(10);
                 home = getHome();
             }
             roleselect.restart();
-            System.out.println(roleselect.isRunning());
             while(roleselect.isRunning() && !home.isRunning()) {
                 view.render(roleselect);
                 delay(10);
-                System.out.println("hi");
                 roleselect = getRoleSelect();
             } 
             // home.nextRound is the round clicked by the user
             running = true;
             World world = getWorld();
             Pause pausepage = getPause();
-            //System.out.println(world.isRunning());
             while (world.isRunning() && running) {
                 if(world.isPause()) {
                     //view.render(world);
@@ -95,7 +92,7 @@ public abstract class GameLoop {
         void render(World world);
         void render(Homepage home);
         void render(Pause pausepage);
-        void addPanel(RoleSelect roleselect);
+        void addPanel(JPanel roleselect);
         void render(RoleSelect roleselect);
     }
 }

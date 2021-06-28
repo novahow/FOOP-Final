@@ -1,99 +1,165 @@
 package model;
-import java.util.ArrayList; 
-
 import java.awt.*;
-import javax.swing.ImageIcon;
-//import java.util.Collection;
-//import java.util.List;
-//import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.*;
+import java.awt.event.*;
 
-//import static java.util.Arrays.stream;
-//import static java.util.stream.Collectors.toSet;
+import java.awt.image.BufferStrategy;
 
-public class Homepage {
-    public class button {
-        Color origColor, clickedColor;
-        int x, y, dx, dy, state;
-        public button(Color c, Color c2, int x, int y, int dx, int dy) {
-            this.origColor = c;
-            this.clickedColor = c2;
-            this.x = x;
-            this.y = y;
-            this.dx = dx;
-            this.dy = dy;
-            this.state = 0;
-        }
-    };
-    Boolean running;
-    int nextRound;
-    ArrayList<button> buttons;
-    
-    public Homepage() {
+public class Homepage extends JPanel{
+    private ArrayList<CircleButton> butts; 
+    private Boolean running;
+    private ActionListener mouseListener ;
+    private int clickedNum;
+    private int width = 1200, height = 760;
+    GridBagLayout griadLayout;
+    public Homepage(){
+        butts = new ArrayList<>();
+        
+
+        setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        griadLayout = new GridBagLayout();
+        setLayout(griadLayout);
+        setVisible(false);
+        setOpaque(false);
         running = true;
-        buttons = new ArrayList<button>();
-        buttons.add(new button(Color.GRAY, Color.lightGray, 300, 420, 150, 100));
-        buttons.add(new button(Color.GRAY, Color.lightGray, 525, 420, 150, 100));
-        buttons.add(new button(Color.GRAY, Color.lightGray, 750, 420, 150, 100));
+
+        mouseListener =  new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                System.out.printf("fuck\n");
+                int cnt = 0;
+                for(CircleButton c: butts){
+                    if(c == e.getSource()){
+                        clickedNum = cnt;
+                        leave();
+                    }
+                    cnt += 1;       
+                }
+            }
+        };
+
+        // addMouseListener(mouselisten);
+        
+
+
+        setPreferredSize(new Dimension(width, height));
+        
+        BufferedImage img = null;
+
+        try {
+            img = ImageIO.read(new File("./assets/gamebuttons/Welcome.png"));
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        // test.setMinimumSize(new Dimension(150, 100));
+        
+
+        GridBagConstraints c0 = new GridBagConstraints();
+        Image dimg = img.getScaledInstance(600, 300,
+            Image.SCALE_SMOOTH);
+        JLabel test = new JLabel(new ImageIcon(dimg), JLabel.CENTER);
+        c0.gridx = 0; 
+        c0.gridy = 0;
+        c0.gridwidth = 6;
+        c0.gridheight = 1;
+        // c0.weightx = 1;
+        // c0.weighty = 0;
+        c0.fill = GridBagConstraints.BOTH;
+        c0.anchor = GridBagConstraints.CENTER;
+        add(test, c0);
+        JLabel buttonContainer = new JLabel();
+        GridBagLayout gbl = new GridBagLayout();
+        // buttonContainer.setLayout((gbl));
+        // test.setBorder(BorderFactory.createLineBorder(Color.RED));
+        for(int i = 1; i <= 3; i++){
+            Integer i1 = i;
+            String name = "./assets/gamebuttons/" + i1.toString() + ".png";
+            try {
+                img = ImageIO.read(new File(name));
+            } 
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            dimg = img.getScaledInstance(150, 150,
+                Image.SCALE_SMOOTH);
+            
+            CircleButton button = new CircleButton(new ImageIcon(dimg));
+            name = "./assets/gamebuttons/" + i1.toString() + "_1.png";
+            try {
+                img = ImageIO.read(new File(name));
+            } 
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            dimg = img.getScaledInstance(150, 150,
+                Image.SCALE_SMOOTH);
+            
+            button.addHover(new ImageIcon(dimg), dimg);
+            butts.add(button);
+        }
+
+        for(CircleButton e: butts){
+            e.setVisible(true);
+            e.addActionListener(mouseListener);
+        }
+
+        for(int i = 0; i < butts.size(); i++){
+            CircleButton e = butts.get(i);
+            c0.gridx = 2 * i;
+            c0.gridy = 1;
+            c0.gridwidth = 1;
+            c0.gridheight = 1;
+            // c0.weightx = 0;
+            // c0.weighty = 0.1;
+            c0.fill = GridBagConstraints.NONE;
+            c0.anchor = GridBagConstraints.CENTER;
+            c0.insets = new Insets(70, 70, 70, 70);
+            gbl.setConstraints(e, c0);
+            e.setPreferredSize(new Dimension(138, 138));
+            e.setBorder(BorderFactory.createLineBorder(Color.RED));
+            // e.setHorizontalAlignment(SwingConstants.CENTER);
+            e.setBorder(BorderFactory.createLineBorder(Color.RED));
+            add(e, c0);
+        }
+        // add(buttonContainer);
+        // super.setVisible(true);
     }
     public void restart() {
+        for(CircleButton e: butts){
+            e.setVisible(true);
+        }
+        setVisible(true);
         running = true;
     }
-    public void leave(int res) {
+
+    public void leave(){
+        for(CircleButton e: butts){
+            e.setVisible(false);
+        }
+        setVisible(false);
         running = false;
-        nextRound = res;
+
     }
+
     public Boolean isRunning() {
         return running;
     }
-    public int clickButton(int x, int y, int release) {
-        if(release == 0) {
-            for(button b: buttons) {
-                if(b.x <= x && x <= b.x + b.dx && b.y <= y-30 && y-30 <= b.y + b.dy) {
-                    b.state = 1;
-                }
-            }    
-            return -1;
-        }
-        else {
-            int res = -1;
-            for(int i=0;i<buttons.size();i++) {
-                button b = buttons.get(i);
-                if(b.state == 1) {
-                    b.state = 0;
-                    res = i;
-                }
-            } 
-            return res;
-        }
-        
+
+    public void paintComponent(Graphics g) {
+        // System.out.printf("paintme?");
+        super.paintComponent(g);
+        // g.drawImage(new ImageIcon("./assets/Sprites/Sel.jpg").getImage(), 0, 0, width, height, null);
     }
 
-    public void render(Graphics g) {
-        //System.out.println("rendering");
-        ImageIcon i = new ImageIcon("assets/back.gif");
-        Image bg = i.getImage();
-        // int x = sprites.get(0).getX();
-        g.drawImage(bg, 0, 0, 1200, 800, null);
-        g.setColor(Color.RED);
-        g.fillRect(300, 100, 600, 200);
-        g.setColor(Color.BLACK);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 50)); 
-        g.drawString("Welcome", 480, 220);
-        Integer cnt = 0;
-        // String num = "123";
-        for(button b: buttons) {
-            if(b.state == 0) {
-                g.setColor(b.origColor);
-            }
-            else {
-                g.setColor(b.clickedColor);
-            }
-            g.fillRect(b.x, b.y, b.dx, b.dy);
-            g.setColor(Color.BLACK);
-            String a = cnt.toString();
-            g.drawString(a, b.x + 60, b.y + b.dy - 30);
-            cnt += 1;
-        }
-        return;
+    public int getIndex(){
+        return clickedNum;
     }
 }
+

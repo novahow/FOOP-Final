@@ -43,10 +43,6 @@ public class Game extends GameLoop {
     protected void restart() {
         this.p1 = new Ninja(new Point(0, 535));
         this.world = new World(new SpriteCollisionHandler(), p1);
-        homepage.restart();
-        //roleselect.restart();
-        //this.homepage = new Homepage();
-        //this.roleselect = new RoleSelect();
     }
 
     public void moveKnight(int playerNumber, Direction direction) {
@@ -106,7 +102,7 @@ public class Game extends GameLoop {
     }
 
     public void clickButton(int x, int y, int release) {
-        if(homepage.isRunning()){
+        /*if(homepage.isRunning()){
             int res = homepage.clickButton(x, y, release);
             if(release == 1) {
                 if(res == -1) {
@@ -118,7 +114,7 @@ public class Game extends GameLoop {
                 }
             }
         }
-        else if(world.isPause()) {
+        else */if(world.isPause()) {
             if(release == 1) {
                 int res = pausepage.clickButton(x, y);
                 if(res == 0) {

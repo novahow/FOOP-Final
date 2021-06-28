@@ -156,6 +156,7 @@ public class GameView extends JFrame {
         @Override
         public void render(Homepage home) {
             this.home = home;
+            home.setVisible(true);
             repaint();
             state = 1;
         }
@@ -168,14 +169,14 @@ public class GameView extends JFrame {
         }
 
         @Override
-        public void addPanel(RoleSelect roleselect){
+        public void addPanel(JPanel roleselect){
             this.add(roleselect);
-            this.setLayout(new GridBagLayout());
         }
 
         @Override
         public void render(RoleSelect roleselect){
             roleselect.setVisible(true);
+            roleselect.setOpaque(false);
             repaint();
             state = 2;
         }
@@ -194,7 +195,14 @@ public class GameView extends JFrame {
                 }
             }
             else if(state == 1){
-                home.render(g);
+                ImageIcon i = new ImageIcon("assets/back.gif");
+                Image bg = i.getImage();
+                g.drawImage(bg, 0, 0, 1200, 800, null);
+                // System.out.printf("parentP\n");
+            }
+
+            else if(state == 2){
+                g.drawImage(new ImageIcon("./assets/Sprites/Sel.jpg").getImage(), 0, 0, 1200, 800, null);
             }
         }
     }
