@@ -26,6 +26,8 @@ public class World {
     private boolean end = false;
     private boolean isjump = false;
     private int gt = 0;
+    private int topObstacle;
+    private int bottomObstacle;
 
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
@@ -109,20 +111,7 @@ public class World {
         // float f = (float)(offset.width) / (float)(20);
         // bar.setF(f);
         // System.out.println(end);
-        int x = getSprites().get(0).getX();
-        if (x == 600 && p.nextGaussian() < 0.3 && offset.width > 0) {
-            int y = r1.nextInt(500);
-            if (y > 350) {
-                y = 400;
-            }
-            else {
-                y = 200;
-            }
-
-            Obstacle o = new Obstacle(1200, y, r1.nextInt(200) + 100);
-            ob.add(o);
-            addSprite(o);
-        }
+        topObstacle = bottomObstacle = 0;
         for (Obstacle o : ob) {
             if (from.getX() >= 600 && offset.width > 0) {
                 // move(o, new Dimension(-offset.width, 0));
@@ -131,7 +120,31 @@ public class World {
             if (o.getX() < 0) {
                 removeSprite(o);
             }
+            Rectangle body = o.getBody();
+            if (body.y == 400) {
+                topObstacle = Math.max(topObstacle, body.x + body.width);
+            } else {
+                bottomObstacle = Math.max(bottomObstacle, body.x + body.width);
+            }
         }
+
+        int x = getSprites().get(0).getX();
+        if (x == 600 && p.nextInt(3) < 1 && offset.width > 0) {
+            int y = r1.nextInt(500);
+            if (y > 350) {
+                y = 400;
+            }
+            else {
+                y = 200;
+            }
+            
+            if (y == 400 && topObstacle <= 1000 || y == 200 && bottomObstacle <= 1000) {
+                Obstacle o = new Obstacle(1200, y, r1.nextInt(150) + 150);
+                ob.add(o);
+                addSprite(o);
+            }
+        }
+
         int dx = offset.width, dy = offset.height;
         if (from.getX() + dx < 0) {
             dx = -from.getX();
