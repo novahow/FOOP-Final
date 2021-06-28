@@ -25,7 +25,6 @@ public abstract class GameLoop {
     }
 
     private void gameLoop() {        
-        view.addPanel(getRoleSelect());
         while(running) {
             Homepage home = getHome();
             RoleSelect roleselect = getRoleSelect();
