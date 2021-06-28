@@ -25,6 +25,7 @@ public class World {
     Random p = new Random(5);
     private boolean end = false;
     private boolean isjump = false;
+    private boolean isPause = false;
     private int gt = 0;
     private int topObstacle;
     private int bottomObstacle;
@@ -96,6 +97,14 @@ public class World {
     public boolean isRunning() {
         end = bar.isEnd();
         return (sprites.size() > 0 && !end);
+    }
+
+    public boolean isPause() {
+        return isPause;
+    }
+
+    public void setPause() {
+        isPause = !isPause;
     }
 
     private boolean collisionBlock(Sprite from, Sprite to, Dimension offset) {

@@ -11,6 +11,7 @@ import controller.Game;
 import hero.*;
 import model.HealthPointSprite;
 import model.World;
+import model.Pause;
 import views.GameView;
 
 import java.awt.*;
@@ -27,6 +28,7 @@ public class Game extends GameLoop {
     private World world;
     private Homepage homepage;
     private RoleSelect roleselect;
+    private Pause pausepage;
 
     public Game(World world, Hero p1) {
         this.p1 = p1;
@@ -34,7 +36,9 @@ public class Game extends GameLoop {
         this.world = world;
         this.homepage = new Homepage();
         this.roleselect = new RoleSelect();
+        this.pausepage = new Pause();
     }
+
     @Override
     protected void restart() {
         Hero p1 = new Ninja(new Point(0, 535));
@@ -77,6 +81,12 @@ public class Game extends GameLoop {
         return p1;
     }
 
+    public void pause() {
+        if(world.isRunning()) {
+            world.setPause();
+        }
+    }
+
     @Override
     protected World getWorld() {
         return world;
@@ -90,6 +100,11 @@ public class Game extends GameLoop {
     @Override 
     protected RoleSelect getRoleSelect() {
         return roleselect;
+    }
+
+    @Override
+    protected Pause getPause() {
+        return pausepage;
     }
 
     public void clickButton(int x, int y, int release) {

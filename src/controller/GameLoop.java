@@ -3,8 +3,8 @@ package controller;
 import model.World;
 import model.Homepage;
 import model.RoleSelect;
+import model.Pause;
 import javax.swing.*;
-
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
@@ -33,8 +33,8 @@ public abstract class GameLoop {
                 view.render(home);
                 delay(10);
                 home = getHome();
-            } 
-
+            }
+            
             while(roleselect.isRunning() && !home.isRunning()) {
                 //home.update();
                 view.render(roleselect);
@@ -44,11 +44,18 @@ public abstract class GameLoop {
             // home.nextRound is the round clicked by the user
             running = true;
             World world = getWorld();
+            Pause pausepage = getPause();
             while (world.isRunning() && running) {
-                // World world = getWorld();
-                world.update();
-                view.render(world);
-                delay(15);
+                if(world.isPause()) {
+                    view.render(world);
+                    view.render(pausepage);
+                    delay(100);
+                }
+                else {
+                    world.update();
+                    view.render(world);
+                    delay(15);    
+                }
             }
             restart();
         }
@@ -56,6 +63,7 @@ public abstract class GameLoop {
 
     protected abstract World getWorld();
     protected abstract Homepage getHome();
+    protected abstract Pause getPause();
     protected abstract void restart();
     protected abstract RoleSelect getRoleSelect();
 
@@ -75,6 +83,7 @@ public abstract class GameLoop {
     public interface View {
         void render(World world);
         void render(Homepage home);
+        void render(Pause pausepage);
         void addPanel(JPanel roleselect);
         void render(RoleSelect roleselect);
     }
