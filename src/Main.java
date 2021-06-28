@@ -1,8 +1,9 @@
 import controller.Game;
 import enemy.Enemy;
 import knight.Knight;
-import knight.KnightCollisionHandler;
+import zombie.Zombie;
 import model.HealthPointSprite;
+import model.SpriteCollisionHandler;
 import model.World;
 import states.Attacking;
 import states.Walking;
@@ -30,7 +31,9 @@ public class Main {
         // Knight p2 = new Knight(150, new Point(300, 0));
         // testing
         Enemy e = new Enemy(20, new Point(300, 534), p1);
-        World world = new World(new KnightCollisionHandler(), p1, e);  // model
+        Zombie z1 = new Zombie(0, 30, new Point(500, 0));
+        Zombie z2 = new Zombie(1, 30, new Point(600, 0));
+        World world = new World(new SpriteCollisionHandler(), p1, e, z1, z2);  // model
         Game game = new Game(world, p1);  // controller
         GameView view = new GameView(game);  // view
         game.start();  // run the game and the game loop

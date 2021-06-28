@@ -7,10 +7,9 @@ import model.World;
 import states.Attacking;
 import states.Walking;
 import model.RoleSelect;
-
+import model.SpriteCollisionHandler;
 import controller.Game;
 import knight.Knight;
-import knight.KnightCollisionHandler;
 import model.HealthPointSprite;
 import model.World;
 import views.GameView;
@@ -41,7 +40,7 @@ public class Game extends GameLoop {
     protected void restart() {
         Knight p1 = new Knight(100, new Point(0, 535));
         Knight p2 = new Knight(150, new Point(300, 0));
-        World world = new World(new KnightCollisionHandler(), p1, p2);
+        World world = new World(new SpriteCollisionHandler(), p1, p2);
         this.p1 = p1;
         // this.p2 = p2;
         this.world = world;
