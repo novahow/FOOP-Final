@@ -23,7 +23,7 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
 
 public class Enemy extends HealthPointSprite {
 
-    public static final int ENEMY_HP = 500;
+    public static final int ENEMY_HP = 100;
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
@@ -72,6 +72,9 @@ public class Enemy extends HealthPointSprite {
     }
 
     public void move(Direction direction) {
+        if (face != direction) {
+            stop(face);
+        }
         if (direction == LEFT || direction == Direction.RIGHT) {
             face = direction;
         }
