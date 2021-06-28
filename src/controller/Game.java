@@ -12,6 +12,7 @@ import hero.*;
 import model.HealthPointSprite;
 import model.World;
 import model.Pause;
+import java.util.List;
 import views.GameView;
 
 import java.awt.*;
@@ -23,56 +24,63 @@ import static media.AudioPlayer.addAudioByFilePath;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class Game extends GameLoop {
-    private Hero p1;
+    private List<Hero> heros;
     // private Knight p2;
     private World world;
     private Homepage homepage;
     private RoleSelect roleselect;
     private Pause pausepage;
+    private int choose;
 
-    public Game(World world, Hero p1) {
-        this.p1 = p1;
+    public Game(World world, List<Hero> heros) {
+        this.heros = heros;
         // this.p2 = p2;
         this.world = world;
         this.homepage = new Homepage();
         this.roleselect = new RoleSelect();
         this.pausepage = new Pause();
     }
+    @Override
+    protected void setChoose(int c) {
+        choose = c;
+        world.addSprite(getPlayer(choose));
+    }
 
     @Override
     protected void restart() {
-        this.p1 = new Ninja(new Point(0, 535));
-        this.world = new World(new SpriteCollisionHandler(), p1);
+        this.heros.clear();
+        this.heros.add(new Ninja(new Point(0, 535)));
+        this.world = new World(new SpriteCollisionHandler(), this.heros.get(0));
     }
 
-    public void moveKnight(int playerNumber, Direction direction) {
+    public void moveKnight(Direction direction) {
         world.setjump(false);
-        getPlayer(playerNumber).move(direction);
+        getPlayer(choose).move(direction);
     }
 
-    public void stopKnight(int playerNumber, Direction direction) {
+    public void stopKnight(Direction direction) {
         world.setjump(false);
-        getPlayer(playerNumber).stop(direction);
+        getPlayer(choose).stop(direction);
     }
 
-    public void attack(int playerNumber) {
+    public void attack() {
         world.setjump(false);
-        getPlayer(playerNumber).attack();
+        getPlayer(choose).attack();
     }
 
-    public void shoot(int playerNumber) {
+    public void shoot() {
         world.setjump(false);
-        getPlayer(playerNumber).shoot();
+        getPlayer(choose).shoot();
     }
 
-    public void jump(int playerNumber) {
+    public void jump() {
         world.setjump(true);
-        getPlayer(playerNumber).jump();
+        getPlayer(choose).jump();
     }
 
     public Hero getPlayer(int playerNumber) {
         // return playerNumber == 1 ? p1 : p2;
-        return p1;
+        return heros.get(playerNumber);
     }
 
     public void pause() {

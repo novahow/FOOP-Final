@@ -41,6 +41,7 @@ public abstract class GameLoop {
                 delay(10);
                 roleselect = getRoleSelect();
             } 
+            setChoose(roleselect.getClicked());
             // home.nextRound is the round clicked by the user
             running = true;
             World world = getWorld();
@@ -69,6 +70,7 @@ public abstract class GameLoop {
     protected abstract Homepage getHome();
     protected abstract Pause getPause();
     protected abstract void restart();
+    protected abstract void setChoose(int c);
     protected abstract RoleSelect getRoleSelect();
 
     public void stop() {
