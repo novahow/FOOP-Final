@@ -7,6 +7,7 @@ import model.Sprite;
 import model.World;
 import model.Homepage;
 import model.RoleSelect;
+import model.Pause;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -45,6 +46,9 @@ public class GameView extends JFrame {
             @Override
             public void keyPressed(KeyEvent keyEvent) {
                 switch (keyEvent.getKeyCode()) {
+                    case KeyEvent.VK_ESCAPE:
+                        game.pause();
+                        break;
                     case KeyEvent.VK_W:
                         game.moveKnight(P1, Direction.UP);
                         break;
@@ -126,7 +130,10 @@ public class GameView extends JFrame {
             @Override
             public void mouseReleased(MouseEvent e) {
                 game.clickButton(e.getX(), e.getY(), 1);
-                //System.out.printf("released %d %d\n", e.getX(), e.getY());
+                if(game.isExit()) {
+                    setVisible(false); //you can't see me!
+                    dispose(); //Destroy the JFrame object
+                }
             }
         });
     }
@@ -135,31 +142,41 @@ public class GameView extends JFrame {
         private World world;
         private Homepage home;
         private RoleSelect roleselect;
+        private Pause pausepage;
         int state;
-
+        int ispause;
         @Override
         public void render(World world) {
             this.world = world;
             repaint(); // ask the JPanel to repaint, it will invoke paintComponent(g) after a while.
             state = 0;
+            ispause = 0;
         }
 
         @Override
         public void render(Homepage home) {
             this.home = home;
+            home.setVisible(true);
             repaint();
             state = 1;
         }
 
         @Override
-        public void addPanel(RoleSelect roleselect){
+        public void render(Pause pausepage) {
+            this.pausepage = pausepage;
+            ispause = 1;
+            repaint();
+        }
+
+        @Override
+        public void addPanel(JPanel roleselect){
             this.add(roleselect);
-            this.setLayout(new GridBagLayout());
         }
 
         @Override
         public void render(RoleSelect roleselect){
             roleselect.setVisible(true);
+            roleselect.setOpaque(false);
             repaint();
             state = 2;
         }
@@ -172,9 +189,20 @@ public class GameView extends JFrame {
             g.fillRect(0, 0, GameView.WIDTH, GameView.HEIGHT);
             if(state == 0) {
                 world.render(g); // ask the world to paint itself and paint the sprites on the canvas
+                if(ispause == 1) {
+                    pausepage.render(g);
+                    ispause = 0;
+                }
             }
             else if(state == 1){
-                home.render(g);
+                ImageIcon i = new ImageIcon("assets/back.gif");
+                Image bg = i.getImage();
+                g.drawImage(bg, 0, 0, 1200, 800, null);
+                // System.out.printf("parentP\n");
+            }
+
+            else if(state == 2){
+                g.drawImage(new ImageIcon("./assets/Sprites/Sel.jpg").getImage(), 0, 0, 1200, 800, null);
             }
         }
     }
