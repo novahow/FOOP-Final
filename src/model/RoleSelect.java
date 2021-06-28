@@ -1,12 +1,14 @@
 package model;
-import java.awt.*;
-import java.util.ArrayList;
-import views.GameView;
-import javax.swing.*;
-import javax.swing.event.MouseInputAdapter;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
-import java.awt.*;
-import java.awt.event.*;
+import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.event.MouseInputAdapter;
 
 public class RoleSelect extends JPanel {
     private ArrayList<Card> cards; 
@@ -68,6 +70,10 @@ public class RoleSelect extends JPanel {
         
 
         // super.setVisible(true);
+    }
+
+    public int getClickedNum() {
+        return clickedNum;
     }
 
 

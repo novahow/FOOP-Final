@@ -1,16 +1,12 @@
 package states;
 
-import fsm.Sequence;
-import fsm.State;
-import fsm.StateMachine;
-import hero.Ninja;
+import java.util.List;
+
 import fsm.CyclicSequence;
 import fsm.ImageState;
+import fsm.StateMachine;
 import model.Direction;
 import model.HealthPointSprite;
-import model.Sprite;
-
-import java.util.List;
 
 public class Jumping extends CyclicSequence {
     private final HealthPointSprite sprite;
