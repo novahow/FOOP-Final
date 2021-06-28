@@ -35,7 +35,9 @@ public class Homepage {
         buttons.add(new button(Color.GRAY, Color.lightGray, 525, 420, 150, 100));
         buttons.add(new button(Color.GRAY, Color.lightGray, 750, 420, 150, 100));
     }
-    
+    public void restart() {
+        running = true;
+    }
     public void leave(int res) {
         running = false;
         nextRound = res;

@@ -130,7 +130,10 @@ public class GameView extends JFrame {
             @Override
             public void mouseReleased(MouseEvent e) {
                 game.clickButton(e.getX(), e.getY(), 1);
-                //System.out.printf("released %d %d\n", e.getX(), e.getY());
+                if(game.isExit()) {
+                    setVisible(false); //you can't see me!
+                    dispose(); //Destroy the JFrame object
+                }
             }
         });
     }

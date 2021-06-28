@@ -41,14 +41,12 @@ public class Game extends GameLoop {
 
     @Override
     protected void restart() {
-        Hero p1 = new Ninja(new Point(0, 535));
-        // Ninja p2 = new Ninja(150, new Point(300, 0));
-        World world = new World(new SpriteCollisionHandler(), p1);
-        this.p1 = p1;
-        // this.p2 = p2;
-        this.world = world;
-        this.homepage = new Homepage();
-        this.roleselect = new RoleSelect();
+        this.p1 = new Ninja(new Point(0, 535));
+        this.world = new World(new SpriteCollisionHandler(), p1);
+        homepage.restart();
+        //roleselect.restart();
+        //this.homepage = new Homepage();
+        //this.roleselect = new RoleSelect();
     }
 
     public void moveKnight(int playerNumber, Direction direction) {
@@ -108,8 +106,8 @@ public class Game extends GameLoop {
     }
 
     public void clickButton(int x, int y, int release) {
-        int res = homepage.clickButton(x, y, release);
         if(homepage.isRunning()){
+            int res = homepage.clickButton(x, y, release);
             if(release == 1) {
                 if(res == -1) {
                     System.out.printf("Clicked on nowhere\n");
@@ -119,6 +117,20 @@ public class Game extends GameLoop {
                     homepage.leave(res);
                 }
             }
+        }
+        else if(world.isPause()) {
+            if(release == 1) {
+                int res = pausepage.clickButton(x, y);
+                if(res == 0) {
+                    world.setPause();
+                }
+                else if(res == 1) {
+                    world.stop();
+                }
+                else if(res == 3) {
+                    stop();
+                }
+            }            
         }
     }
 }

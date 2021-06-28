@@ -85,6 +85,14 @@ public class RoleSelect extends JPanel {
         return running;
     }
 
+    public void restart() {
+        for(Card e: cards){
+            e.setVisible(true);
+        }
+        setVisible(true);
+        running = true;        
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(new ImageIcon("./assets/Sprites/Sel.jpg").getImage(), 0, 0, width, height, null);

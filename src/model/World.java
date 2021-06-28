@@ -26,6 +26,7 @@ public class World {
     private boolean end = false;
     private boolean isjump = false;
     private boolean isPause = false;
+    private boolean isStop = false;
     private int gt = 0;
     private int topObstacle;
     private int bottomObstacle;
@@ -94,7 +95,13 @@ public class World {
         sprite.setWorld(null);
     }
 
+    public void stop() {
+        isStop = true;
+    }
+
     public boolean isRunning() {
+        if(isStop)
+            return false;
         end = bar.isEnd();
         return (sprites.size() > 0 && !end);
     }
