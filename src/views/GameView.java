@@ -8,6 +8,7 @@ import model.World;
 import model.Homepage;
 import model.RoleSelect;
 import model.Pause;
+import model.WorldButton;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -132,6 +133,7 @@ public class GameView extends JFrame {
                     setVisible(false); //you can't see me!
                     dispose(); //Destroy the JFrame object
                 }
+                canvas.world.clickButton(e.getX(), e.getY());
             }
         });
     }

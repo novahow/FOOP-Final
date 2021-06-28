@@ -1,10 +1,13 @@
 package controller;
 
 import model.World;
+import model.WorldButton;
 import model.Homepage;
 import model.RoleSelect;
 import model.Pause;
 import javax.swing.*;
+import java.awt.*;
+
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
@@ -41,6 +44,10 @@ public abstract class GameLoop {
                 roleselect = getRoleSelect();
             } 
             setChoose(roleselect.getClicked());
+            addButton(
+                new WorldButton(new Dimension(50, 50)
+                , new Dimension(100, 100), "mute", "unmute")
+            );
             // home.nextRound is the round clicked by the user
             running = true;
             World world = getWorld();
@@ -71,6 +78,7 @@ public abstract class GameLoop {
     protected abstract void restart();
     protected abstract void setChoose(int c);
     protected abstract RoleSelect getRoleSelect();
+    protected abstract void addButton(WorldButton b);
 
     public void stop() {
         running = false;

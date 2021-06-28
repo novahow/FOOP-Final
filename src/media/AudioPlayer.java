@@ -11,6 +11,7 @@ import java.util.Map;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class AudioPlayer {
+    private static boolean muted = true;
     private static final Map<Object, File> sounds = new HashMap<>();
 
     public static void addAudioByFilePath(Object audioName, File file) {
@@ -22,13 +23,19 @@ public class AudioPlayer {
     }
 
     public static void playSounds(Object audioName) {
-        try {
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(sounds.get(audioName)));
-            clip.start();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(!muted){
+            try {
+                Clip clip = AudioSystem.getClip();
+                clip.open(AudioSystem.getAudioInputStream(sounds.get(audioName)));
+                clip.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    public static void setEnable(boolean _muted){
+        muted = _muted;
     }
 
 }

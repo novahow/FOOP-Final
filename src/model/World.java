@@ -11,6 +11,7 @@ import static java.util.stream.Collectors.toSet;
 import javax.swing.ImageIcon;
 
 import maps.Tiles;
+import media.AudioPlayer;
 
 import java.util.Random;
 /**
@@ -18,6 +19,7 @@ import java.util.Random;
  */
 public class World {
     private final List<Sprite> sprites = new CopyOnWriteArrayList<>();
+    private final List<WorldButton> buttons = new ArrayList<>();
     private final CollisionHandler collisionHandler;
     private List<Obstacle> ob = new ArrayList<Obstacle>();
     private final ProcessBar bar = new ProcessBar(100);
@@ -27,6 +29,7 @@ public class World {
     private boolean isjump = false;
     private boolean isPause = false;
     private boolean isStop = false;
+    private boolean muted = false;
     private int gt = 0;
     private int topObstacle;
     private int bottomObstacle;
@@ -85,6 +88,8 @@ public class World {
         stream(sprites).forEach(this::addSprite);
     }
 
+    
+
     public void addSprite(Sprite sprite) {
         sprites.add(sprite);
         sprite.setWorld(this);
@@ -93,6 +98,14 @@ public class World {
     public void removeSprite(Sprite sprite) {
         sprites.remove(sprite);
         sprite.setWorld(null);
+    }
+
+    public void addButton(WorldButton... buttons){
+        stream(buttons).forEach(this::addButton);
+    }
+
+    public void addButton(WorldButton button){
+        buttons.add(button);
     }
 
     public void stop() {
@@ -197,6 +210,10 @@ public class World {
         return sprites;
     }
 
+    public List<WorldButton> getButtons(){
+        return buttons;
+    }
+
     // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
@@ -209,5 +226,20 @@ public class World {
         for (Sprite sprite : sprites) {
             sprite.render(g);
         }
+        // System.out.printf("l = %d\n", buttons.size());
+        for(WorldButton btn: buttons){
+            btn.render(g);
+        }
+    }
+
+    public void clickButton(int x, int y){
+        if(isRunning()){
+            muted = (buttons.get(0).clickbutton(x, y) == 0);
+        }
+        AudioPlayer.setEnable(muted);
+    }
+
+    public boolean isMuted(){
+        return muted;
     }
 }

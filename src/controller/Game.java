@@ -3,6 +3,7 @@ package controller;
 import model.Direction;
 import model.Homepage;
 import model.World;
+import model.WorldButton;
 import states.Attacking;
 import states.Walking;
 import model.RoleSelect;
@@ -44,6 +45,11 @@ public class Game extends GameLoop {
     protected void setChoose(int c) {
         choose = c;
         world.addSprite(getPlayer(choose));
+    }
+
+    @Override
+    protected void addButton(WorldButton b) {
+        world.addButton(b);
     }
 
     @Override
