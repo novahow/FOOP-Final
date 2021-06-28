@@ -1,6 +1,5 @@
 package controller;
 
-import knight.Knight;
 import model.Direction;
 import model.Homepage;
 import model.World;
@@ -9,7 +8,7 @@ import states.Walking;
 import model.RoleSelect;
 import model.SpriteCollisionHandler;
 import controller.Game;
-import knight.Knight;
+import hero.*;
 import model.HealthPointSprite;
 import model.World;
 import views.GameView;
@@ -23,13 +22,13 @@ import static media.AudioPlayer.addAudioByFilePath;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class Game extends GameLoop {
-    private Knight p1;
+    private Hero p1;
     // private Knight p2;
     private World world;
     private Homepage homepage;
     private RoleSelect roleselect;
 
-    public Game(World world, Knight p1) {
+    public Game(World world, Hero p1) {
         this.p1 = p1;
         // this.p2 = p2;
         this.world = world;
@@ -38,9 +37,9 @@ public class Game extends GameLoop {
     }
     @Override
     protected void restart() {
-        Knight p1 = new Knight(100, new Point(0, 535));
-        Knight p2 = new Knight(150, new Point(300, 0));
-        World world = new World(new SpriteCollisionHandler(), p1, p2);
+        Hero p1 = new Ninja(new Point(0, 535));
+        // Ninja p2 = new Ninja(150, new Point(300, 0));
+        World world = new World(new SpriteCollisionHandler(), p1);
         this.p1 = p1;
         // this.p2 = p2;
         this.world = world;
@@ -68,7 +67,7 @@ public class Game extends GameLoop {
         getPlayer(playerNumber).jump();
     }
 
-    public Knight getPlayer(int playerNumber) {
+    public Hero getPlayer(int playerNumber) {
         // return playerNumber == 1 ? p1 : p2;
         return p1;
     }

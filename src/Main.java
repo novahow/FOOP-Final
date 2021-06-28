@@ -1,6 +1,7 @@
 import controller.Game;
 import enemy.Enemy;
-import knight.Knight;
+import hero.Hero;
+import hero.Ninja;
 import zombie.Zombie;
 import model.HealthPointSprite;
 import model.SpriteCollisionHandler;
@@ -27,7 +28,7 @@ public class Main {
         addAudioByFilePath(HealthPointSprite.AUDIO_DIE, new File("assets/audio/die.wav"));
 
         // initialization procedure
-        Knight p1 = new Knight(100, new Point(0, 534));
+        Hero p1 = new Ninja(new Point(0, 534));
         // Knight p2 = new Knight(150, new Point(300, 0));
         // testing
         Enemy e = new Enemy(20, new Point(300, 534), p1);

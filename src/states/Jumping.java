@@ -3,7 +3,7 @@ package states;
 import fsm.Sequence;
 import fsm.State;
 import fsm.StateMachine;
-import knight.Knight;
+import hero.Ninja;
 import fsm.CyclicSequence;
 import fsm.ImageState;
 import model.Direction;

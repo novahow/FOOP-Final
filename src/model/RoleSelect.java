@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.*;
 import java.awt.event.*;
 
-public class RoleSelect extends JPanel{
+public class RoleSelect extends JPanel {
     private ArrayList<Card> cards; 
     private Boolean running;
     private MouseInputAdapter mouselisten;
