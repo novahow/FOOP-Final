@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import model.Direction;
+import states.Shooting;
 import model.Sprite;
 import static hero.Robot.Event.*;
 import java.util.List;
@@ -37,19 +38,27 @@ public class Robot extends Hero {
         Iterator<bullet> it = bullets.iterator();
         while (it.hasNext()) {
             bullet b = it.next();
-            int dx = (b.getDir() == Direction.RIGHT) ? 2 : -2;
-            b.setX(b.getX() + dx);
-            if (b.getX() <= 0 || b.getX() > 1200) 
-                it.remove();
+            if (b.getHit()) {
+                if(b.getStage() != 9)
+                    continue;
+                else {
+                    it.remove();
+                }
+            }
             else {
-                List<Sprite> sprites = world.getSprites();
-                for (Sprite s : sprites) {
-                    if (s != this) {
-                        if (s.getX() < b.getX() && s.getX() + 90 > b.getX() 
-                        && s.getY() < b.getY() && s.getY() + 120 > b.getY()) {
-                            s.onDamaged(null, b.getDamage());
-                            it.remove();
-                            break;
+                int dx = (b.getDir() == Direction.RIGHT) ? 2 : -2;
+                b.setX(b.getX() + dx);
+                if (b.getX() <= 0 || b.getX() > 1200) 
+                    it.remove();
+                else {
+                    List<Sprite> sprites = world.getSprites();
+                    for (Sprite s : sprites) {
+                        if (s != this) {
+                            if (s.getX() < b.getX() && s.getX() + 90 > b.getX() 
+                            && s.getY() < b.getY() && s.getY() + 120 > b.getY()) {
+                                b.setHit();
+                                s.onDamaged(null, b.getDamage());
+                            }
                         }
                     }
                 }
@@ -68,14 +77,18 @@ public class Robot extends Hero {
     public class bullet{
         private int x;
         private int y;
+        private int stage;
         private Direction dir;
         private int damage;
+        private boolean hit = false;
+        private int cnt = 0;
 
         public bullet(int x, int y, Direction dir, int damage) {
             this.x = x;
             this.y = y;
             this.dir = dir;
             this.damage = damage;
+            this.stage = 0;
         }
 
         public void setX(int x) {
@@ -102,8 +115,37 @@ public class Robot extends Hero {
             return damage;
         }
 
+        public void setHit() {
+            hit = true;
+            stage = 4;
+        }
+
+        public int getStage() {
+            return stage;
+        }
+
+        public boolean getHit() {
+            return hit;
+        }
+
+        public void setStage() {
+            if (!hit)
+                stage = (stage + 1) % 5;
+            else {
+                if (cnt > 3) {
+                    stage = (stage + 1) % 5;
+                    stage += 5;
+                    cnt = 0;
+                }
+                else {
+                    cnt += 1;
+                }
+            }
+        }
+
         public void render(Graphics g) {
-            ImageIcon i = new ImageIcon("assets/robot/Objects/Bullet_000.png");
+            ImageIcon i = new ImageIcon("assets/robot/Objects/" + Integer.toString(stage) + ".png");
+            setStage();
             Image b = i.getImage();
             if (getDir() == Direction.RIGHT)
                 g.drawImage(b, x, y, 50, 50, null);
