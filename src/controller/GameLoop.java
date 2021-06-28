@@ -3,6 +3,7 @@ package controller;
 import model.World;
 import model.Homepage;
 import model.RoleSelect;
+import javax.swing.*;
 
 /**
  * @author - johnny850807@gmail.com (Waterball)
@@ -13,6 +14,8 @@ public abstract class GameLoop {
 
     public void setView(View view) {
         this.view = view;
+        this.view.addPanel(getHome());
+        this.view.addPanel(getRoleSelect());
     }
 
     public void start() {
@@ -21,8 +24,6 @@ public abstract class GameLoop {
     }
 
     private void gameLoop() {        
-        // Homepage home = getHome();
-        view.addPanel(getRoleSelect());
         while(true) {
             Homepage home = getHome();
             RoleSelect roleselect = getRoleSelect();
@@ -74,7 +75,7 @@ public abstract class GameLoop {
     public interface View {
         void render(World world);
         void render(Homepage home);
-        void addPanel(RoleSelect roleselect);
+        void addPanel(JPanel roleselect);
         void render(RoleSelect roleselect);
     }
 }

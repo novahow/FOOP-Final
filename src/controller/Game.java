@@ -93,7 +93,7 @@ public class Game extends GameLoop {
     }
 
     public void clickButton(int x, int y, int release) {
-        int res = homepage.clickButton(x, y, release);
+        /*int res = homepage.clickButton(x, y, release);
         if(homepage.isRunning()){
             if(release == 1) {
                 if(res == -1) {
@@ -104,6 +104,6 @@ public class Game extends GameLoop {
                     homepage.leave(res);
                 }
             }
-        }
+        }*/
     }
 }

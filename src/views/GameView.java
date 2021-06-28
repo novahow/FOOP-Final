@@ -147,14 +147,14 @@ public class GameView extends JFrame {
         @Override
         public void render(Homepage home) {
             this.home = home;
+            home.setVisible(true);
             repaint();
             state = 1;
         }
 
         @Override
-        public void addPanel(RoleSelect roleselect){
+        public void addPanel(JPanel roleselect){
             this.add(roleselect);
-            this.setLayout(new GridBagLayout());
         }
 
         @Override
@@ -174,7 +174,10 @@ public class GameView extends JFrame {
                 world.render(g); // ask the world to paint itself and paint the sprites on the canvas
             }
             else if(state == 1){
-                home.render(g);
+                ImageIcon i = new ImageIcon("assets/back.gif");
+                Image bg = i.getImage();
+                g.drawImage(bg, 0, 0, 1200, 800, null);
+                // System.out.printf("parentP\n");
             }
         }
     }
