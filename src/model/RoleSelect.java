@@ -28,9 +28,7 @@ public class RoleSelect extends JPanel{
             this.add(cards.get(i).getCard());
         }
         setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-        griadLayout = new GridLayout(2, 3);
-        griadLayout.setHgap(40);
-        griadLayout.setVgap(40);
+        griadLayout = new GridLayout(2, 3, 40, 40);
         setLayout(griadLayout);
         setVisible(false);
         running = true;

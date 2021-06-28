@@ -95,7 +95,7 @@ public class Card{
             super.paintComponent(g);
             g.setColor(Color.BLACK);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
-            g.drawString(name, 120, 175);
+            g.drawString(name, 140, 175);
         }
     }
 }
