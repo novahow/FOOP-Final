@@ -10,7 +10,7 @@ import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
 import javax.swing.ImageIcon;
 
-import enemy.Enemy;
+import maps.Tiles;
 
 import java.util.Random;
 /**
@@ -26,9 +26,14 @@ public class World {
     private boolean end = false;
     private boolean isjump = false;
     private int gt = 0;
+
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
         addSprites(sprites);
+        for(int i = 0; i < 3; i++){
+            Integer i1 = i;
+            Tiles.addTiles("./assets/obstacles/", i1.toString() + ".png");
+        }
     }
 
     public void update() {
