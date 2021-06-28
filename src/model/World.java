@@ -105,7 +105,7 @@ public class World {
         // bar.setF(f);
         // System.out.println(end);
         int x = getSprites().get(0).getX();
-        if (x == 600 && p.nextGaussian() < 0.001 && offset.width > 0) {
+        if (x == 600 && p.nextGaussian() < 0.3 && offset.width > 0) {
             int y = r1.nextInt(500);
             if (y > 350) {
                 y = 400;
@@ -113,7 +113,8 @@ public class World {
             else {
                 y = 200;
             }
-            Obstacle o = new Obstacle(1200, y, r1.nextInt(50) + 50);
+
+            Obstacle o = new Obstacle(1200, y, r1.nextInt(200) + 100);
             ob.add(o);
             addSprite(o);
         }
