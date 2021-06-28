@@ -21,9 +21,14 @@ public class CircleButton extends JButton{
     private ImageIcon hovered;
     private ImageIcon original;
     private Image hoverImg;
-     
+    private Cursor handCursor;
+    private Cursor defaultCursor;
+
+
     public CircleButton(ImageIcon label) {
         super(label);
+        defaultCursor = this.getCursor();
+        handCursor = new Cursor(Cursor.HAND_CURSOR);
         original = label;
         setBackground(Color.lightGray);
         setFocusable(false);
@@ -45,11 +50,13 @@ public class CircleButton extends JButton{
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 setIcon(hovered);
+                setCursor(handCursor);
                 repaint();
             }
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 setIcon(original); 
+                setCursor(handCursor);
                 repaint();           
             }
 
