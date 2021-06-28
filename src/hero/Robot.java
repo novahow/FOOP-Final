@@ -1,18 +1,114 @@
 package hero;
 
 import java.awt.*;
+import javax.swing.ImageIcon;
+import java.util.ArrayList;
+import model.Direction;
+import model.Sprite;
+import static hero.Robot.Event.*;
+import java.util.List;
+import java.util.Iterator;
 
 public class Robot extends Hero {
     public static final int HP = 500;
     public static final int DAMAGE = 100;
-
+    private final int bullet_damage = 20;
+    private ArrayList<bullet> bullets = new ArrayList<bullet>();
     public enum Event {
-        WALK, STOP, ATTACK, DAMAGED, JUMP
+        WALK, STOP, ATTACK, DAMAGED, JUMP, SHOOT
     }
 
     public Robot(Point location) {
         super(HP, "assets/robot/");
         this.damage = DAMAGE;
         this.location = location;
+    }
+
+    @Override
+    public void shoot() {
+        getFsm().trigger(SHOOT);
+        bullet bu = new bullet(getX() + 90, getY() + 50, face, bullet_damage);
+        bullets.add(bu);
+    }
+
+    @Override
+    public void update() {
+        getFsm().update();
+        Iterator<bullet> it = bullets.iterator();
+        while (it.hasNext()) {
+            bullet b = it.next();
+            int dx = (b.getDir() == Direction.RIGHT) ? 2 : -2;
+            b.setX(b.getX() + dx);
+            if (b.getX() <= 0 || b.getX() > 1200) 
+                it.remove();
+            else {
+                List<Sprite> sprites = world.getSprites();
+                for (Sprite s : sprites) {
+                    if (s != this) {
+                        if (s.getX() < b.getX() && s.getX() + 90 > b.getX() 
+                        && s.getY() < b.getY() && s.getY() + 120 > b.getY()) {
+                            s.onDamaged(null, b.getDamage());
+                            it.remove();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @Override
+    public void render(Graphics g) {
+        super.render(g);
+        getFsm().render(g);
+        for (bullet b : bullets) {
+            b.render(g);
+        }
+    }
+
+    public class bullet{
+        private int x;
+        private int y;
+        private Direction dir;
+        private int damage;
+
+        public bullet(int x, int y, Direction dir, int damage) {
+            this.x = x;
+            this.y = y;
+            this.dir = dir;
+            this.damage = damage;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
+
+        public void setY(int y) {
+            this.y = y;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public Direction getDir() {
+            return dir;
+        }
+
+        public int getDamage() {
+            return damage;
+        }
+
+        public void render(Graphics g) {
+            ImageIcon i = new ImageIcon("assets/robot/Objects/Bullet_000.png");
+            Image b = i.getImage();
+            if (getDir() == Direction.RIGHT)
+                g.drawImage(b, x, y, 50, 50, null);
+            else
+                g.drawImage(b, x + 50, y, -50, 50, null);
+        }
     }
 }

@@ -60,6 +60,9 @@ public class GameView extends JFrame {
                     case KeyEvent.VK_E:
                         game.attack(P1);
                         break;
+                    case KeyEvent.VK_R:
+                        game.shoot(P1);
+                        break; 
                     case KeyEvent.VK_SPACE:
                         game.jump(P1);
                         break;

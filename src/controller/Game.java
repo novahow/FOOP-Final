@@ -62,6 +62,11 @@ public class Game extends GameLoop {
         getPlayer(playerNumber).attack();
     }
 
+    public void shoot(int playerNumber) {
+        world.setjump(false);
+        getPlayer(playerNumber).shoot();
+    }
+
     public void jump(int playerNumber) {
         world.setjump(true);
         getPlayer(playerNumber).jump();
