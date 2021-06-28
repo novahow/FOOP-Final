@@ -28,13 +28,18 @@ public class Main {
 
         // initialization procedure
         Knight p1 = new Knight(100, new Point(0, 534));
-        Knight p2 = new Knight(150, new Point(300, 0));
+        // Knight p2 = new Knight(150, new Point(300, 0));
         // testing
         Enemy e = new Enemy(100, new Point(300, 534), p1);
+<<<<<<< HEAD
         Zombie z1 = new Zombie(0, 30, new Point(500, 0));
         Zombie z2 = new Zombie(1, 30, new Point(600, 0));
         World world = new World(new SpriteCollisionHandler(), p1, p2, e, z1, z2);  // model
         Game game = new Game(world, p1, p2);  // controller
+=======
+        World world = new World(new KnightCollisionHandler(), p1, e);  // model
+        Game game = new Game(world, p1);  // controller
+>>>>>>> ea15e455479f1dbc0baa45fe2a28c17740794d57
         GameView view = new GameView(game);  // view
         game.start();  // run the game and the game loop
         view.launch(); // launch the GUI

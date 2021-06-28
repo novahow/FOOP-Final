@@ -1,14 +1,18 @@
 package model;
 
 import java.awt.*;
+import maps.Tiles;
 
 public class Obstacle extends Sprite {
     private final SpriteShape shape;
-
+    private Image img;
     public Obstacle(int x, int y, int size) {
         setLocation(new Point(x, y));
-        shape = new SpriteShape(new Dimension(size, 50),
-                new Dimension(0, 0), new Dimension(size, 50));
+        shape = new SpriteShape(new Dimension(size - (size % 50), 50),
+                new Dimension(0, 0), new Dimension(size - (size % 50), 50));
+        int tileidx = (int) (Math.random() * 3);
+        img = Tiles.tiles.get(tileidx);
+        
     }
 
     @Override
@@ -30,6 +34,10 @@ public class Obstacle extends Sprite {
     public void render(Graphics g) {
         g.setColor(Color.BLACK);
         g.fillRect(getX(), getY(), (int)shape.size.getWidth(), 50);
+        int tileNum = (int)shape.size.getWidth() / 50;
+        for(int i = 0; i < tileNum; i++){
+            g.drawImage(img, getX() + i * 50, getY(), null);
+        }
     }
 
     @Override

@@ -24,14 +24,14 @@ import static media.AudioPlayer.addAudioByFilePath;
  */
 public class Game extends GameLoop {
     private Knight p1;
-    private Knight p2;
+    // private Knight p2;
     private World world;
     private Homepage homepage;
     private RoleSelect roleselect;
 
-    public Game(World world, Knight p1, Knight p2) {
+    public Game(World world, Knight p1) {
         this.p1 = p1;
-        this.p2 = p2;
+        // this.p2 = p2;
         this.world = world;
         this.homepage = new Homepage();
         this.roleselect = new RoleSelect();
@@ -42,7 +42,7 @@ public class Game extends GameLoop {
         Knight p2 = new Knight(150, new Point(300, 0));
         World world = new World(new SpriteCollisionHandler(), p1, p2);
         this.p1 = p1;
-        this.p2 = p2;
+        // this.p2 = p2;
         this.world = world;
         this.homepage = new Homepage();
         this.roleselect = new RoleSelect();
@@ -69,7 +69,8 @@ public class Game extends GameLoop {
     }
 
     public Knight getPlayer(int playerNumber) {
-        return playerNumber == 1 ? p1 : p2;
+        // return playerNumber == 1 ? p1 : p2;
+        return p1;
     }
 
     @Override
