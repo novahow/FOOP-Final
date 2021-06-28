@@ -82,7 +82,6 @@ public class RoleSelect extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(new ImageIcon("./assets/Sprites/Sel.jpg").getImage(), 0, 0, width, height, null);
     }
 
     public int getIndex(){

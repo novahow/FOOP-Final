@@ -173,6 +173,7 @@ public class GameView extends JFrame {
         @Override
         public void render(RoleSelect roleselect){
             roleselect.setVisible(true);
+            roleselect.setOpaque(false);
             repaint();
             state = 2;
         }
@@ -195,6 +196,10 @@ public class GameView extends JFrame {
                 Image bg = i.getImage();
                 g.drawImage(bg, 0, 0, 1200, 800, null);
                 // System.out.printf("parentP\n");
+            }
+
+            else if(state == 2){
+                g.drawImage(new ImageIcon("./assets/Sprites/Sel.jpg").getImage(), 0, 0, 1200, 800, null);
             }
         }
     }
