@@ -19,7 +19,6 @@ import states.Walking;
 import static fsm.FiniteStateMachine.Transition.from;
 import static enemy.Enemy.Event.*;
 import static model.Direction.LEFT;
-import static model.Direction.RIGHT;
 import static utils.ImageStateUtils.imageStatesFromFolder;
 
 public class Enemy extends HealthPointSprite {
@@ -73,7 +72,7 @@ public class Enemy extends HealthPointSprite {
     }
 
     public void move(Direction direction) {
-        if (direction == LEFT || direction == RIGHT) {
+        if (direction == LEFT || direction == Direction.RIGHT) {
             face = direction;
         }
         if (!directions.contains(direction)) {
@@ -114,7 +113,7 @@ public class Enemy extends HealthPointSprite {
         }
         Point targetLocation = target.getLocation();
         if (location.x < targetLocation.x - 50)
-            move(RIGHT);
+            move(Direction.RIGHT);
         else if (location.x > targetLocation.x + 50)
             move(LEFT);
         if (location.y > targetLocation.y + 50)
