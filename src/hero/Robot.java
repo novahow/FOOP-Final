@@ -132,7 +132,7 @@ public class Robot extends Hero {
             if (!hit)
                 stage = (stage + 1) % 5;
             else {
-                if (cnt > 5) {
+                if (cnt > 3) {
                     stage = (stage + 1) % 5;
                     stage += 5;
                     cnt = 0;
