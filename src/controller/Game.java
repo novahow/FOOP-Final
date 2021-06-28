@@ -4,13 +4,13 @@ import knight.Knight;
 import model.Direction;
 import model.Homepage;
 import model.World;
+import states.Attacking;
+import states.Walking;
 import model.RoleSelect;
 
 import controller.Game;
-import knight.Attacking;
 import knight.Knight;
 import knight.KnightCollisionHandler;
-import knight.Walking;
 import model.HealthPointSprite;
 import model.World;
 import views.GameView;

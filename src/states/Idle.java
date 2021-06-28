@@ -1,4 +1,4 @@
-package knight;
+package states;
 
 import fsm.CyclicSequence;
 import fsm.ImageState;

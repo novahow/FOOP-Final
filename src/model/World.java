@@ -9,6 +9,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
 import javax.swing.ImageIcon;
+
+import enemy.Enemy;
+
 import java.util.Random;
 /**
  * @author - johnny850807@gmail.com (Waterball)
@@ -162,6 +165,7 @@ public class World {
     // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
+        
         ImageIcon i = new ImageIcon("assets/level1.gif");
         Image bg = i.getImage();
         int x = sprites.get(0).getX();

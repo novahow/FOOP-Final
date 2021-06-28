@@ -7,6 +7,10 @@ import fsm.WaitingPerFrame;
 import model.Direction;
 import model.HealthPointSprite;
 import model.SpriteShape;
+import states.Idle;
+import states.Attacking;
+import states.Jumping;
+import states.Walking;
 
 import java.awt.*;
 import java.util.Set;
@@ -62,6 +66,7 @@ public class Knight extends HealthPointSprite {
         fsm.trigger(ATTACK);
     }
 
+    @Override
     public int getDamage() {
         return damage;
     }

@@ -1,9 +1,10 @@
-package knight;
+package states;
 
 import fsm.Sequence;
 import fsm.State;
 import fsm.StateMachine;
 import media.AudioPlayer;
+import model.HealthPointSprite;
 import model.Sprite;
 import model.World;
 
@@ -18,19 +19,19 @@ import java.util.Set;
 public class Attacking extends Sequence {
     public static final String AUDIO_SWORD_CLASH_1 = "sword-clash1";
     public static final String AUDIO_SWORD_CLASH_2 = "sword-clash2";
-    private final Knight knight;
+    private final HealthPointSprite sprite;
     private final StateMachine stateMachine;
     private final Set<Integer> damagingStateNumbers = new HashSet<>(List.of(6));
 
-    public Attacking(Knight knight, StateMachine stateMachine, List<? extends State> states) {
+    public Attacking(HealthPointSprite sprite, StateMachine stateMachine, List<? extends State> states) {
         super(states);
-        this.knight = knight;
+        this.sprite = sprite;
         this.stateMachine = stateMachine;
     }
 
     @Override
     public void update() {
-        if (knight.isAlive()) {
+        if (sprite.isAlive()) {
             super.update();
             if (damagingStateNumbers.contains(currentPosition)) {
                 effectDamage();
@@ -41,19 +42,19 @@ public class Attacking extends Sequence {
     @Override
     public void render(Graphics g) {
         super.render(g);
-         Rectangle damageArea = damageArea();
-         g.setColor(Color.BLUE);
-         g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
+        Rectangle damageArea = damageArea();
+        g.setColor(Color.BLUE);
+        g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
     }
 
     private void effectDamage() {
-        World world = knight.getWorld();
+        World world = sprite.getWorld();
         Rectangle damageArea = damageArea();
         var sprites = world.getSprites(damageArea);
         boolean hasClash = false;
-        for (Sprite sprite : sprites) {
-            if (knight != sprite) {
-                sprite.onDamaged(damageArea, knight.getDamage());
+        for (Sprite s : sprites) {
+            if (s != sprite) {
+                s.onDamaged(damageArea, sprite.getDamage());
                 hasClash = true;
             }
         }
@@ -65,7 +66,7 @@ public class Attacking extends Sequence {
     }
 
     private Rectangle damageArea() {
-        return knight.getArea(new Dimension(87, 70),
+        return sprite.getArea(new Dimension(87, 70),
                 new Dimension(55, 88));
     }
 

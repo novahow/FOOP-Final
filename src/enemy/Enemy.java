@@ -1,34 +1,57 @@
 package enemy;
 
+import java.awt.*;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
+
+import fsm.FiniteStateMachine;
+import fsm.ImageRenderer;
+import fsm.State;
+import fsm.WaitingPerFrame;
 import model.HealthPointSprite;
+import model.SpriteShape;
+import model.Direction;
+import states.Idle;
+import states.Attacking;
+import states.Jumping;
+import states.Walking;
+
+import static fsm.FiniteStateMachine.Transition.from;
+import static enemy.Enemy.Event.*;
+import static model.Direction.LEFT;
+import static model.Direction.RIGHT;
+import static utils.ImageStateUtils.imageStatesFromFolder;
 
 public class Enemy extends HealthPointSprite {
-    public static final int KNIGHT_HP = 500;
+
+    public static final int ENEMY_HP = 500;
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
     private final int damage;
+    private final HealthPointSprite target;
 
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED, JUMP
     }
 
-    public Knight(int damage, Point location) {
-        super(KNIGHT_HP);
+    public Enemy(int damage, Point location, HealthPointSprite target) {
+        super(ENEMY_HP);
         this.damage = damage;
         this.location = location;
+        this.target = target;
         shape = new SpriteShape(new Dimension(146, 176),
                 new Dimension(33, 38), new Dimension(66, 105));
         fsm = new FiniteStateMachine();
 
-        ImageRenderer imageRenderer = new KnightImageRenderer(this);
+        ImageRenderer imageRenderer = new EnemyImageRenderer(this);
         State idle = new WaitingPerFrame(4,
                 new Idle(imageStatesFromFolder("assets/idle", imageRenderer)));
         State walking = new WaitingPerFrame(2,
                 new Walking(this, imageStatesFromFolder("assets/walking", imageRenderer)));
         State attacking = new WaitingPerFrame(3,
                 new Attacking(this, fsm, imageStatesFromFolder("assets/attack", imageRenderer)));
-        State jumping = new WaitingPerFrame(5, 
+        State jumping = new WaitingPerFrame(4, 
                 new Jumping(this, fsm, imageStatesFromFolder("assets/jumping", imageRenderer)));
 
         fsm.setInitialState(idle);
@@ -44,12 +67,13 @@ public class Enemy extends HealthPointSprite {
         fsm.trigger(ATTACK);
     }
 
+    @Override
     public int getDamage() {
         return damage;
     }
 
     public void move(Direction direction) {
-        if (direction == LEFT || direction == Direction.RIGHT) {
+        if (direction == LEFT || direction == RIGHT) {
             face = direction;
         }
         if (!directions.contains(direction)) {
@@ -73,9 +97,34 @@ public class Enemy extends HealthPointSprite {
         fsm.update();
     }
 
+    private Rectangle damageArea() {
+        return getArea(new Dimension(87, 70),
+                new Dimension(55, 88));
+    }
+
+    private void decideAction() {
+        if (!target.isAlive()) {
+            stop(face);
+            return;
+        }
+        Rectangle damageArea = damageArea();
+        if (world.getSprites(damageArea).contains(target)) {
+            attack();
+            return;
+        }
+        Point targetLocation = target.getLocation();
+        if (location.x < targetLocation.x - 50)
+            move(RIGHT);
+        else if (location.x > targetLocation.x + 50)
+            move(LEFT);
+        if (location.y > targetLocation.y + 50)
+            jump();
+    }
+
     @Override
     public void render(Graphics g) {
         super.render(g);
+        decideAction();
         fsm.render(g);
     }
 

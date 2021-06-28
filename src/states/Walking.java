@@ -1,8 +1,9 @@
-package knight;
+package states;
 
 import fsm.CyclicSequence;
 import fsm.ImageState;
 import model.Direction;
+import model.HealthPointSprite;
 
 import java.util.List;
 
@@ -12,19 +13,19 @@ import java.util.List;
 public class Walking extends CyclicSequence {
     public static final String AUDIO_STEP1 = "step1";
     public static final String AUDIO_STEP2 = "step2";
-    private final Knight knight;
+    private final HealthPointSprite sprite;
 
-    public Walking(Knight knight, List<ImageState> states) {
+    public Walking(HealthPointSprite sprite, List<ImageState> states) {
         super(states);
-        this.knight = knight;
+        this.sprite = sprite;
     }
 
     @Override
     public void update() {
-        if (knight.isAlive()) {
+        if (sprite.isAlive()) {
             super.update();
-            for (Direction direction : knight.getDirections()) {
-                knight.getWorld().move(knight, direction.translate());
+            for (Direction direction : sprite.getDirections()) {
+                sprite.getWorld().move(sprite, direction.translate());
             }
         }
     }

@@ -1,6 +1,4 @@
-package knight;
-
-import model.Sprite;
+package model;
 
 import java.awt.*;
 
