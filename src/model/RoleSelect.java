@@ -67,10 +67,16 @@ public class RoleSelect extends JPanel {
         // super.setVisible(true);
     }
 
+<<<<<<< HEAD
     public int getClickedNum() {
         return clickedNum;
     }
 
+=======
+    public int getClicked() {
+        return clickedNum;
+    }
+>>>>>>> 8cb024067c0989baa4af64a280a23e09ed67e7d7
 
     public void leave(){
         for(Card e: cards){
