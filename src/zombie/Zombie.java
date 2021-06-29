@@ -1,5 +1,6 @@
 package zombie;
 
+import media.AudioPlayer;
 import fsm.FiniteStateMachine;
 import fsm.ImageRenderer;
 import fsm.State;
@@ -12,13 +13,15 @@ import states.Attacking;
 import states.Idle;
 import states.Jumping;
 import states.Walking;
+import states.Dying;
 
 import java.awt.*;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import static fsm.FiniteStateMachine.Transition.from;
-import static hero.Ninja.Event.*;
+import static zombie.Zombie.Event.*;
+//import static hero.Ninja.Event.*;
 import static model.Direction.LEFT;
 import static utils.ImageStateUtils.imageStatesFromFolder;
 
@@ -31,9 +34,10 @@ public class Zombie extends HealthPointSprite {
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
     private final int damage;
+    public static final String AUDIO_DIE = "Die";
 
     public enum Event {
-        WALK, STOP, ATTACK, DAMAGED, JUMP
+        WALK, STOP, ATTACK, DAMAGED, JUMP, DIE
     }
 
     public Zombie(int sex, int damage, Point location) {
@@ -45,7 +49,7 @@ public class Zombie extends HealthPointSprite {
         fsm = new FiniteStateMachine();
 
         ImageRenderer imageRenderer = new SpriteImageRenderer(this);
-        State idle, walking, attacking, dead;
+        State idle, walking, attacking, dying;
         if(sex == 0) {
             idle = new WaitingPerFrame(4,
                     new Idle(imageStatesFromFolder("assets/male_zombie/idle", imageRenderer)));
@@ -53,8 +57,8 @@ public class Zombie extends HealthPointSprite {
                     new Walking(this, imageStatesFromFolder("assets/male_zombie/walk", imageRenderer)));
             attacking = new WaitingPerFrame(3,
                     new Attacking(this, fsm, imageStatesFromFolder("assets/male_zombie/attack", imageRenderer)));
-            dead = new WaitingPerFrame(4, 
-                    new Jumping(this, fsm, imageStatesFromFolder("assets/male_zombie/dead", imageRenderer)));
+            dying = new WaitingPerFrame(4, 
+                    new Dying(this, fsm, imageStatesFromFolder("assets/male_zombie/dead", imageRenderer)));
         }
         else {
             idle = new WaitingPerFrame(4,
@@ -63,8 +67,8 @@ public class Zombie extends HealthPointSprite {
                     new Walking(this, imageStatesFromFolder("assets/female_zombie/walk", imageRenderer)));
             attacking = new WaitingPerFrame(3,
                     new Attacking(this, fsm, imageStatesFromFolder("assets/female_zombie/attack", imageRenderer)));
-            dead = new WaitingPerFrame(4, 
-                    new Jumping(this, fsm, imageStatesFromFolder("assets/female_zombie/dead", imageRenderer)));
+            dying = new WaitingPerFrame(4, 
+                    new Dying(this, fsm, imageStatesFromFolder("assets/female_zombie/dead", imageRenderer)));
         }
 
         fsm.setInitialState(idle);
@@ -72,11 +76,15 @@ public class Zombie extends HealthPointSprite {
         fsm.addTransition(from(walking).when(STOP).to(idle));
         fsm.addTransition(from(idle).when(ATTACK).to(attacking));
         fsm.addTransition(from(walking).when(ATTACK).to(attacking));
+        fsm.addTransition(from(idle).when(DIE).to(dying));
+        fsm.addTransition(from(walking).when(DIE).to(dying));
+        fsm.addTransition(from(attacking).when(DIE).to(dying));
     }
 
     public void attack() {
         fsm.trigger(ATTACK);
     }
+
     @Override
     public int getDamage() {
         return damage;
@@ -101,6 +109,10 @@ public class Zombie extends HealthPointSprite {
         if (directions.isEmpty()) {
             fsm.trigger(STOP);
         }
+    }
+
+    public void die() {
+        fsm.trigger(DIE);
     }
 
     public void update() {
@@ -136,5 +148,15 @@ public class Zombie extends HealthPointSprite {
     @Override
     public Dimension getBodySize() {
         return shape.bodySize;
+    }
+
+    @Override
+    public void onDamaged(Rectangle damageArea, int damage) {
+        hpBar.onDamaged(damageArea, damage);
+        if (hpBar.isDead()) {
+            world.removeSprite(this);
+            AudioPlayer.playSounds(AUDIO_DIE);
+            die();
+        }
     }
 }

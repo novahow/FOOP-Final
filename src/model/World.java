@@ -19,6 +19,7 @@ import java.util.Random;
  */
 public class World {
     private final List<Sprite> sprites = new CopyOnWriteArrayList<>();
+    private Sprite player;
     private final List<WorldButton> buttons = new ArrayList<>();
     private final CollisionHandler collisionHandler;
     private List<Obstacle> ob = new ArrayList<Obstacle>();
@@ -34,6 +35,7 @@ public class World {
     private int topObstacle;
     private int bottomObstacle;
     private HealthPointSprite hero;
+    private int floorY = 685;
 
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
@@ -42,6 +44,14 @@ public class World {
             Integer i1 = i;
             Tiles.addTiles("./assets/obstacles/", i1.toString() + ".png");
         }
+    }
+
+    public void setPlayer(Sprite s) {
+        player = s;
+    }
+
+    public Sprite getPlayer() {
+        return player;
     }
 
     public void update() {
@@ -189,8 +199,8 @@ public class World {
         if (from.getY() + dy < 0) {
             dy = -from.getY();
         }
-        if (from.getY() + from.getBodySize().height + dy > 800) {
-            dy = 800 - from.getY();
+        if (from.getY() + from.getBodyOffset().height + from.getBodySize().height + dy > floorY) {
+            dy = floorY - (from.getY() + from.getBodyOffset().height + from.getBodySize().height);
         }
         // System.out.printf("%d %d\n", dx, dy);
         Point originalLocation = new Point(from.getLocation());

@@ -12,6 +12,8 @@ import model.SpriteCollisionHandler;
 import controller.Game;
 import enemy.Enemy;
 import hero.*;
+import hero.Robot;
+import zombie.Zombie;
 import model.HealthPointSprite;
 import model.World;
 import model.Pause;
@@ -28,6 +30,7 @@ import static media.AudioPlayer.addAudioByFilePath;
  */
 public class Game extends GameLoop {
     private List<Hero> heros;
+    private List<Zombie> zombies;
     // private Knight p2;
     private World world;
     private Homepage homepage;
@@ -35,14 +38,19 @@ public class Game extends GameLoop {
     private Pause pausepage;
     private int choose;
 
-    public Game(World world, List<Hero> heros) {
+    public Game(World world, List<Hero> heros, List<Zombie> zombies) {
         this.heros = heros;
+        this.zombies = zombies;
         // this.p2 = p2;
         this.world = world;
         this.homepage = new Homepage();
         this.roleselect = new RoleSelect();
         this.pausepage = new Pause();
+        for(Sprite z: zombies) {
+            world.addSprite(z);
+        }
     }
+
     @Override
     protected void setChoose(int c) {
         choose = c;
@@ -57,9 +65,20 @@ public class Game extends GameLoop {
 
     @Override
     protected void restart() {
+        this.world = new World(new SpriteCollisionHandler());
         this.heros.clear();
-        this.heros.add(new Ninja(new Point(0, 535)));
-        this.world = new World(new SpriteCollisionHandler(), this.heros.get(0));
+        this.heros.add(new Cowgirl(new Point(0, 0)));
+        this.heros.add(new Ninjagirl(new Point(0, 0)));
+        this.heros.add(new Robot(new Point(0, 0)));
+        this.heros.add(new Santa(new Point(0, 0)));
+        this.heros.add(new Cowboy(new Point(0, 0)));
+        this.heros.add(new Ninja(new Point(0, 0)));
+        this.zombies.clear();
+        this.zombies.add(new Zombie(0, 30, new Point(600, 0)));
+        this.zombies.add(new Zombie(1, 30, new Point(400, 0)));
+        for(Sprite z: zombies) {
+            world.addSprite(z);
+        }
     }
 
     public void moveKnight(Direction direction) {

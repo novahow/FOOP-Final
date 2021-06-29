@@ -32,7 +32,7 @@ public class Jumping extends CyclicSequence {
                 if(direction == Direction.LEFT) {
                     sprite.getWorld().move(sprite, Direction.BIGLEFT.translate());
                 }
-                else {
+                else if(direction == Direction.RIGHT) {
                     sprite.getWorld().move(sprite, Direction.BIGRIGHT.translate());
                 }
             }
