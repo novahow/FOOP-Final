@@ -96,6 +96,7 @@ public class Hero extends HealthPointSprite {
 
     public void jump() {
         fsm.trigger(JUMP);
+        setGT(0);
     }
 
     public void stop(Direction direction) {

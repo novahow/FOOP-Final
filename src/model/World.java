@@ -27,7 +27,6 @@ public class World {
     Random r1 = new Random(10);
     Random p = new Random(5);
     private boolean end = false;
-    private boolean isjump = false;
     private boolean isPause = false;
     private boolean isStop = false;
     private boolean muted = false;
@@ -55,31 +54,13 @@ public class World {
     }
 
     public void update() {
-        for (int i = 0; i < sprites.size(); i ++) {
-            if (i == 0) {
-                if (!isjump) {
-                    gravity(sprites.get(0));
-                }
-            }
-            else {
-                gravity(sprites.get(i));
-            }
-        }
-        // if (!isjump) {
-        //     int incre = gt / 20;
-        //     gravity(sprites.get(0), incre);
-        //     gt += 1;
-        // }
-        // else
-        //     gt = 0;
-        for (Sprite sprite : sprites) {
-            sprite.update();
+        for (Sprite s : sprites) {
+            if (s.getY() + s.getBodyOffset().height + s.getBodySize().height < floorY)
+                gravity(s);
+                s.update();
         }
     }
 
-    public void setjump(boolean tmp) {
-        isjump = tmp;
-    }
 
     public void setHero(HealthPointSprite hero) {
         this.hero = hero;

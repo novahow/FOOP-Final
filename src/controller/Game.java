@@ -84,27 +84,22 @@ public class Game extends GameLoop {
     }
 
     public void moveKnight(Direction direction) {
-        world.setjump(false);
         getPlayer(choose).move(direction);
     }
 
     public void stopKnight(Direction direction) {
-        world.setjump(false);
         getPlayer(choose).stop(direction);
     }
 
     public void attack() {
-        world.setjump(false);
         getPlayer(choose).attack();
     }
 
     public void shoot() {
-        world.setjump(false);
         getPlayer(choose).shoot();
     }
 
     public void jump() {
-        world.setjump(true);
         getPlayer(choose).jump();
     }
 

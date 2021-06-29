@@ -22,7 +22,6 @@ public class Jumping extends CyclicSequence {
     public void update() {
         if (sprite.isAlive()) {
             super.update();
-            // System.out.println(currentPosition);
             if(currentPosition * 2 <= states.size() && currentPosition != 0) {
                 sprite.getWorld().move(sprite, Direction.JUMPUP.translate());
             } else {
