@@ -49,9 +49,12 @@ public class Hero extends HealthPointSprite {
                 new Attacking(this, fsm, imageStatesFromFolder(pathPrefix + "attack", imageRenderer)));
         State jumping = new WaitingPerFrame(4, 
                 new Jumping(this, fsm, imageStatesFromFolder(pathPrefix + "jumping", imageRenderer)));
-        
-        State shooting = new WaitingPerFrame(5, 
-            new Shooting(this, fsm, imageStatesFromFolder(pathPrefix + "shooting", imageRenderer)));
+        try {
+            State shooting = new WaitingPerFrame(5, 
+                new Shooting(this, fsm, imageStatesFromFolder(pathPrefix + "shooting", imageRenderer)));
+            fsm.addTransition(from(idle).when(SHOOT).to(shooting));
+            fsm.addTransition(from(walking).when(SHOOT).to(shooting));
+        } catch (Exception e) {}
         
         fsm.setInitialState(idle);
         fsm.addTransition(from(idle).when(WALK).to(walking));
@@ -60,8 +63,7 @@ public class Hero extends HealthPointSprite {
         fsm.addTransition(from(walking).when(ATTACK).to(attacking));
         fsm.addTransition(from(idle).when(JUMP).to(jumping));
         fsm.addTransition(from(walking).when(JUMP).to(jumping));
-        fsm.addTransition(from(idle).when(SHOOT).to(shooting));
-        fsm.addTransition(from(walking).when(SHOOT).to(shooting));
+        
 
     }
 

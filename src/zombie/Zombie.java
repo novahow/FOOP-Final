@@ -33,43 +33,30 @@ public class Zombie extends HealthPointSprite {
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
-    private final int damage;
+    private final int damage = 30;
     public static final String AUDIO_DIE = "Die";
 
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED, JUMP, DIE
     }
 
-    public Zombie(int sex, int damage, Point location) {
+    public Zombie(String pathPrefix, Dimension bodyOffset, Dimension bodySize) {
         super(ZOMBIE_HP);
-        this.damage = damage;
-        this.location = location;
         shape = new SpriteShape(new Dimension(146, 176),
-                new Dimension(33, 38), new Dimension(66, 105));
+                bodyOffset, bodySize);
         fsm = new FiniteStateMachine();
 
         ImageRenderer imageRenderer = new SpriteImageRenderer(this);
         State idle, walking, attacking, dying;
-        if(sex == 0) {
-            idle = new WaitingPerFrame(4,
-                    new Idle(imageStatesFromFolder("assets/male_zombie/idle", imageRenderer)));
-            walking = new WaitingPerFrame(2,
-                    new Walking(this, imageStatesFromFolder("assets/male_zombie/walk", imageRenderer)));
-            attacking = new WaitingPerFrame(3,
-                    new Attacking(this, fsm, imageStatesFromFolder("assets/male_zombie/attack", imageRenderer)));
-            dying = new WaitingPerFrame(4, 
-                    new Dying(this, fsm, imageStatesFromFolder("assets/male_zombie/dead", imageRenderer)));
-        }
-        else {
-            idle = new WaitingPerFrame(4,
-                    new Idle(imageStatesFromFolder("assets/female_zombie/idle", imageRenderer)));
-            walking = new WaitingPerFrame(2,
-                    new Walking(this, imageStatesFromFolder("assets/female_zombie/walk", imageRenderer)));
-            attacking = new WaitingPerFrame(3,
-                    new Attacking(this, fsm, imageStatesFromFolder("assets/female_zombie/attack", imageRenderer)));
-            dying = new WaitingPerFrame(4, 
-                    new Dying(this, fsm, imageStatesFromFolder("assets/female_zombie/dead", imageRenderer)));
-        }
+        
+        idle = new WaitingPerFrame(4,
+                new Idle(imageStatesFromFolder(pathPrefix + "idle", imageRenderer)));
+        walking = new WaitingPerFrame(2,
+                new Walking(this, imageStatesFromFolder(pathPrefix + "walk", imageRenderer)));
+        attacking = new WaitingPerFrame(3,
+                new Attacking(this, fsm, imageStatesFromFolder(pathPrefix + "attack", imageRenderer)));
+        dying = new WaitingPerFrame(4, 
+                new Dying(this, fsm, imageStatesFromFolder(pathPrefix + "dead", imageRenderer)));
 
         fsm.setInitialState(idle);
         fsm.addTransition(from(idle).when(WALK).to(walking));

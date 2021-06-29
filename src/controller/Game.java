@@ -13,6 +13,8 @@ import controller.Game;
 import enemy.Enemy;
 import hero.*;
 import hero.Robot;
+import zombie.FemaleZombie;
+import zombie.MaleZombie;
 import zombie.Zombie;
 import model.HealthPointSprite;
 import model.World;
@@ -74,8 +76,8 @@ public class Game extends GameLoop {
         this.heros.add(new Cowboy(new Point(0, 0)));
         this.heros.add(new Ninja(new Point(0, 0)));
         this.zombies.clear();
-        this.zombies.add(new Zombie(0, 30, new Point(600, 0)));
-        this.zombies.add(new Zombie(1, 30, new Point(400, 0)));
+        this.zombies.add(new MaleZombie(new Point(600, 0)));
+        this.zombies.add(new FemaleZombie(new Point(400, 0)));
         for(Sprite z: zombies) {
             world.addSprite(z);
         }
