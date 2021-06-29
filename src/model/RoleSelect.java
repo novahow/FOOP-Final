@@ -19,12 +19,12 @@ public class RoleSelect extends JPanel {
     GridLayout griadLayout;
     public RoleSelect(){
         cards = new ArrayList<>();
-        for(int i = 0; i < 6; i++){
-            Integer i1 = i, i2 = i + 1;
-            cards.add(new Card(i1.toString() + ".png", 
-                "zelda" + (i2).toString(), "S" + (i2).toString(),
-            i));
-        }
+        cards.add(new Card("0.png", "cowgirl", "S1", 0));
+        cards.add(new Card("1.png", "ninjagirl", "S2", 1)); 
+        cards.add(new Card("2.png", "robot", "S3", 2)); 
+        cards.add(new Card("3.png", "santa", "S4", 3)); 
+        cards.add(new Card("4.png", "cowboy", "S5", 4)); 
+        cards.add(new Card("5.png", "ninja", "S6", 5)); 
 
         for(int i = 0; i < cards.size(); i++){
             this.add(cards.get(i).getCard());
