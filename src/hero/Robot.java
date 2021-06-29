@@ -15,12 +15,16 @@ public class Robot extends Hero {
     public static final int DAMAGE = 100;
     private final int bullet_damage = 20;
     private ArrayList<bullet> bullets = new ArrayList<bullet>();
+    private static final Dimension size = new Dimension(146, 176);
+    private static final Dimension bodyOffset = new Dimension(33, 16);
+    private static final Dimension bodySize = new Dimension(68, 148);
+
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED, JUMP, SHOOT
     }
 
     public Robot(Point location) {
-        super(HP, "assets/robot/");
+        super(HP, "assets/robot/", size, bodyOffset, bodySize);
         this.damage = DAMAGE;
         this.location = location;
     }

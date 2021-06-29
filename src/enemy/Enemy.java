@@ -28,17 +28,16 @@ public class Enemy extends HealthPointSprite {
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
     private final int damage;
-    private final HealthPointSprite target;
+    private HealthPointSprite target;
 
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED, JUMP
     }
 
-    public Enemy(int damage, Point location, HealthPointSprite target) {
+    public Enemy(int damage, Point location) {
         super(ENEMY_HP);
         this.damage = damage;
         this.location = location;
-        this.target = target;
         shape = new SpriteShape(new Dimension(146, 176),
                 new Dimension(33, 38), new Dimension(66, 105));
         fsm = new FiniteStateMachine();
@@ -60,6 +59,10 @@ public class Enemy extends HealthPointSprite {
         fsm.addTransition(from(walking).when(ATTACK).to(attacking));
         fsm.addTransition(from(idle).when(JUMP).to(jumping));
         fsm.addTransition(from(walking).when(JUMP).to(jumping));
+    }
+
+    public void setTarget(HealthPointSprite target) {
+        this.target = target;
     }
 
     public void attack() {

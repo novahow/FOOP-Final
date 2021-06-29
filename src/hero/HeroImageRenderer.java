@@ -27,5 +27,6 @@ public class HeroImageRenderer implements ImageRenderer {
         }
         g.setColor(Color.RED);
         g.drawRect(body.x, body.y, body.width, body.height);
+        g.drawRect(range.x, range.y, range.width, range.height);
     }
 }

@@ -30,6 +30,7 @@ public class World {
     private int gt = 0;
     private int topObstacle;
     private int bottomObstacle;
+    private HealthPointSprite hero;
 
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
@@ -65,6 +66,10 @@ public class World {
 
     public void setjump(boolean tmp) {
         isjump = tmp;
+    }
+
+    public void setHero(HealthPointSprite hero) {
+        this.hero = hero;
     }
 
     public void gravity(Sprite from) {

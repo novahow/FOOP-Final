@@ -35,10 +35,9 @@ public class Hero extends HealthPointSprite {
         WALK, STOP, ATTACK, DAMAGED, JUMP, SHOOT
     }
 
-    public Hero(int hp, String pathPrefix) {
+    public Hero(int hp, String pathPrefix, Dimension size, Dimension bodyOffset, Dimension bodySize) {
         super(hp);
-        shape = new SpriteShape(new Dimension(146, 176),
-                new Dimension(33, 38), new Dimension(66, 105));
+        shape = new SpriteShape(size, bodyOffset, bodySize);
         fsm = new FiniteStateMachine();
 
         ImageRenderer imageRenderer = new HeroImageRenderer(this);

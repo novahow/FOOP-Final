@@ -1,8 +1,12 @@
 import controller.Game;
 import enemy.Enemy;
+import hero.Cowboy;
+import hero.Cowgirl;
 import hero.Hero;
 import hero.Robot;
+import hero.Santa;
 import hero.Ninja;
+import hero.Ninjagirl;
 import zombie.Zombie;
 import model.HealthPointSprite;
 import model.SpriteCollisionHandler;
@@ -32,17 +36,18 @@ public class Main {
         addAudioByFilePath(HealthPointSprite.AUDIO_DIE, new File("assets/audio/die.wav"));
 
         // initialization procedure
-        Hero p1 = new Robot(new Point(0, 534));
-        Hero p2 = new Ninja(new Point(0, 0));
         // Knight p2 = new Knight(150, new Point(300, 0));
         List<Hero> heros = new ArrayList<Hero>();
-        heros.add(p1);
-        heros.add(p2);
+        heros.add(new Cowgirl(new Point(0, 0)));
+        heros.add(new Ninjagirl(new Point(0, 0)));
+        heros.add(new Robot(new Point(0, 0)));
+        heros.add(new Santa(new Point(0, 0)));
+        heros.add(new Cowboy(new Point(0, 0)));
+        heros.add(new Ninja(new Point(0, 0)));
         // testing
-        Enemy e = new Enemy(20, new Point(300, 534), p1);
-        Zombie z1 = new Zombie(0, 30, new Point(500, 0));
-        Zombie z2 = new Zombie(1, 30, new Point(600, 0));
-        World world = new World(new SpriteCollisionHandler(), e, z1, z2);  // model
+        // Zombie z1 = new Zombie(0, 30, new Point(500, 0));
+        // Zombie z2 = new Zombie(1, 30, new Point(600, 0));
+        World world = new World(new SpriteCollisionHandler());  // model
         Game game = new Game(world, heros);  // controller
         GameView view = new GameView(game);  // view
         game.start();  // run the game and the game loop

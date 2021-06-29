@@ -6,8 +6,10 @@ import model.World;
 import states.Attacking;
 import states.Walking;
 import model.RoleSelect;
+import model.Sprite;
 import model.SpriteCollisionHandler;
 import controller.Game;
+import enemy.Enemy;
 import hero.*;
 import model.HealthPointSprite;
 import model.World;
@@ -43,6 +45,7 @@ public class Game extends GameLoop {
     @Override
     protected void setChoose(int c) {
         choose = c;
+        world.setHero(getPlayer(choose));
         world.addSprite(getPlayer(choose));
     }
 
