@@ -217,12 +217,14 @@ public class World {
     // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
-        
         ImageIcon i = new ImageIcon("assets/level1.gif");
         Image bg = i.getImage();
         int x = sprites.get(0).getX();
         g.drawImage(bg, 0, 0, 1200, 800, null);
         bar.render(g);
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g.drawString("Press esc to pause.", 10, 30);
         for (Sprite sprite : sprites) {
             sprite.render(g);
         }
