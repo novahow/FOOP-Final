@@ -8,13 +8,14 @@ import java.awt.*;
 public class SpriteCollisionHandler implements CollisionHandler {
     @Override
     public void handle(Point originalLocation, Sprite from, Sprite to) {
+        Sprite toMove = (to instanceof Obstacle)? from: to;
         Rectangle body = from.getBody();
         int offsetLeft = to.getX() - body.x;
         int offsetRight = body.x + body.width - to.getX();
         if (offsetLeft < 0) {
-            from.setLocation(new Point(from.getX() - (from.getRange().width + offsetLeft) / 3, from.getY()));
+            toMove.setLocation(new Point(toMove.getX() - (toMove.getRange().width + offsetLeft) / 3, toMove.getY()));
         } else {
-            from.setLocation(new Point(from.getX() + offsetRight / 3, from.getY()));
+            toMove.setLocation(new Point(toMove.getX() + offsetRight / 3, toMove.getY()));
         }
     }
 }
