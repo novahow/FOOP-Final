@@ -189,15 +189,15 @@ public class World {
         if (from.getY() + dy < 0) {
             dy = -from.getY();
         }
-        if (from.getY() + dy > 535) {
-            dy = 535 - from.getY();
+        if (from.getY() + from.getBodySize().height + dy > 800) {
+            dy = 800 - from.getY();
         }
         // System.out.printf("%d %d\n", dx, dy);
         Point originalLocation = new Point(from.getLocation());
         from.getLocation().translate(dx, dy);
         // System.out.printf("%d %d\n", from.getX(), from.getY());
         Rectangle body = from.getBody();
-        // collision detection
+        // collision detectiond
         for (Sprite to : sprites) {
             if (to != from && body.intersects(to.getBody())) {
                 collisionHandler.handle(originalLocation, from, to);
