@@ -153,9 +153,10 @@ public class Zombie extends HealthPointSprite {
     @Override
     public void onDamaged(Rectangle damageArea, int damage) {
         hpBar.onDamaged(damageArea, damage);
-        if (hpBar.isDead()) {
-            world.removeSprite(this);
+        if (hpBar.noHP()) {
+            //world.removeSprite(this);
             AudioPlayer.playSounds(AUDIO_DIE);
+            System.out.println("Dying");
             die();
         }
     }

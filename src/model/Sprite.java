@@ -10,6 +10,7 @@ public abstract class Sprite {
     protected Point location = new Point();
     protected Direction face = Direction.RIGHT;
     protected int gt = 0;
+    private Boolean died = false;
 
     public abstract void update();
 
@@ -93,5 +94,13 @@ public abstract class Sprite {
 
     public boolean isAlive() {
         return world != null;
+    }
+
+    public void finishDying() {
+        died = true;
+    }
+
+    public Boolean isDead() {
+        return died;
     }
 }

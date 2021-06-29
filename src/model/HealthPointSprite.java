@@ -28,7 +28,7 @@ public abstract class HealthPointSprite extends Sprite {
     @Override
     public void onDamaged(Rectangle damageArea, int damage) {
         hpBar.onDamaged(damageArea, damage);
-        if (hpBar.isDead()) {
+        if (hpBar.noHP()) {
             world.removeSprite(this);
             AudioPlayer.playSounds(AUDIO_DIE);
         }
