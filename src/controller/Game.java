@@ -46,6 +46,9 @@ public class Game extends GameLoop {
         this.homepage = new Homepage();
         this.roleselect = new RoleSelect();
         this.pausepage = new Pause();
+        for(Sprite z: zombies) {
+            world.addSprite(z);
+        }
     }
 
     @Override
@@ -62,6 +65,7 @@ public class Game extends GameLoop {
 
     @Override
     protected void restart() {
+        this.world = new World(new SpriteCollisionHandler());
         this.heros.clear();
         this.heros.add(new Cowgirl(new Point(0, 0)));
         this.heros.add(new Ninjagirl(new Point(0, 0)));
@@ -69,7 +73,12 @@ public class Game extends GameLoop {
         this.heros.add(new Santa(new Point(0, 0)));
         this.heros.add(new Cowboy(new Point(0, 0)));
         this.heros.add(new Ninja(new Point(0, 0)));
-        this.world = new World(new SpriteCollisionHandler());
+        this.zombies.clear();
+        this.zombies.add(new Zombie(0, 30, new Point(600, 0)));
+        this.zombies.add(new Zombie(1, 30, new Point(400, 0)));
+        for(Sprite z: zombies) {
+            world.addSprite(z);
+        }
     }
 
     public void moveKnight(Direction direction) {
