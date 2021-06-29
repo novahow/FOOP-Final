@@ -33,12 +33,14 @@ public abstract class Sprite {
         int incre = gt / 20;
         setGT(getGT() + 1);
         int dy = 1 + incre;
-        if (getY() + dy > 535) {
-            dy = 535 - getY();
-            setGT(0);
-        }
-        Point originalLocation = new Point(getLocation());
-        getLocation().translate(0, dy);
+        Dimension d = new Dimension(0, dy);
+        world.move(this, d);
+        // if (getY() + dy > 535) {
+        //     dy = 535 - getY();
+        //     setGT(0);
+        // }
+        // Point originalLocation = new Point(getLocation());
+        // getLocation().translate(0, dy);
     }
 
     public void setWorld(World world) {

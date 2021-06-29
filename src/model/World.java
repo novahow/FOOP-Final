@@ -19,6 +19,7 @@ import java.util.Random;
  */
 public class World {
     private final List<Sprite> sprites = new CopyOnWriteArrayList<>();
+    private Sprite player;
     private final List<WorldButton> buttons = new ArrayList<>();
     private final CollisionHandler collisionHandler;
     private List<Obstacle> ob = new ArrayList<Obstacle>();
@@ -42,6 +43,14 @@ public class World {
             Integer i1 = i;
             Tiles.addTiles("./assets/obstacles/", i1.toString() + ".png");
         }
+    }
+
+    public void setPlayer(Sprite s) {
+        player = s;
+    }
+
+    public Sprite getPlayer() {
+        return player;
     }
 
     public void update() {
@@ -189,8 +198,8 @@ public class World {
         if (from.getY() + dy < 0) {
             dy = -from.getY();
         }
-        if (from.getY() + dy > 535) {
-            dy = 535 - from.getY();
+        if (from.getY() + dy > 560) {
+            dy = 560 - from.getY();
         }
         // System.out.printf("%d %d\n", dx, dy);
         Point originalLocation = new Point(from.getLocation());
