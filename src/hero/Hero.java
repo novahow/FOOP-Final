@@ -32,7 +32,7 @@ public class Hero extends HealthPointSprite {
     protected int damage;
 
     public enum Event {
-        WALK, STOP, ATTACK, DAMAGED, JUMP, SHOOT
+        WALK, STOP, ATTACK, DAMAGED, JUMP, SHOOT, DIE
     }
 
     public Hero(int hp, String pathPrefix, Dimension size, Dimension bodyOffset, Dimension bodySize) {

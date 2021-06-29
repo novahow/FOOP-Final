@@ -45,10 +45,11 @@ public class Main {
         heros.add(new Cowboy(new Point(0, 0)));
         heros.add(new Ninja(new Point(0, 0)));
         // testing
-        // Zombie z1 = new Zombie(0, 30, new Point(500, 0));
+        List<Zombie> zombies = new ArrayList<Zombie>();
+        zombies.add(new Zombie(0, 30, new Point(500, 0)));
         // Zombie z2 = new Zombie(1, 30, new Point(600, 0));
         World world = new World(new SpriteCollisionHandler());  // model
-        Game game = new Game(world, heros);  // controller
+        Game game = new Game(world, heros, zombies);  // controller
         GameView view = new GameView(game);  // view
         game.start();  // run the game and the game loop
         view.launch(); // launch the GUI
