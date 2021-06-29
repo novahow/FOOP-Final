@@ -31,14 +31,14 @@ public class Robot extends Hero {
 
     @Override
     public void shoot() {
-        getFsm().trigger(SHOOT);
+        super.shoot();
         bullet bu = new bullet(getX() + 90, getY() + 50, face, bullet_damage);
         bullets.add(bu);
     }
 
     @Override
     public void update() {
-        getFsm().update();
+        super.update();
         Iterator<bullet> it = bullets.iterator();
         while (it.hasNext()) {
             bullet b = it.next();

@@ -56,7 +56,7 @@ public class HealthPointBar extends Sprite {
         return new Dimension();
     }
 
-    public boolean isDead() {
+    public boolean noHP() {
         return hp <= 0;
     }
 }

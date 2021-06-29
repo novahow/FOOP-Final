@@ -241,7 +241,12 @@ public class World {
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         g.drawString("Press esc to pause.", 10, 30);
         for (Sprite sprite : sprites) {
-            sprite.render(g);
+            if(sprite.isDead()) {
+                removeSprite(sprite);
+            }
+            else {
+                sprite.render(g);
+            }
         }
         // System.out.printf("l = %d\n", buttons.size());
         for(WorldButton btn: buttons){
