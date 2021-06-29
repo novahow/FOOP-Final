@@ -148,10 +148,10 @@ public class World {
     }
     
     public void move(Sprite from, Dimension offset) {
-        // for (Sprite to : sprites)
-        //     if (to != from && from.getBody().intersects(to.getBody()))
-        //         if (collisionBlock(from, to, offset))
-        //             return;
+        for (Sprite to : sprites)
+            if (to != from && from.getBody().intersects(to.getBody()))
+                if (collisionBlock(from, to, offset))
+                    return;
         // float f = (float)(offset.width) / (float)(20);
         // bar.setF(f);
         // System.out.println(end);
