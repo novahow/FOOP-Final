@@ -16,8 +16,8 @@ public class Cowgirl extends Hero {
     private final int bullet_damage = 20;
     private ArrayList<bullet> bullets = new ArrayList<bullet>();
     private static final Dimension size = new Dimension(146, 176);
-    private static final Dimension bodyOffset = new Dimension(33, 16);
-    private static final Dimension bodySize = new Dimension(68, 148);
+    private static final Dimension bodyOffset = new Dimension(28, 16);
+    private static final Dimension bodySize = new Dimension(68, 149);
 
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED, JUMP, SHOOT
