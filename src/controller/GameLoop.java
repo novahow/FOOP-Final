@@ -19,6 +19,7 @@ public abstract class GameLoop {
         this.view = view;
         this.view.addPanel(getHome());
         this.view.addPanel(getRoleSelect());
+        this.view.addPanel(getPause());
     }
 
     public void start() {
@@ -43,11 +44,7 @@ public abstract class GameLoop {
                 delay(10);
                 roleselect = getRoleSelect();
             } 
-            setChoose(roleselect.getClicked());
-            addButton(
-                new WorldButton(new Dimension(50, 50)
-                , new Dimension(100, 100), "mute", "unmute")
-            );
+
             // home.nextRound is the round clicked by the user
             running = true;
             World world = getWorld();
@@ -103,5 +100,7 @@ public abstract class GameLoop {
         void render(Pause pausepage);
         void addPanel(JPanel roleselect);
         void render(RoleSelect roleselect);
+        void addGame(Game game);
+        void disposeParentFrame();
     }
 }

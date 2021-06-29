@@ -30,6 +30,8 @@ public class GameView extends JFrame {
     public GameView(Game game) throws HeadlessException {
         this.game = game;
         game.setView(canvas);
+        setName("topView");
+        canvas.addGame(game);
     }
 
     public void launch() {
@@ -116,9 +118,6 @@ public class GameView extends JFrame {
                         break;
                 }
             }
-
-
-
         });
         addMouseListener(new MouseInputAdapter(){
             @Override
@@ -143,8 +142,41 @@ public class GameView extends JFrame {
         private Homepage home;
         private RoleSelect roleselect;
         private Pause pausepage;
+        private Game game;
         int state;
         int ispause;
+        public Canvas(){
+            super();
+            addMouseListener(new MouseInputAdapter(){
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    game.clickButton(e.getX(), e.getY(), 0);
+                    //System.out.printf("clicked at %d %d\n", e.getX(), e.getY());
+                }
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    game.clickButton(e.getX(), e.getY(), 1);
+                    if(game.isExit()) {
+                        setVisible(false); //you can't see me!
+                        disposeParentFrame();
+                    }
+                    // System.out.printf("canvasclick\n");
+                }
+            });
+            
+            setName("canvas");
+        }
+
+        @Override
+        public void disposeParentFrame(){
+            SwingUtilities.getWindowAncestor(this).dispose();//Destroy the JFrame object
+        }
+
+        @Override
+        public void addGame(Game game){
+            this.game = game;
+        }
+
         @Override
         public void render(World world) {
             this.world = world;
@@ -156,6 +188,7 @@ public class GameView extends JFrame {
         @Override
         public void render(Homepage home) {
             this.home = home;
+            setLayout(new GridBagLayout());
             home.setVisible(true);
             repaint();
             state = 1;
@@ -164,6 +197,7 @@ public class GameView extends JFrame {
         @Override
         public void render(Pause pausepage) {
             this.pausepage = pausepage;
+            pausepage.setVisible(true);
             ispause = 1;
             repaint();
         }
@@ -190,7 +224,7 @@ public class GameView extends JFrame {
             if(state == 0) {
                 world.render(g); // ask the world to paint itself and paint the sprites on the canvas
                 if(ispause == 1) {
-                    pausepage.render(g);
+                    // pausepage.render(g);
                     ispause = 0;
                 }
             }
@@ -205,5 +239,6 @@ public class GameView extends JFrame {
                 g.drawImage(new ImageIcon("./assets/Sprites/Sel.jpg").getImage(), 0, 0, 1200, 800, null);
             }
         }
+        
     }
 }

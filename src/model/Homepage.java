@@ -14,8 +14,8 @@ import java.awt.image.BufferStrategy;
 public class Homepage extends JPanel{
     private ArrayList<CircleButton> butts; 
     private Boolean running;
-    private ActionListener mouseListener ;
-    private int clickedNum;
+    private MouseInputAdapter mouseListener ;
+    private int clickedNum = -1;
     private int width = 1200, height = 760;
     GridBagLayout griadLayout;
     public Homepage(){
@@ -29,15 +29,26 @@ public class Homepage extends JPanel{
         setOpaque(false);
         running = true;
 
-        mouseListener =  new ActionListener(){
+        mouseListener =  new MouseInputAdapter(){
             @Override
-            public void actionPerformed(ActionEvent e){
-                System.out.printf("fuck\n");
+            public void mouseReleased(MouseEvent e){
+                // System.out.printf("fuck\n");
                 int cnt = 0;
                 for(CircleButton c: butts){
                     if(c == e.getSource()){
                         clickedNum = cnt;
-                        leave();
+                        Component src = (Component) e.getSource();
+                        while(src.getParent() != null){
+                            src = src.getParent();
+                            System.out.printf("%s\n", src.getName());
+                            if(src.getName() != null && src.getName().equals("canvas")){
+                                break;
+                            }
+                        }
+
+                        // new MouseEvent(type, button, modifiers, x, y)
+                        src.dispatchEvent(e);
+                        // leave();
                     }
                     cnt += 1;       
                 }
@@ -107,7 +118,7 @@ public class Homepage extends JPanel{
 
         for(CircleButton e: butts){
             e.setVisible(true);
-            e.addActionListener(mouseListener);
+            e.addMouseListener(mouseListener);
         }
 
         for(int i = 0; i < butts.size(); i++){
@@ -157,9 +168,10 @@ public class Homepage extends JPanel{
         super.paintComponent(g);
         // g.drawImage(new ImageIcon("./assets/Sprites/Sel.jpg").getImage(), 0, 0, width, height, null);
     }
-
-    public int getIndex(){
-        return clickedNum;
+    public int getClicked(){
+        int tmp = clickedNum;
+        clickedNum = -1;
+        return tmp;
     }
 }
 

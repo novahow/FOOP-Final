@@ -111,6 +111,7 @@ public class Game extends GameLoop {
     public void pause() {
         if(world.isRunning()) {
             world.setPause();
+            pausepage.setPause();
         }
     }
 
@@ -135,25 +136,35 @@ public class Game extends GameLoop {
     }
 
     public void clickButton(int x, int y, int release) {
-        /*if(homepage.isRunning()){
-            int res = homepage.clickButton(x, y, release);
-            if(release == 1) {
-                if(res == -1) {
-                    System.out.printf("Clicked on nowhere\n");
-                }
-                else {
-                    System.out.printf("Clicked on box %d\n", res);
-                    homepage.leave(res);
+        if(homepage.isRunning()){
+            if(release == 1){
+                int res = homepage.getClicked();
+                if(res >= 0){
+                    homepage.leave();
                 }
             }
         }
-        else */if(world.isPause()) {
+
+
+        if(roleselect.isRunning()){
+            if(release == 1){
+                int res = roleselect.getClicked();
+                // System.out.p
+                if(res >= 0){
+                    this.setChoose(res);
+                    roleselect.leave();
+                }
+            }
+        }
+
+        if(world.isPause()) {
             if(release == 1) {
-                int res = pausepage.clickButton(x, y);
-                if(res == 0) {
+                int res = pausepage.getClicked();    
+                System.out.printf("Clicked on box %d\n", res);
+                if(res == 1) {
                     world.setPause();
                 }
-                else if(res == 1) {
+                else if(res == 2) {
                     world.stop();
                 }
                 else if(res == 3) {
