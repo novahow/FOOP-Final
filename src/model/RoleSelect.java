@@ -18,6 +18,7 @@ public class RoleSelect extends JPanel {
     private int clickedNum = -1;
     private int width = 1200, height = 760;
     GridLayout griadLayout;
+    
     public RoleSelect(){
         setName("role");
         cards = new ArrayList<>();

@@ -30,15 +30,14 @@ public class World {
     private List<Background> backs = new ArrayList<Background>();
     Random r1 = new Random(10);
     Random p = new Random(5);
+    private HealthPointSprite hero;
     private boolean end = false;
     private boolean isPause = false;
     private boolean isStop = false;
     private boolean muted = false;
     private int last_x = 0;
-    private int topObstacle;
-    private int bottomObstacle;
-    private HealthPointSprite hero;
-    private int floorY = 685;
+    private int[] obstacleY = {125, 280, 430};
+    private int floorY = 677;
     
     private Random random_zombie_appear_time = new Random();
     private Random random_zombie_sex = new Random();
@@ -48,10 +47,9 @@ public class World {
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
         addSprites(sprites);
-        for(int i = 0; i < 3; i++){
-            Integer i1 = i;
-            Tiles.addTiles("./assets/obstacles/", i1.toString() + ".png");
-        }
+        Tiles.addTiles("./assets/obstacles/0.png");
+        Tiles.addTiles("./assets/obstacles/1.png");
+        Tiles.addTiles("./assets/obstacles/2.png");
         for (int i = 0; i < 10; i ++) {
             int y = r1.nextInt(150);
             int x = r1.nextInt(120);
@@ -154,6 +152,20 @@ public class World {
     }
     
     public void move(Sprite from, Dimension offset) {
+        int[] leftmostObstacle = new int[3];
+        for (Obstacle o : ob) {
+            if (from.getX() >= 600 && offset.width > 0) {
+                // move(o, new Dimension(-offset.width, 0));
+                o.setX(o.getX() - offset.width);
+            }
+            if (o.getX() + o.getBodySize().width < 0) {
+                removeSprite(o);
+            }
+            Rectangle body = o.getBody();
+            int level = getObstacleLevel(body.y);
+            leftmostObstacle[level] = Math.max(leftmostObstacle[level], body.x + body.width);
+        }
+
         int dx = offset.width, dy = offset.height;
         if (from.getX() + dx < 0) {
             dx = -from.getX();
@@ -178,40 +190,22 @@ public class World {
                 Background b = new Background(1200, 565, 120, 150, "assets/background/grave.png");
                 backs.add(b);
             }
-            if (y > 350) {
-                y = 400;
-            }
-            else {
-                y = 200;
-            }
+            
             last_x += offset.width;
             if (last_x == 60) {
                 Background b = new Background(1200, 565, 300, 120, "assets/background/grass_bg.png");
                 backs.add(b); 
                 last_x = 0;
             }
-            
-            if (y == 400 && topObstacle <= 1000 || y == 200 && bottomObstacle <= 1000) {
-                Obstacle o = new Obstacle(1200, y, r1.nextInt(150) + 150);
+            int level = getObstacleLevel(y);
+            y = obstacleY[level];
+            if (leftmostObstacle[level] <= 1000) {
+                Obstacle o = new Obstacle(1200, y, r1.nextInt(150) + 500);
                 ob.add(o);
                 addSprite(o);
             }
         }
-        topObstacle = bottomObstacle = 0;
-        for (Obstacle o : ob) {
-            if (from.getX() >= 600 && offset.width > 0) {
-                o.setX(o.getX() - offset.width);
-            }
-            if (o.getX() + o.getWidth() < 0) {
-                removeSprite(o);
-            }
-            Rectangle body = o.getBody();
-            if (body.y == 400) {
-                topObstacle = Math.max(topObstacle, body.x + body.width);
-            } else {
-                bottomObstacle = Math.max(bottomObstacle, body.x + body.width);
-            }
-        }
+        
         Iterator<Background> it = backs.iterator();
         while (it.hasNext()) {
             Background b = it.next();
@@ -295,5 +289,13 @@ public class World {
 
     public boolean isMuted(){
         return muted;
+    }
+
+    private int getObstacleLevel(int y) {
+        if (y > (obstacleY[1] + obstacleY[2]) / 2)
+            return 2;
+        else if (y < (obstacleY[0] + obstacleY[1]) / 2)
+            return 0;
+        return 1;
     }
 }
