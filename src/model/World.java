@@ -38,6 +38,7 @@ public class World {
     private int last_x = 0;
     private int[] obstacleY = {125, 280, 430};
     private int floorY = 677;
+    private boolean win = false; 
     
     private Random random_zombie_appear_time = new Random();
     private Random random_zombie_sex = new Random();
@@ -71,6 +72,12 @@ public class World {
     }
 
     public void update() {
+        win = bar.isEnd();
+        if (win) {
+            gravity(hero);
+            hero.update();
+            return;
+        }
         elapsed_time += 1;
         if(elapsed_time > interval*67) {
             // around 67 ticks = 1 second
@@ -134,7 +141,7 @@ public class World {
     public boolean isRunning() {
         if(isStop)
             return false;
-        end = bar.isEnd();
+        // end = bar.isEnd();
         return (sprites.size() > 0 && !end);
     }
 
@@ -144,6 +151,10 @@ public class World {
 
     public void setPause() {
         isPause = !isPause;
+    }
+
+    public ProcessBar getBar() {
+        return bar;
     }
 
     private boolean collisionBlock(Sprite from, Sprite to, Dimension offset) {
@@ -248,6 +259,20 @@ public class World {
     // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
+        if (win) {
+            g.setColor(Color.black);
+            g.fillRect(0, 0, 1200, 800);
+            ImageIcon object = new ImageIcon("assets/background/firework.gif");
+            Image bg = object.getImage();
+            g.drawImage(bg ,0, 0, 1200, 800, null);
+            if (hero.getY() + hero.getBodyOffset().height + hero.getBodySize().height >= floorY)
+                hero.jump();
+            hero.render(g);
+            int y = r1.nextInt(100);
+            if (y == 69)
+                end = true;
+            return;
+        }
         Graphics2D g2 = (Graphics2D) g;
         GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,679,lightblue);
         g2.setPaint(gradient);

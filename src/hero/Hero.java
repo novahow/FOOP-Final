@@ -93,7 +93,7 @@ public class Hero extends HealthPointSprite {
             fsm.trigger(WALK);
         }
     }
-
+    @Override
     public void jump() {
         fsm.trigger(JUMP);
         setGT(0);
