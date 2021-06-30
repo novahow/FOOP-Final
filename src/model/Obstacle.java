@@ -55,4 +55,9 @@ public class Obstacle extends Sprite {
     }
 
     public void onDamaged(Rectangle damageArea, int damage) {}
+
+    @Override
+    public String getName() {
+        return "Obstacle";
+    }
 }

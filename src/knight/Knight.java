@@ -125,4 +125,10 @@ public class Knight extends HealthPointSprite {
     public Dimension getBodySize() {
         return shape.bodySize;
     }
+
+
+    @Override
+    public String getName() {
+        return "Knight";
+    }
 }

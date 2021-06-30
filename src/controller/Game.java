@@ -146,8 +146,7 @@ public class Game extends GameLoop {
                 }
             }
         }
-
-
+        
         if(roleselect.isRunning()){
             if(release == 1){
                 int res = roleselect.getClicked();

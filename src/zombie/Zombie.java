@@ -147,4 +147,9 @@ public class Zombie extends HealthPointSprite {
             die();
         }
     }
+
+    @Override
+    public String getName() {
+        return "Zombie";
+    }
 }

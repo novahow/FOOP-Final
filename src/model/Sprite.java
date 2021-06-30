@@ -103,4 +103,6 @@ public abstract class Sprite {
     public Boolean isDead() {
         return died;
     }
+
+    abstract public String getName();
 }

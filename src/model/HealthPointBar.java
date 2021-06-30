@@ -59,4 +59,9 @@ public class HealthPointBar extends Sprite {
     public boolean noHP() {
         return hp <= 0;
     }
+
+    @Override
+    public String getName() {
+        return "HealthPointBar";
+    }
 }

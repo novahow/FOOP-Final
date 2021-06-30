@@ -156,4 +156,9 @@ public class Enemy extends HealthPointSprite {
     public Dimension getBodySize() {
         return shape.bodySize;
     }
+
+    @Override
+    public String getName() {
+        return "Enemy";
+    }
 }
