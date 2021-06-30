@@ -30,6 +30,7 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
  */
 public class Zombie extends HealthPointSprite {
     public static final int ZOMBIE_HP = 500;
+    private final HealthPointSprite target;
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
@@ -40,8 +41,9 @@ public class Zombie extends HealthPointSprite {
         WALK, STOP, ATTACK, DAMAGED, JUMP, DIE
     }
 
-    public Zombie(String pathPrefix, Dimension bodyOffset, Dimension bodySize) {
+    public Zombie(String pathPrefix, Dimension bodyOffset, Dimension bodySize, HealthPointSprite target) {
         super(ZOMBIE_HP);
+        this.target = target;
         shape = new SpriteShape(new Dimension(146, 176),
                 bodyOffset, bodySize);
         fsm = new FiniteStateMachine();
@@ -78,8 +80,11 @@ public class Zombie extends HealthPointSprite {
     }
 
     public void move(Direction direction) {
-        if (direction == LEFT || direction == Direction.RIGHT) {
-            face = direction;
+        if(direction == Direction.SLOW_LEFT || direction == Direction.LEFT) {
+            face = Direction.LEFT;
+        }
+        if(direction == Direction.SLOW_RIGHT || direction == Direction.RIGHT) {
+            face = Direction.RIGHT;
         }
         if (!directions.contains(direction)) {
             this.directions.add(direction);
@@ -106,9 +111,29 @@ public class Zombie extends HealthPointSprite {
         fsm.update();
     }
 
+    private void decideAction() {
+        if (!target.isAlive()) {
+            stop(face);
+            return;
+        }
+        /*Rectangle damageArea = damageArea();
+        if (world.getSprites(damageArea).contains(target)) {
+            attack();
+            return;
+        }*/
+        Point targetLocation = target.getLocation();
+        if (location.x < targetLocation.x - 50)
+            move(Direction.SLOW_RIGHT);
+        else if (location.x > targetLocation.x + 50)
+            move(Direction.SLOW_LEFT);
+        if (location.y > targetLocation.y + 50)
+            jump();
+    }
+
     @Override
     public void render(Graphics g) {
         super.render(g);
+        decideAction();
         fsm.render(g);
     }
 

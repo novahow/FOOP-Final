@@ -76,13 +76,13 @@ public class World {
         elapsed_time += 1;
         if(elapsed_time > interval*67) {
             // around 67 ticks = 1 second
-            interval = random_zombie_appear_time.nextInt(15);
+            interval = random_zombie_appear_time.nextInt(13) + 2;
             elapsed_time = 0;
             if(random_zombie_sex.nextInt()%2 == 0) {
-                addSprite(new MaleZombie(new Point(1100, 500)));
+                addSprite(new MaleZombie(new Point(1100, 500), hero));
             }
             else {
-                addSprite(new FemaleZombie(new Point(1100, 500)));
+                addSprite(new FemaleZombie(new Point(1100, 500), hero));
             }
         }
         for (Sprite s : sprites) {

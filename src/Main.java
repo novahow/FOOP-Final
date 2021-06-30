@@ -48,8 +48,8 @@ public class Main {
         heros.add(new Ninja(new Point(0, 0)));
         // testing
         List<Zombie> zombies = new ArrayList<Zombie>();
-        zombies.add(new MaleZombie(new Point(500, 0)));
-        zombies.add(new FemaleZombie(new Point(600, 0)));
+        //zombies.add(new MaleZombie(new Point(500, 0)));
+        //zombies.add(new FemaleZombie(new Point(600, 0)));
         World world = new World(new SpriteCollisionHandler());  // model
         Game game = new Game(world, heros, zombies);  // controller
         GameView view = new GameView(game);  // view
