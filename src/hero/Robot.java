@@ -70,6 +70,10 @@ public class Robot extends Hero {
         }
     }
     @Override
+    public void clearB() {
+        bullets.clear();
+    }
+    @Override
     public void render(Graphics g) {
         super.render(g);
         getFsm().render(g);

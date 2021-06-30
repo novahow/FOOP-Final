@@ -69,6 +69,12 @@ public class Cowgirl extends Hero {
             }
         }
     }
+
+    @Override
+    public void clearB() {
+        bullets.clear();
+    }
+
     @Override
     public void render(Graphics g) {
         super.render(g);

@@ -70,12 +70,17 @@ public class World {
         return player;
     }
 
+    public HealthPointSprite getHero() {
+        return hero;
+    }
+
     public void update() {
         win = bar.isEnd();
         // bar.setF(-100.0f);
         if (win) {
             // System.out.println(setforboss);
             if (setforboss < 10) {
+                hero.clearB();
                 sprites.clear();
                 ob.clear();
                 backs.clear();
