@@ -45,6 +45,8 @@ public class World {
     private Random random_zombie_sex = new Random();
     private int elapsed_time = 0, interval;
     private Image floor;
+    private Sprite Boss;
+    private int setforboss = 0;
 
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
@@ -70,9 +72,37 @@ public class World {
 
     public void update() {
         win = bar.isEnd();
+        // bar.setF(-100.0f);
         if (win) {
+            // System.out.println(setforboss);
+            if (setforboss < 10) {
+                sprites.clear();
+                ob.clear();
+                backs.clear();
+                // Boss = new Boss(new Point(1200, 100), hero);
+                setforboss += 1;
+            }
+            if (setforboss == 10) {
+                Boss = new Boss(new Point(1200, 100), hero);
+                addSprite(Boss);
+                setforboss += 1;
+            }
+            // if (sprites.isEmpty()) {
+            //     addSprite(Boss);
+            // }
+            try {
+                for (Sprite s : sprites) {
+                    if (s.getY() + s.getBodyOffset().height + s.getBodySize().height < floorY)
+                        gravity(s);
+                    s.update();
+                } 
+            }
+            catch (Exception e) {
+                System.out.println("sorry");
+            }
             gravity(hero);
             hero.update();
+
             return;
         }
         elapsed_time += 1;
@@ -139,7 +169,7 @@ public class World {
         if(isStop)
             return false;
         // end = bar.isEnd();
-        return (sprites.size() > 0 && !end);
+        return (!end);
     }
 
     public boolean isPause() {
@@ -186,6 +216,11 @@ public class World {
         }
         if (from.getY() + from.getBodyOffset().height + from.getBodySize().height + dy > floorY) {
             dy = floorY - (from.getY() + from.getBodyOffset().height + from.getBodySize().height);
+        }
+        if (win) {
+            Point originalLocation = new Point(from.getLocation());
+            from.getLocation().translate(dx, dy);
+            return;
         }
 
         if (p.nextInt(3) < 1 && offset.width > 0 && dx == 0) {
@@ -261,15 +296,24 @@ public class World {
         if (win) {
             g.setColor(Color.black);
             g.fillRect(0, 0, 1200, 800);
-            ImageIcon object = new ImageIcon("assets/background/firework.gif");
-            Image bg = object.getImage();
-            g.drawImage(bg ,0, 0, 1200, 800, null);
-            if (hero.getY() + hero.getBodyOffset().height + hero.getBodySize().height >= floorY)
-                hero.jump();
+            if (setforboss < 10) {
+                ImageIcon object = new ImageIcon("assets/background/warning.gif");
+                Image bg = object.getImage();
+                g.drawImage(bg ,0, 0, 1200, 800, null);
+            }
+            // ImageIcon object = new ImageIcon("assets/background/firework.gif");
+            // Image bg = object.getImage();
+            // g.drawImage(bg ,0, 0, 1200, 800, null);
+            // if (hero.getY() + hero.getBodyOffset().height + hero.getBodySize().height >= floorY)
+                // hero.jump();
             hero.render(g);
-            int y = r1.nextInt(100);
-            if (y == 69)
-                end = true;
+
+            for (Sprite sprite : sprites) {
+                sprite.render(g);
+            }
+            // int y = r1.nextInt(100);
+            // if (y == 69)
+            //     end = true;
             return;
         }
         Graphics2D g2 = (Graphics2D) g;

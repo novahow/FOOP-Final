@@ -30,7 +30,7 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
  */
 public class Zombie extends HealthPointSprite {
     public static final int ZOMBIE_HP = 500;
-    private final HealthPointSprite target;
+    protected final HealthPointSprite target;
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
@@ -114,7 +114,7 @@ public class Zombie extends HealthPointSprite {
         return getArea(new Dimension(87, 70),
                 new Dimension(55, 88));
     }
-    private void decideAction() {
+    protected void decideAction() {
         if (!target.isAlive()) {
             stop(face);
             return;

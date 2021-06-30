@@ -1,3 +1,3 @@
 all:
 	javac -cp . -sourcepath src -d out/ src/*.java
-	java -cp out/ Main
+	java -Xmx2g -cp out/ Main
