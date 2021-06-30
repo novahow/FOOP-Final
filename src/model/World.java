@@ -158,7 +158,7 @@ public class World {
         if (from.getX() + dx < 0) {
             dx = -from.getX();
         }
-        if (from.getX()+ dx > 600) {
+        if (from.getName() != "Zombie" && from.getX()+ dx > 600) {
             dx = 600 - from.getX();
         }
         if (from.getY() + dy < 0) {
