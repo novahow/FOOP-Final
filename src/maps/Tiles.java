@@ -10,28 +10,28 @@ import javax.imageio.*;
 import java.nio.file.*;
 public abstract class Tiles 
 {
-    public static ArrayList<Image> tiles = new ArrayList<Image>();
-    private String tileoffset = "./assets/obstacles/";
-    // private GraphicsConfiguration gc;
-
-    // host sprites used for cloning
-
-    /**
-        Creates a new ResourceManager with the specified
-        GraphicsConfiguration.
+    public static ArrayList<Image>[] tiles = new ArrayList[3];
     
-    public Tiles() 
-    {
-        tiles = new ArrayList<Image>();
+    private static void initTiles(){
         for(int i = 0; i < 3; i++){
-            Integer i1 = i;
-            tiles.add(loadImage(tileoffset + i1.toString() + ".png"));
+            tiles[i] = new ArrayList<Image>();
         }
-        
     }
-    */
-    public static void addTiles(String filename){
-        tiles.add(loadImage(filename));
+    
+    private static String tileoffset = "./assets/obstacles/";
+
+    private static void addTiles(String filename, int idx){
+        tiles[idx].add(loadImage(filename));
+    }
+
+    public static void setUp(){
+        initTiles();
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                String tmp = String.format("%s%d/%d.png", tileoffset, i, j);
+                addTiles(tmp, i);
+            }
+        }
     }
 
     /**
@@ -64,8 +64,8 @@ public abstract class Tiles
         // draw the transformed image
     }
 
-    public Image getTile(int index){
-        return tiles.get(index);
+    public Image getTile(int index, int world){
+        return tiles[world].get(index);
     }
 
 }
