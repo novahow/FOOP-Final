@@ -33,7 +33,6 @@ import static media.AudioPlayer.addAudioByFilePath;
 public class Game extends GameLoop {
     private List<Hero> heros;
     private List<Zombie> zombies;
-    // private Knight p2;
     private World world;
     private Homepage homepage;
     private RoleSelect roleselect;

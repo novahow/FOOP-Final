@@ -34,6 +34,8 @@ public class HealthPointBar extends Sprite {
         g.fillRect(range.x, range.y, (int) owner.getRange().getWidth(), range.height);
         g.setColor(Color.GREEN);
         g.fillRect(range.x, range.y, width, range.height);
+        g.setColor(Color.BLACK);
+        g.drawRect(range.x, range.y, (int) owner.getRange().getWidth(), range.height);
     }
 
     @Override

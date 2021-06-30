@@ -30,8 +30,8 @@ public abstract class Tiles
         
     }
     */
-    public static void addTiles(String offset, String filename){
-        tiles.add(loadImage(offset + filename));
+    public static void addTiles(String filename){
+        tiles.add(loadImage(filename));
     }
 
     /**
