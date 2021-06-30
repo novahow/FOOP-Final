@@ -2,6 +2,7 @@ package controller;
 
 import model.Direction;
 import model.Homepage;
+import model.TutorPage;
 import model.World;
 import model.WorldButton;
 import states.Attacking;
@@ -47,6 +48,7 @@ public class Game extends GameLoop {
         this.homepage = new Homepage();
         this.roleselect = new RoleSelect();
         this.pausepage = new Pause();
+        this.homepage.setTutor(new TutorPage());
         for(Sprite z: zombies) {
             world.addSprite(z);
         }
