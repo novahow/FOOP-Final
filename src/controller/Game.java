@@ -75,12 +75,14 @@ public class Game extends GameLoop {
         this.heros.add(new Santa(new Point(0, 0)));
         this.heros.add(new Cowboy(new Point(0, 0)));
         this.heros.add(new Ninja(new Point(0, 0)));
+        /*
         this.zombies.clear();
+        this.zombies.add(new MaleZombie(new Point(2000, 0)));
         this.zombies.add(new MaleZombie(new Point(600, 0)));
         this.zombies.add(new FemaleZombie(new Point(400, 0)));
         for(Sprite z: zombies) {
             world.addSprite(z);
-        }
+        }*/
     }
 
     public void moveKnight(Direction direction) {

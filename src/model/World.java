@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 
 import maps.Tiles;
 import media.AudioPlayer;
-
+import zombie.*;
 import java.util.Random;
 /**
  * @author - johnny850807@gmail.com (Waterball)
@@ -35,6 +35,11 @@ public class World {
     private int bottomObstacle;
     private HealthPointSprite hero;
     private int floorY = 685;
+    
+    private Random random_zombie_appear_time = new Random();
+    private Random random_zombie_sex = new Random();
+    private int elapsed_time = 0, interval;
+
 
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
@@ -54,6 +59,18 @@ public class World {
     }
 
     public void update() {
+        elapsed_time += 1;
+        if(elapsed_time > interval*67) {
+            // around 67 ticks = 1 second
+            interval = random_zombie_appear_time.nextInt(15);
+            elapsed_time = 0;
+            if(random_zombie_sex.nextInt()%2 == 0) {
+                addSprite(new MaleZombie(new Point(1800, 0)));
+            }
+            else {
+                addSprite(new FemaleZombie(new Point(1800, 0)));
+            }
+        }
         for (Sprite s : sprites) {
             if (s.getY() + s.getBodyOffset().height + s.getBodySize().height < floorY)
                 gravity(s);
