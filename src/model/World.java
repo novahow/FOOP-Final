@@ -13,6 +13,9 @@ import javax.swing.ImageIcon;
 import maps.Tiles;
 import media.AudioPlayer;
 import zombie.*;
+import java.util.Iterator;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
 import java.util.Random;
 /**
  * @author - johnny850807@gmail.com (Waterball)
@@ -24,13 +27,14 @@ public class World {
     private final CollisionHandler collisionHandler;
     private List<Obstacle> ob = new ArrayList<Obstacle>();
     private final ProcessBar bar = new ProcessBar(100);
+    private List<Background> backs = new ArrayList<Background>();
     Random r1 = new Random(10);
     Random p = new Random(5);
     private boolean end = false;
     private boolean isPause = false;
     private boolean isStop = false;
     private boolean muted = false;
-    private int gt = 0;
+    private int last_x = 0;
     private int topObstacle;
     private int bottomObstacle;
     private HealthPointSprite hero;
@@ -47,6 +51,16 @@ public class World {
         for(int i = 0; i < 3; i++){
             Integer i1 = i;
             Tiles.addTiles("./assets/obstacles/", i1.toString() + ".png");
+        }
+        for (int i = 0; i < 20; i ++) {
+            int y = r1.nextInt(150);
+            int x = r1.nextInt(120);
+            Background b = new Background(1200 - 10 * x, y, 40, "assets/background/cloud.png");
+            backs.add(b);
+        }
+        for (int i = 0; i < 12; i ++) {
+            Background b = new Background(1200 - 120 * i, 565, 60, "assets/background/grass_bg.png");
+            backs.add(b);
         }
     }
 
@@ -169,15 +183,35 @@ public class World {
                 bottomObstacle = Math.max(bottomObstacle, body.x + body.width);
             }
         }
-
+        Iterator<Background> it = backs.iterator();
+        while (it.hasNext()) {
+            Background b = it.next();
+            if (from.getX() >= 600 && offset.width > 0) {
+                // move(o, new Dimension(-offset.width, 0));
+                b.setX(b.getX() - offset.width);
+            }
+            if (b.getX() + b.getSize() < 0) {
+                it.remove();
+            }
+        }
         int x = getSprites().get(0).getX();
         if (x == 600 && p.nextInt(3) < 1 && offset.width > 0) {
             int y = r1.nextInt(500);
+            if (y > 450 && y < 480) {
+                Background b = new Background(1200, 5*(500 - y), 40, "assets/background/cloud.png");
+                backs.add(b);
+            }
             if (y > 350) {
                 y = 400;
             }
             else {
                 y = 200;
+            }
+            last_x += offset.width;
+            if (last_x == 60) {
+                Background b = new Background(1200, 565, 60, "assets/background/grass_bg.png");
+                backs.add(b); 
+                last_x = 0;
             }
             
             if (y == 400 && topObstacle <= 1000 || y == 200 && bottomObstacle <= 1000) {
@@ -226,15 +260,26 @@ public class World {
     public List<WorldButton> getButtons(){
         return buttons;
     }
-
+    public static final Color lightblue = new Color(51, 153, 255);
+    public static final Color lightgreen = new Color(0, 204, 0);
     // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
-        ImageIcon i = new ImageIcon("assets/level1.gif");
-        Image bg = i.getImage();
-        int x = sprites.get(0).getX();
-        g.drawImage(bg, 0, 0, 1200, 800, null);
-        bar.render(g);
+        Graphics2D g2 = (Graphics2D) g;
+        GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,665,lightblue);
+        g2.setPaint(gradient);
+        g2.fillRect(0, 0, 1200, 665);
+        gradient=new GradientPaint(0, 665, Color.GREEN,0,965,lightgreen);
+        g2.setPaint(gradient);
+        g2.fillRect(0, 665, 1200, 300);
+
+        for (Background b : backs) {
+            b.render(g);
+        }
+
+        gradient=new GradientPaint(70,70,Color.orange,150,150,Color.yellow);
+        g2.setPaint(gradient);
+        g2.fillOval(70, 70, 100, 100);bar.render(g);
         g.setColor(Color.BLACK);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         g.drawString("Press esc to pause.", 10, 30);

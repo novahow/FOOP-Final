@@ -32,8 +32,8 @@ public class Obstacle extends Sprite {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.BLACK);
-        g.fillRect(getX(), getY(), (int)shape.size.getWidth(), 50);
+        // g.setColor(Color.BLACK);
+        // g.fillRect(getX(), getY(), (int)shape.size.getWidth(), 50);
         int tileNum = (int)shape.size.getWidth() / 50;
         for(int i = 0; i < tileNum; i++){
             g.drawImage(img, getX() + i * 50, getY(), null);
