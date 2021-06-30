@@ -34,7 +34,7 @@ public class Zombie extends HealthPointSprite {
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
-    private final int damage = 30;
+    private final int damage = 10;
     public static final String AUDIO_DIE = "Die";
 
     public enum Event {
@@ -110,17 +110,20 @@ public class Zombie extends HealthPointSprite {
     public void update() {
         fsm.update();
     }
-
+    private Rectangle damageArea() {
+        return getArea(new Dimension(87, 70),
+                new Dimension(55, 88));
+    }
     private void decideAction() {
         if (!target.isAlive()) {
             stop(face);
             return;
         }
-        /*Rectangle damageArea = damageArea();
+        Rectangle damageArea = damageArea();
         if (world.getSprites(damageArea).contains(target)) {
             attack();
             return;
-        }*/
+        }
         Point targetLocation = target.getLocation();
         if (location.x < targetLocation.x - 50)
             move(Direction.SLOW_RIGHT);
