@@ -5,6 +5,7 @@ import model.Homepage;
 import model.TutorPage;
 import model.World;
 import model.WorldButton;
+import model.EndButton;
 import states.Attacking;
 import states.Walking;
 import model.RoleSelect;
@@ -38,6 +39,7 @@ public class Game extends GameLoop {
     private Homepage homepage;
     private RoleSelect roleselect;
     private Pause pausepage;
+    private EndButton endButton;
     private int choose;
 
     public Game(World world, List<Hero> heros, List<Zombie> zombies) {
@@ -49,6 +51,7 @@ public class Game extends GameLoop {
         this.roleselect = new RoleSelect();
         this.pausepage = new Pause();
         this.homepage.setTutor(new TutorPage());
+        this.endButton = new EndButton();
         for(Sprite z: zombies) {
             world.addSprite(z);
         }
@@ -133,6 +136,12 @@ public class Game extends GameLoop {
         return roleselect;
     }
 
+    @Override 
+    protected EndButton getEnd() {
+        return endButton;
+    }
+
+
     @Override
     protected Pause getPause() {
         return pausepage;
@@ -174,6 +183,15 @@ public class Game extends GameLoop {
                     stop();
                 }
             }            
+        }
+
+        if(!world.isRunning()){
+            if(release == 1){
+                int res = endButton.getClicked();
+                if(res > 0){
+                    endButton.setVisible(false);
+                }
+            }
         }
     }
 }
