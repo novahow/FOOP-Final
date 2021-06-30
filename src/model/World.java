@@ -36,7 +36,7 @@ public class World {
     private boolean isStop = false;
     private boolean muted = false;
     private int last_x = 0;
-    private int[] obstacleY = {125, 280, 430};
+    private int[] obstacleY = {125, 200, 450};
     private int floorY = 677;
     private boolean win = false; 
     private int worldNum;
@@ -261,7 +261,7 @@ public class World {
                 it.remove();
             }
         }
-        // System.out.printf("%d %d\n", dx, dy);
+        // System.out.prinㄇtf("%d %d\n", dx, dy);
         Point originalLocation = new Point(from.getLocation());
         from.getLocation().translate(dx, dy);
         // System.out.printf("%d %d\n", from.getX(), from.getY());

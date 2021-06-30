@@ -19,9 +19,9 @@ public enum Direction {
             case RIGHT:
                 return new Dimension(6, 0);
             case JUMPUP:
-                return new Dimension(0, -45);
+                return new Dimension(0, -55);
             case JUMPDOWN:
-                return new Dimension(0, 55);
+                return new Dimension(0, 65);
             case BIGLEFT:
                 return new Dimension(-12, 0);
             case BIGRIGHT:

@@ -103,7 +103,7 @@ public class Zombie extends HealthPointSprite {
     }
 
     public void die() {
-        world.getBar().setF(100.0f);
+        world.getBar().setF(10.0f);
         fsm.trigger(DIE);
     }
 

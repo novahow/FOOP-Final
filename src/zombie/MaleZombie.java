@@ -7,8 +7,8 @@ import model.HealthPointSprite;
 
 public class MaleZombie extends Zombie {
     private static final Dimension size = new Dimension(146, 176);
-    private static final Dimension bodyOffset = new Dimension(26, 29);
-    private static final Dimension bodySize = new Dimension(89, 143);
+    private static final Dimension bodyOffset = new Dimension(22, 29);
+    private static final Dimension bodySize = new Dimension(100, 143);
 
     public MaleZombie(Point location, HealthPointSprite target) {
         super("assets/male_zombie/", size, bodyOffset, bodySize, target);

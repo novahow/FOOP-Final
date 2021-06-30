@@ -105,4 +105,5 @@ public abstract class Sprite {
     }
 
     abstract public String getName();
+    
 }
