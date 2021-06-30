@@ -6,12 +6,12 @@ import maps.Tiles;
 public class Obstacle extends Sprite {
     private final SpriteShape shape;
     private Image img;
-    public Obstacle(int x, int y, int size) {
+    public Obstacle(int x, int y, int size, int world) {
         setLocation(new Point(x, y));
         shape = new SpriteShape(new Dimension(size - (size % 50), 50),
                 new Dimension(0, 0), new Dimension(size - (size % 50), 50));
         int tileidx = (int) (Math.random() * 3);
-        img = Tiles.tiles.get(tileidx);
+        img = Tiles.tiles[world].get(tileidx);
         
     }
 

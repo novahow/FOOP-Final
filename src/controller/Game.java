@@ -144,6 +144,7 @@ public class Game extends GameLoop {
                 int res = homepage.getClicked();
                 if(res >= 0){
                     homepage.leave();
+                    world.setWorldNum(res);
                 }
             }
         }

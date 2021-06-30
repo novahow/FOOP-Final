@@ -39,28 +39,25 @@ public class World {
     private int[] obstacleY = {125, 280, 430};
     private int floorY = 677;
     private boolean win = false; 
-    
+    private int worldNum;
+    private int bushidx = 0;
     private Random random_zombie_appear_time = new Random();
     private Random random_zombie_sex = new Random();
     private int elapsed_time = 0, interval;
-
+    private Image floor;
 
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
         this.collisionHandler = collisionHandler;
         addSprites(sprites);
-        Tiles.addTiles("./assets/obstacles/0.png");
-        Tiles.addTiles("./assets/obstacles/1.png");
-        Tiles.addTiles("./assets/obstacles/2.png");
+        Tiles.setUp();
         for (int i = 0; i < 10; i ++) {
             int y = r1.nextInt(150);
             int x = r1.nextInt(120);
             Background b = new Background(1200 - 10 * x, y, 150 - y / 5, 80, "assets/background/cloud.png");
             backs.add(b);
         }
-        for (int i = 0; i < 12; i ++) {
-            Background b = new Background(1200 - 120 * i, 565, 300, 120, "assets/background/grass_bg.png");
-            backs.add(b);
-        }
+
+        
     }
 
     public void setPlayer(Sprite s) {
@@ -198,20 +195,22 @@ public class World {
                 backs.add(b);
             }
             if ((10 < y && y < 13) || (19 < y && y < 24)) {
-                Background b = new Background(1200, 565, 120, 150, "assets/background/grave.png");
+                Background b = new Background(1200, 565, 120, 150, String.format("assets/background/grave%d.png", worldNum));
                 backs.add(b);
             }
             
             last_x += offset.width;
-            if (last_x == 60) {
-                Background b = new Background(1200, 565, 300, 120, "assets/background/grass_bg.png");
-                backs.add(b); 
+            if (last_x == 30) {
+                Background b = new Background(1200 - 30, 565, 120, 120, 
+                    String.format("assets/background/%d/bush%d.png", worldNum, bushidx % 3));
+                backs.add(b);
                 last_x = 0;
+                bushidx = (bushidx + 1) % 3;
             }
             int level = getObstacleLevel(y);
             y = obstacleY[level];
             if (leftmostObstacle[level] <= 1000) {
-                Obstacle o = new Obstacle(1200, y, r1.nextInt(150) + 500);
+                Obstacle o = new Obstacle(1200, y, r1.nextInt(150) + 500, worldNum);
                 ob.add(o);
                 addSprite(o);
             }
@@ -283,14 +282,17 @@ public class World {
         }
         gradient=new GradientPaint(0, 679, lightgreen,0,965,darkgreen);
         g2.setPaint(gradient);
-        g2.fillRect(0, 679, 1200, 300);
+        // g2.fillRect(0, 679, 1200, 300);
+        for(int i = 0; i < 10; i++){
+            g2.drawImage(floor, 120 * i, 679, null);
+        }
 
         gradient=new GradientPaint(70,70,Color.orange,150,150,Color.yellow);
         g2.setPaint(gradient);
         g2.fillOval(70, 70, 100, 100);bar.render(g);
         g.setColor(Color.BLACK);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-        g.drawString("Press esc to pause.", 10, 30);
+        // g.drawString("Press esc to pause.", 10, 30);
         for (Sprite sprite : sprites) {
             if(sprite.isDead()) {
                 removeSprite(sprite);
@@ -322,5 +324,18 @@ public class World {
         else if (y < (obstacleY[0] + obstacleY[1]) / 2)
             return 0;
         return 1;
+    }
+
+    public void setWorldNum(int num){
+        worldNum = num;
+        // System.out.printf("worldnum = %d\n", num);
+        floor = new GetSizedImage("assets/background/floor" + 
+            Integer.toString(num) + ".png", 120, 120).getImage();
+
+        for (int i = 0; i < 12; i ++) {
+            Background b = new Background(1200 - 120 * i, 565, 120, 120, 
+                String.format("assets/background/%d/bush%d.png", num, i % 3));
+            backs.add(b);
+        }
     }
 }
