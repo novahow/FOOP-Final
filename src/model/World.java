@@ -52,7 +52,7 @@ public class World {
             Integer i1 = i;
             Tiles.addTiles("./assets/obstacles/", i1.toString() + ".png");
         }
-        for (int i = 0; i < 20; i ++) {
+        for (int i = 0; i < 10; i ++) {
             int y = r1.nextInt(150);
             int x = r1.nextInt(120);
             Background b = new Background(1200 - 10 * x, y, 40, "assets/background/cloud.png");
@@ -79,10 +79,10 @@ public class World {
             interval = random_zombie_appear_time.nextInt(15);
             elapsed_time = 0;
             if(random_zombie_sex.nextInt()%2 == 0) {
-                addSprite(new MaleZombie(new Point(1800, 0)));
+                addSprite(new MaleZombie(new Point(1100, 500)));
             }
             else {
-                addSprite(new FemaleZombie(new Point(1800, 0)));
+                addSprite(new FemaleZombie(new Point(1100, 500)));
             }
         }
         for (Sprite s : sprites) {
@@ -195,7 +195,22 @@ public class World {
             }
         }
         int x = getSprites().get(0).getX();
-        if (x == 600 && p.nextInt(3) < 1 && offset.width > 0) {
+
+        int dx = offset.width, dy = offset.height;
+        if (from.getX() + dx < 0) {
+            dx = -from.getX();
+        }
+        if (from.getX()+ dx > 600) {
+            dx = 600 - from.getX();
+        }
+        if (from.getY() + dy < 0) {
+            dy = -from.getY();
+        }
+        if (from.getY() + from.getBodyOffset().height + from.getBodySize().height + dy > floorY) {
+            dy = floorY - (from.getY() + from.getBodyOffset().height + from.getBodySize().height);
+        }
+
+        if (p.nextInt(3) < 1 && offset.width > 0 && dx == 0) {
             int y = r1.nextInt(500);
             if (y > 450 && y < 480) {
                 Background b = new Background(1200, 5*(500 - y), 40, "assets/background/cloud.png");
@@ -219,20 +234,6 @@ public class World {
                 ob.add(o);
                 addSprite(o);
             }
-        }
-
-        int dx = offset.width, dy = offset.height;
-        if (from.getX() + dx < 0) {
-            dx = -from.getX();
-        }
-        if (from.getX()+ dx > 600) {
-            dx = 600 - from.getX();
-        }
-        if (from.getY() + dy < 0) {
-            dy = -from.getY();
-        }
-        if (from.getY() + from.getBodyOffset().height + from.getBodySize().height + dy > floorY) {
-            dy = floorY - (from.getY() + from.getBodyOffset().height + from.getBodySize().height);
         }
         // System.out.printf("%d %d\n", dx, dy);
         Point originalLocation = new Point(from.getLocation());
@@ -261,7 +262,7 @@ public class World {
         return buttons;
     }
     public static final Color lightblue = new Color(51, 153, 255);
-    public static final Color lightgreen = new Color(0, 204, 0);
+    public static final Color darkgreen = new Color(0, 102, 0);
     // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
@@ -269,7 +270,7 @@ public class World {
         GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,665,lightblue);
         g2.setPaint(gradient);
         g2.fillRect(0, 0, 1200, 665);
-        gradient=new GradientPaint(0, 665, Color.GREEN,0,965,lightgreen);
+        gradient=new GradientPaint(0, 0, Color.GREEN,0,965,darkgreen);
         g2.setPaint(gradient);
         g2.fillRect(0, 665, 1200, 300);
 
