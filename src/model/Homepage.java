@@ -56,30 +56,15 @@ public class Homepage extends JPanel{
         };
 
         // addMouseListener(mouselisten);
-        
-
 
         setPreferredSize(new Dimension(width, height));
-        
-        BufferedImage img = null;
-
-        try {
-            img = ImageIO.read(new File("./assets/gamebuttons/Welcome.png"));
-        } 
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        // test.setMinimumSize(new Dimension(150, 100));
-        
-
         GridBagConstraints c0 = new GridBagConstraints();
-        Image dimg = img.getScaledInstance(600, 300,
-            Image.SCALE_SMOOTH);
+        Image dimg = new GetSizedImage("./assets/gamebuttons/Welcome.png", 600, 300).getImage();
         JLabel test = new JLabel(new ImageIcon(dimg), JLabel.CENTER);
         c0.gridx = 0; 
         c0.gridy = 0;
         c0.gridwidth = 6;
-        c0.gridheight = 1;
+        c0.gridheight = 4;
         // c0.weightx = 1;
         // c0.weighty = 0;
         c0.fill = GridBagConstraints.BOTH;
@@ -92,26 +77,12 @@ public class Homepage extends JPanel{
         for(int i = 1; i <= 3; i++){
             Integer i1 = i;
             String name = "./assets/gamebuttons/" + i1.toString() + ".png";
-            try {
-                img = ImageIO.read(new File(name));
-            } 
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            dimg = img.getScaledInstance(150, 150,
-                Image.SCALE_SMOOTH);
+            dimg = new GetSizedImage(name, 150, 150).getImage();
             
             CircleButton button = new CircleButton(new ImageIcon(dimg));
             name = "./assets/gamebuttons/" + i1.toString() + "_1.png";
-            try {
-                img = ImageIO.read(new File(name));
-            } 
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            dimg = img.getScaledInstance(150, 150,
-                Image.SCALE_SMOOTH);
-            
+            dimg = new GetSizedImage(name, 150, 150).getImage();
+
             button.addHover(new ImageIcon(dimg), dimg);
             butts.add(button);
         }
@@ -124,9 +95,9 @@ public class Homepage extends JPanel{
         for(int i = 0; i < butts.size(); i++){
             CircleButton e = butts.get(i);
             c0.gridx = 2 * i;
-            c0.gridy = 1;
+            c0.gridy = 4;
             c0.gridwidth = 1;
-            c0.gridheight = 1;
+            c0.gridheight = 2;
             // c0.weightx = 0;
             // c0.weighty = 0.1;
             c0.fill = GridBagConstraints.NONE;
