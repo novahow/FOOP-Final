@@ -55,11 +55,11 @@ public class World {
         for (int i = 0; i < 10; i ++) {
             int y = r1.nextInt(150);
             int x = r1.nextInt(120);
-            Background b = new Background(1200 - 10 * x, y, 40, "assets/background/cloud.png");
+            Background b = new Background(1200 - 10 * x, y, 150 - y / 5, 80, "assets/background/cloud.png");
             backs.add(b);
         }
         for (int i = 0; i < 12; i ++) {
-            Background b = new Background(1200 - 120 * i, 565, 60, "assets/background/grass_bg.png");
+            Background b = new Background(1200 - 120 * i, 565, 300, 120, "assets/background/grass_bg.png");
             backs.add(b);
         }
     }
@@ -103,12 +103,6 @@ public class World {
                 if (to.getBody().getY() > from.getBody().getY())
                     return;
         from.gravity();
-        // int dy = 1 + incre;
-        // if (from.getY() + dy > 535) {
-        //     dy = 535 - from.getY();
-        // }
-        // Point originalLocation = new Point(from.getLocation());
-        // from.getLocation().translate(0, dy);
     }
 
     public void addSprites(Sprite... sprites) {
@@ -160,42 +154,6 @@ public class World {
     }
     
     public void move(Sprite from, Dimension offset) {
-        // for (Sprite to : sprites)
-        //     if (to != from && from.getBody().intersects(to.getBody()))
-        //         if (collisionBlock(from, to, offset))
-        //             return;
-        // float f = (float)(offset.width) / (float)(20);
-        // bar.setF(f);
-        // System.out.println(end);
-        topObstacle = bottomObstacle = 0;
-        for (Obstacle o : ob) {
-            if (from.getX() >= 600 && offset.width > 0) {
-                // move(o, new Dimension(-offset.width, 0));
-                o.setX(o.getX() - offset.width);
-            }
-            if (o.getX() < 0) {
-                removeSprite(o);
-            }
-            Rectangle body = o.getBody();
-            if (body.y == 400) {
-                topObstacle = Math.max(topObstacle, body.x + body.width);
-            } else {
-                bottomObstacle = Math.max(bottomObstacle, body.x + body.width);
-            }
-        }
-        Iterator<Background> it = backs.iterator();
-        while (it.hasNext()) {
-            Background b = it.next();
-            if (from.getX() >= 600 && offset.width > 0) {
-                // move(o, new Dimension(-offset.width, 0));
-                b.setX(b.getX() - offset.width);
-            }
-            if (b.getX() + b.getSize() < 0) {
-                it.remove();
-            }
-        }
-        int x = getSprites().get(0).getX();
-
         int dx = offset.width, dy = offset.height;
         if (from.getX() + dx < 0) {
             dx = -from.getX();
@@ -213,7 +171,11 @@ public class World {
         if (p.nextInt(3) < 1 && offset.width > 0 && dx == 0) {
             int y = r1.nextInt(500);
             if (y > 450 && y < 480) {
-                Background b = new Background(1200, 5*(500 - y), 40, "assets/background/cloud.png");
+                Background b = new Background(1200, 5*(500 - y), 150 - y / 9, 80, "assets/background/cloud.png");
+                backs.add(b);
+            }
+            if ((10 < y && y < 13) || (19 < y && y < 24)) {
+                Background b = new Background(1200, 565, 120, 150, "assets/background/grave.png");
                 backs.add(b);
             }
             if (y > 350) {
@@ -224,7 +186,7 @@ public class World {
             }
             last_x += offset.width;
             if (last_x == 60) {
-                Background b = new Background(1200, 565, 60, "assets/background/grass_bg.png");
+                Background b = new Background(1200, 565, 300, 120, "assets/background/grass_bg.png");
                 backs.add(b); 
                 last_x = 0;
             }
@@ -233,6 +195,31 @@ public class World {
                 Obstacle o = new Obstacle(1200, y, r1.nextInt(150) + 150);
                 ob.add(o);
                 addSprite(o);
+            }
+        }
+        topObstacle = bottomObstacle = 0;
+        for (Obstacle o : ob) {
+            if (from.getX() >= 600 && offset.width > 0) {
+                o.setX(o.getX() - offset.width);
+            }
+            if (o.getX() + o.getWidth() < 0) {
+                removeSprite(o);
+            }
+            Rectangle body = o.getBody();
+            if (body.y == 400) {
+                topObstacle = Math.max(topObstacle, body.x + body.width);
+            } else {
+                bottomObstacle = Math.max(bottomObstacle, body.x + body.width);
+            }
+        }
+        Iterator<Background> it = backs.iterator();
+        while (it.hasNext()) {
+            Background b = it.next();
+            if (from.getX() >= 600 && offset.width > 0) {
+                b.setX(b.getX() - offset.width);
+            }
+            if (b.getX() + b.getSize() < 0) {
+                it.remove();
             }
         }
         // System.out.printf("%d %d\n", dx, dy);
@@ -263,20 +250,21 @@ public class World {
     }
     public static final Color lightblue = new Color(51, 153, 255);
     public static final Color darkgreen = new Color(0, 102, 0);
+    public static final Color lightgreen = new Color(0, 204, 0);
     // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,665,lightblue);
+        GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,679,lightblue);
         g2.setPaint(gradient);
-        g2.fillRect(0, 0, 1200, 665);
-        gradient=new GradientPaint(0, 0, Color.GREEN,0,965,darkgreen);
-        g2.setPaint(gradient);
-        g2.fillRect(0, 665, 1200, 300);
+        g2.fillRect(0, 0, 1200, 679);
 
         for (Background b : backs) {
             b.render(g);
         }
+        gradient=new GradientPaint(0, 679, lightgreen,0,965,darkgreen);
+        g2.setPaint(gradient);
+        g2.fillRect(0, 679, 1200, 300);
 
         gradient=new GradientPaint(70,70,Color.orange,150,150,Color.yellow);
         g2.setPaint(gradient);

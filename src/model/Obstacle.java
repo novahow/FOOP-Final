@@ -25,6 +25,10 @@ public class Obstacle extends Sprite {
         return shape.bodyOffset;
     }
 
+    public int getWidth() {
+        return (int)shape.size.getWidth();
+    }
+
     @Override
     public Dimension getBodySize() {
         return shape.bodySize;
