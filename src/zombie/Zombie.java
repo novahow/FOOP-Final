@@ -41,11 +41,10 @@ public class Zombie extends HealthPointSprite {
         WALK, STOP, ATTACK, DAMAGED, JUMP, DIE
     }
 
-    public Zombie(String pathPrefix, Dimension bodyOffset, Dimension bodySize, HealthPointSprite target) {
+    public Zombie(String pathPrefix, Dimension size, Dimension bodyOffset, Dimension bodySize, HealthPointSprite target) {
         super(ZOMBIE_HP);
         this.target = target;
-        shape = new SpriteShape(new Dimension(146, 176),
-                bodyOffset, bodySize);
+        shape = new SpriteShape(size, bodyOffset, bodySize);
         fsm = new FiniteStateMachine();
 
         ImageRenderer imageRenderer = new SpriteImageRenderer(this);
