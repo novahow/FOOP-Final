@@ -21,6 +21,6 @@ public class SpriteShape {
         size.width = x;
         size.height = y;
         bodySize.width = x;
-        bodySize.height = y - 50;
+        bodySize.height = y - 80;
     }
 }

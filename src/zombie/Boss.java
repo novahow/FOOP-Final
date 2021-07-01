@@ -37,7 +37,7 @@ import javax.swing.ImageIcon;
 public class Boss extends Zombie {
     private static Dimension size = new Dimension(400, 550);
     private static final Dimension bodyOffset = new Dimension(30, 30);
-    private static final Dimension bodySize = new Dimension(410, 500);
+    private static final Dimension bodySize = new Dimension(410, 470);
     private final int bullet_damage = 50;
     private ArrayList<bullet> bullets = new ArrayList<bullet>();
     private Random r1 = new Random(20);
@@ -59,16 +59,21 @@ public class Boss extends Zombie {
         super.update();
         if (fsm.toString() == "Attacking") {
             shape.setSize(550, 750);
-            location.y = -53;
+            location.y = -23;
+            location.x = 700;
+        }
+        else if (fsm.toString() == "Dying") {
+            shape.setSize(550, 750);
+            location.y = 7;
             location.x = 700;
         }
         else {
             shape.setSize(400, 550);
-            location.y = 147;
+            location.y = 177;
             if (location.x <= 800)
                 location.x = 800;
         }
-        System.out.println(location.x);
+        System.out.println(location.y);
         Iterator<bullet> it = bullets.iterator();
         while (it.hasNext()) {
             bullet b = it.next();
