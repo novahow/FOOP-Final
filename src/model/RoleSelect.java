@@ -13,7 +13,7 @@ import javax.swing.event.MouseInputAdapter;
 
 public class RoleSelect extends JPanel {
     private ArrayList<Card> cards; 
-    private Boolean running;
+    private Boolean running = false;
     private MouseInputAdapter mouselisten;
     private int clickedNum = -1;
     private int width = 1200, height = 760;
@@ -36,7 +36,6 @@ public class RoleSelect extends JPanel {
         griadLayout = new GridLayout(2, 3, 40, 40);
         setLayout(griadLayout);
         setVisible(false);
-        running = true;
 
         mouselisten = new MouseInputAdapter(){
             @Override

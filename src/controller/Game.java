@@ -149,7 +149,7 @@ public class Game extends GameLoop {
     }
 
     public void clickButton(int x, int y, int release) {
-        if(homepage.isRunning()){
+        if(homepage.isRunning() && !roleselect.isRunning()){
             if(release == 1){
                 int res = homepage.getClicked();
                 if(res >= 0){
@@ -159,7 +159,7 @@ public class Game extends GameLoop {
             }
         }
         
-        if(roleselect.isRunning()){
+        if(roleselect.isRunning() && !homepage.isRunning()){
             if(release == 1){
                 int res = roleselect.getClicked();
                 if(res >= 0){
@@ -185,7 +185,7 @@ public class Game extends GameLoop {
             }            
         }
 
-        if(!world.isRunning()){
+        if(!world.isRunning() && !homepage.isRunning()){
             if(release == 1){
                 int res = endButton.getClicked();
                 if(res > 0){

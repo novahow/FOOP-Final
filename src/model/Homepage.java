@@ -8,7 +8,7 @@ import java.awt.event.*;
 
 public class Homepage extends JPanel{
     private ArrayList<CircleButton> butts; 
-    private Boolean running;
+    private Boolean running = false;
     private MouseInputAdapter mouseListener ;
     private int clickedNum = -1;
     private int width = 1200, height = 760;
