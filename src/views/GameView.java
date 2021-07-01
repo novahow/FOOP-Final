@@ -51,12 +51,12 @@ public class GameView extends JFrame {
                     case KeyEvent.VK_ESCAPE:
                         game.pause();
                         break;
-                    case KeyEvent.VK_W:
-                        game.moveKnight(Direction.UP);
-                        break;
-                    case KeyEvent.VK_S:
-                        game.moveKnight(Direction.DOWN);
-                        break;
+                    // case KeyEvent.VK_W:
+                    //     game.moveKnight(Direction.UP);
+                    //     break;
+                    // case KeyEvent.VK_S:
+                    //     game.moveKnight(Direction.DOWN);
+                    //     break;
                     case KeyEvent.VK_A:
                         game.moveKnight(Direction.LEFT);
                         break;
@@ -72,12 +72,12 @@ public class GameView extends JFrame {
                     case KeyEvent.VK_SPACE:
                         game.jump();
                         break;
-                    case KeyEvent.VK_I:
-                        game.moveKnight(Direction.UP);
-                        break;
-                    case KeyEvent.VK_K:
-                        game.moveKnight(Direction.DOWN);
-                        break;
+                    // case KeyEvent.VK_I:
+                    //     game.moveKnight(Direction.UP);
+                    //     break;
+                    // case KeyEvent.VK_K:
+                    //     game.moveKnight(Direction.DOWN);
+                    //     break;
                     case KeyEvent.VK_J:
                         game.moveKnight(Direction.LEFT);
                         break;
@@ -105,9 +105,9 @@ public class GameView extends JFrame {
                     case KeyEvent.VK_D:
                         game.stopKnight(Direction.RIGHT);
                         break;
-                    case KeyEvent.VK_I:
-                        game.stopKnight(Direction.UP);
-                        break;
+                    // case KeyEvent.VK_I:
+                    //     game.stopKnight(Direction.UP);
+                    //     break;
                     // case KeyEvent.VK_K:
                     //     game.stopKnight(Direction.DOWN);
                     //     break;

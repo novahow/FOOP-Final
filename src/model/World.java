@@ -144,6 +144,8 @@ public class World {
     }
 
     public void gravity(Sprite from) {
+        if (from == null)
+            return;
         int feet = from.getY() + from.getBodyOffset().height + from.getBodySize().height;
         int x = from.getX() + (from.getBodySize().width) / 2;
         for (Sprite to : sprites)
@@ -358,7 +360,7 @@ public class World {
             }
             hero.render(g);
             if (end) {
-                System.out.println("win");
+                // System.out.println("win");
             }
             if (end) 
                 hero.jump(obstacleAbove(hero.getLocation()));

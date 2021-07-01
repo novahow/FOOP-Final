@@ -35,7 +35,9 @@ public abstract class Sprite {
         setGT(getGT() + 1);
         int dy = 1 + incre;
         Dimension d = new Dimension(0, dy);
-        world.move(this, d);
+        try {
+            world.move(this, d);
+        } catch (Exception e) {}
         // if (getY() + dy > 535) {
         //     dy = 535 - getY();
         //     setGT(0);
