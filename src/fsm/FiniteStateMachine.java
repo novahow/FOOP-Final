@@ -53,6 +53,10 @@ public class FiniteStateMachine implements StateMachine {
         return current;
     }
 
+    public String toString() {
+        return String.valueOf(current);
+    }
+
 
     public static class Transition {
         State from;

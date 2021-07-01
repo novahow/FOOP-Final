@@ -31,8 +31,8 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
 public class Zombie extends HealthPointSprite {
     public static final int ZOMBIE_HP = 500;
     protected final HealthPointSprite target;
-    private final SpriteShape shape;
-    private final FiniteStateMachine fsm;
+    protected SpriteShape shape;
+    protected final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
     private final int damage = 10;
     public static final String AUDIO_DIE = "Die";

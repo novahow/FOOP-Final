@@ -93,6 +93,10 @@ public class World {
                 addSprite(Boss);
                 setforboss += 1;
             }
+            if (setforboss == 11) {
+                if (sprites.isEmpty())
+                    end = true;
+            }
             // if (sprites.isEmpty()) {
             //     addSprite(Boss);
             // }
