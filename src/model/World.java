@@ -43,6 +43,7 @@ public class World {
     private int bushidx = 0;
     private Random random_zombie_appear_time = new Random();
     private Random random_zombie_sex = new Random();
+    private Random random_zombie_appear_level = new Random();
     private int elapsed_time = 0, interval;
     private Image floor;
     private Sprite Boss;
@@ -114,12 +115,13 @@ public class World {
         if(elapsed_time > interval*67) {
             // around 67 ticks = 1 second
             interval = random_zombie_appear_time.nextInt(13) + 2;
+            int obstacle_level = random_zombie_appear_level.nextInt(3);
             elapsed_time = 0;
             if(random_zombie_sex.nextInt()%2 == 0) {
-                addSprite(new MaleZombie(new Point(1100, 500), hero));
+                addSprite(new MaleZombie(new Point(1100, obstacleY[obstacle_level]), hero));
             }
             else {
-                addSprite(new FemaleZombie(new Point(1100, 500), hero));
+                addSprite(new FemaleZombie(new Point(1100, obstacleY[obstacle_level]), hero));
             }
         }
         for (Sprite s : sprites) {
