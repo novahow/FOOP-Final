@@ -25,7 +25,7 @@ public abstract class HealthPointSprite extends Sprite {
         hpBar.setOwner(this);
     }
 
-    public void jump() {
+    public void jump(boolean back) {
     
     }
     public void clearB() {

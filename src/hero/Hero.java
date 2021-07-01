@@ -12,6 +12,7 @@ import states.Attacking;
 import states.Jumping;
 import states.Walking;
 import states.Shooting;
+import states.Up;
 
 import java.awt.*;
 import java.util.Set;
@@ -32,7 +33,7 @@ public class Hero extends HealthPointSprite {
     protected int damage;
 
     public enum Event {
-        WALK, STOP, ATTACK, DAMAGED, JUMP, SHOOT, DIE
+        WALK, STOP, ATTACK, DAMAGED, JUMP, SHOOT, DIE, UP
     }
 
     public Hero(int hp, String pathPrefix, Dimension size, Dimension bodyOffset, Dimension bodySize) {
@@ -49,6 +50,8 @@ public class Hero extends HealthPointSprite {
                 new Attacking(this, fsm, imageStatesFromFolder(pathPrefix + "attack", imageRenderer)));
         State jumping = new WaitingPerFrame(4, 
                 new Jumping(this, fsm, imageStatesFromFolder(pathPrefix + "jumping", imageRenderer)));
+        State up = new WaitingPerFrame(4, 
+                new Up(this, fsm, imageStatesFromFolder(pathPrefix + "jumping", imageRenderer)));        
         try {
             State shooting = new WaitingPerFrame(5, 
                 new Shooting(this, fsm, imageStatesFromFolder(pathPrefix + "shooting", imageRenderer)));
@@ -64,7 +67,8 @@ public class Hero extends HealthPointSprite {
         fsm.addTransition(from(idle).when(JUMP).to(jumping));
         fsm.addTransition(from(walking).when(JUMP).to(jumping));
         fsm.addTransition(from(jumping).when(STOP).to(idle));
-
+        fsm.addTransition(from(idle).when(UP).to(up));
+        fsm.addTransition(from(walking).when(UP).to(up));
     }
 
     public FiniteStateMachine getFsm() {
@@ -94,8 +98,11 @@ public class Hero extends HealthPointSprite {
         fsm.trigger(WALK);
     }
     @Override
-    public void jump() {
-        fsm.trigger(JUMP);
+    public void jump(boolean up) {
+        if (up)
+            fsm.trigger(UP);
+        else
+            fsm.trigger(JUMP);
         setGT(0);
     }
 

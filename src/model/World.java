@@ -37,7 +37,7 @@ public class World {
     private boolean isStop = false;
     private boolean muted = false;
     private int last_x = 0;
-    private int[] obstacleY = {250, 450};
+    private int[] obstacleY = {145, 420};
     private int floorY = 677;
     private boolean win = false; 
     private int worldNum;
@@ -120,13 +120,13 @@ public class World {
         if(elapsed_time > interval*67) {
             // around 67 ticks = 1 second
             interval = random_zombie_appear_time.nextInt(13) + 2;
-            int obstacle_level = random_zombie_appear_level.nextInt(3);
+            int obstacle_level = random_zombie_appear_level.nextInt(2);
             elapsed_time = 0;
             if(random_zombie_sex.nextInt()%2 == 0) {
-                addSprite(new MaleZombie(new Point(1100, obstacleY[obstacle_level]), hero));
+                addSprite(new MaleZombie(new Point(1100, obstacleY[obstacle_level] - 176), hero));
             }
             else {
-                addSprite(new FemaleZombie(new Point(1100, obstacleY[obstacle_level]), hero));
+                addSprite(new FemaleZombie(new Point(1100, obstacleY[obstacle_level] - 176), hero));
             }
         }
         for (Sprite s : sprites) {
@@ -201,21 +201,21 @@ public class World {
         return bar;
     }
 
-    private boolean collisionBlock(Sprite from, Sprite to, Dimension offset) {
-        return offset.width * (to.getBody().getX() - from.getBody().getX()) > 0 ||
-                (offset.height > 0 && to.getBody().getY() > from.getBody().getY());
-    }
+    // private boolean collisionBlock(Sprite from, Sprite to, Dimension offset) {
+    //     return offset.width * (to.getBody().getX() - from.getBody().getX()) > 0 ||
+    //             (offset.height > 0 && to.getBody().getY() > from.getBody().getY());
+    // }
 
     private int getHeight(Sprite sprite) {
         return sprite.getBodyOffset().height + sprite.getBodySize().height;
     }
 
-    private boolean inside(int left, int test, int offset) {
-        return left <= test && test <= left + offset;
-    }
+    // private boolean inside(int left, int test, int offset) {
+    //     return left <= test && test <= left + offset;
+    // }
     
     public void move(Sprite from, Dimension offset) {
-        int[] leftmostObstacle = new int[3];
+        int[] leftmostObstacle = new int[2];
         for (Obstacle o : ob) {
             if (from.getX() >= 600 && offset.width > 0) {
                 // move(o, new Dimension(-offset.width, 0));
@@ -229,16 +229,16 @@ public class World {
             leftmostObstacle[level] = Math.max(leftmostObstacle[level], body.x + body.width);
         }
 
-        for (Obstacle o : ob) {
-            if (inside(o.getX(), from.getX(), o.getBodySize().width))
-                if (inside(from.getY() + getHeight(from), o.getY(), 10))
-                    if (collisionBlock(from, o, offset))
-                        if (from instanceof Hero) {
-                            Hero hero = (Hero)from;
-                            hero.stop(hero.getFace());
-                            return;
-                        }
-        }
+        // for (Obstacle o : ob) {
+        //     if (inside(o.getX(), from.getX(), o.getBodySize().width))
+        //         if (inside(from.getY() + getHeight(from), o.getY(), 10))
+        //             if (collisionBlock(from, o, offset))
+        //                 if (from instanceof Hero) {
+        //                     Hero hero = (Hero)from;
+        //                     hero.stop(hero.getFace());
+        //                     return;
+        //                 }
+        // }
          
 
         int dx = offset.width, dy = offset.height;
@@ -261,7 +261,7 @@ public class World {
             return;
         }
 
-        if (p.nextInt(3) < 1 && offset.width > 0 && dx == 0) {
+        if (p.nextInt(3) < 1 && offset.width > 0 && dx == 0 && from instanceof Hero) {
             int y = r1.nextInt(500);
             if (y > 450 && y < 480) {
                 Background b = new Background(1200, 5*(500 - y), 150 - y / 9, 80, "assets/background/cloud.png");
@@ -331,10 +331,7 @@ public class World {
     // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,679,lightblue);
         if (win) {
-            floor = new GetSizedImage("assets/background/fireground.png", 200, 200).getImage();
             g.setColor(Color.black);
             g.fillRect(0, 0, 1200, 800);
             if (setforboss < 10) {
@@ -342,25 +339,12 @@ public class World {
                 Image bg = object.getImage();
                 g.drawImage(bg ,0, 0, 1200, 800, null);
             }
-            else {
-                ImageIcon object = new ImageIcon("assets/background/bosslevel.gif");
-                Image bg = object.getImage();
-                g.drawImage(bg ,0, 0, 1200, 800, null);
-            }
             // ImageIcon object = new ImageIcon("assets/background/firework.gif");
             // Image bg = object.getImage();
             // g.drawImage(bg ,0, 0, 1200, 800, null);
             // if (hero.getY() + hero.getBodyOffset().height + hero.getBodySize().height >= floorY)
-            //     hero.jump();
-            for(int i = 0; i < 10; i++){
-                g2.drawImage(floor, 120 * i, 580, null);
-            }
+                // hero.jump();
             hero.render(g);
-            if (end) {
-                System.out.println("win");
-            }
-            if (end) 
-                hero.jump();
 
             for (Sprite sprite : sprites) {
                 if(sprite.isDead()) {
@@ -370,28 +354,27 @@ public class World {
                     sprite.render(g);
                 }
             }
-            
             // int y = r1.nextInt(100);
             // if (y == 69)
             //     end = true;
             return;
         }
         Graphics2D g2 = (Graphics2D) g;
-        GradientPaint gradient = new GradientPaint(0, 0, Color.BLUE, 0, 679, lightblue);
+        GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,679,lightblue);
         g2.setPaint(gradient);
         g2.fillRect(0, 0, 1200, 679);
 
         for (Background b : backs) {
             b.render(g);
         }
-        gradient = new GradientPaint(0, 679, lightgreen, 0, 965, darkgreen);
+        gradient=new GradientPaint(0, 679, lightgreen,0,965,darkgreen);
         g2.setPaint(gradient);
         // g2.fillRect(0, 679, 1200, 300);
         for(int i = 0; i < 10; i++){
             g2.drawImage(floor, 120 * i, 679, null);
         }
 
-        gradient = new GradientPaint(70, 70, Color.orange, 150, 150, Color.yellow);
+        gradient =new GradientPaint(70,70,Color.orange,150,150,Color.yellow);
         g2.setPaint(gradient);
         g2.fillOval(70, 70, 100, 100);bar.render(g);
         g.setColor(Color.BLACK);
@@ -439,5 +422,17 @@ public class World {
                 String.format("assets/background/%d/bush%d.png", num, i % 3));
             backs.add(b);
         }
+    }
+
+    public boolean obstacleAbove(Point location) {
+        for (Obstacle o : ob) {
+            int left = o.getX();
+            int right = o.getX() + o.getBodySize().width;
+            int x = location.x;
+            int y = location.y;
+            if (left <= x && x <= right && y <= o.getY() + 150)
+                return true;
+        }
+        return false;
     }
 }

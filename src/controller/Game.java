@@ -106,7 +106,8 @@ public class Game extends GameLoop {
     }
 
     public void jump() {
-        getPlayer(choose).jump();
+        Hero hero = getPlayer(choose);
+        hero.jump(hero.getWorld().obstacleAbove(hero.getLocation()));
     }
 
     public Hero getPlayer(int playerNumber) {
