@@ -3,6 +3,7 @@ package model;
 import java.awt.*;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
+import maps.BarDamage;
 
 /**
  * @author - johnny850807@gmail.com (Waterball)
@@ -14,17 +15,8 @@ public class HealthPointBar extends Sprite {
     private Sprite owner;
     private int hp;
     private int damageCycle = -1, damageType = -1;
-    private int[] damamgeArr = {10, 20, 50, 100};
-    private HashMap<Integer, Image> damageMap = new HashMap<Integer, Image>();
-    
     public HealthPointBar(int hp) {
         this.maxHp = this.hp = hp;
-        for(int i = 0; i < damamgeArr.length; i++){
-            damageMap.put(damamgeArr[i], 
-            new GetSizedImage(String.format("assets/background/-%d.png"
-            , damamgeArr[i]), 100, 50).getImage());
-        }
-        
     }
 
     public void setOwner(Sprite owner) {
@@ -57,7 +49,7 @@ public class HealthPointBar extends Sprite {
         }
         else if(damageCycle >= 1){
             // System.out.printf("drawing damage\n");
-            g.drawImage(damageMap.get(damageType), range.x, range.y - 50, null);
+            g.drawImage(BarDamage.damageMap.get(damageType), range.x, range.y - 50, null);
         }
     }
 
