@@ -63,7 +63,7 @@ public class Hero extends HealthPointSprite {
         fsm.addTransition(from(walking).when(ATTACK).to(attacking));
         fsm.addTransition(from(idle).when(JUMP).to(jumping));
         fsm.addTransition(from(walking).when(JUMP).to(jumping));
-        fsm.addTransition(from(jumping).when(STOP).to(idle));
+        
 
     }
 
@@ -90,8 +90,8 @@ public class Hero extends HealthPointSprite {
         }
         if (!directions.contains(direction)) {
             this.directions.add(direction);
-            fsm.trigger(WALK);
         }
+        fsm.trigger(WALK);
     }
     @Override
     public void jump() {

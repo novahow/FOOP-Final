@@ -28,7 +28,9 @@ public abstract class HealthPointSprite extends Sprite {
     public void jump() {
     
     }
-
+    public void clearB() {
+        
+    }
     @Override
     public void onDamaged(Rectangle damageArea, int damage) {
         hpBar.onDamaged(damageArea, damage);

@@ -18,6 +18,7 @@ public class SpriteCollisionHandler implements CollisionHandler {
             int fromY = from.getY() + from.getBodyOffset().height + from.getBodySize().height;
             Hero hero = (Hero)from;
             if (fromY <= toY) {
+                hero.setLocation(new Point(hero.getX(), hero.getY() + 10));
                 hero.getFsm().trigger(STOP);
             }
         }

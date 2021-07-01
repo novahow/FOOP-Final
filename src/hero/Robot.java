@@ -36,6 +36,11 @@ public class Robot extends Hero {
         bullets.add(bu);
     }
 
+    private boolean inside(int left, int middle, int offset) {
+        int right = left + offset;
+        return left <= middle && middle <= right;
+    }
+
     @Override
     public void update() {
         super.update();
@@ -58,8 +63,9 @@ public class Robot extends Hero {
                     List<Sprite> sprites = world.getSprites();
                     for (Sprite s : sprites) {
                         if (s != this) {
-                            if (s.getX() < b.getX() && s.getX() + 90 > b.getX() 
-                            && s.getY() < b.getY() && s.getY() + 120 > b.getY()) {
+                            int width = s.getBodySize().width;
+                            int height = s.getBodySize().height;
+                            if (inside(s.getX(), b.getX(), width) && inside(s.getY(), b.getY(), height)) {
                                 b.setHit();
                                 s.onDamaged(null, b.getDamage());
                             }
@@ -68,6 +74,10 @@ public class Robot extends Hero {
                 }
             }
         }
+    }
+    @Override
+    public void clearB() {
+        bullets.clear();
     }
     @Override
     public void render(Graphics g) {

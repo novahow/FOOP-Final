@@ -5,6 +5,7 @@ import model.WorldButton;
 import model.Homepage;
 import model.RoleSelect;
 import model.Pause;
+import model.EndButton;
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,6 +21,8 @@ public abstract class GameLoop {
         this.view.addPanel(getHome());
         this.view.addPanel(getRoleSelect());
         this.view.addPanel(getPause());
+        this.view.addButton(getEnd());
+
     }
 
     public void start() {
@@ -61,6 +64,21 @@ public abstract class GameLoop {
                     delay(15);    
                 }
             }
+
+            EndButton endbtn = getEnd();
+            if(!world.isRunning()){
+                endbtn.setVisible(true);
+            }
+
+            while(endbtn.isVisible()){
+                // System.out.printf("end btn = %d\n", endbtn.isVisible()?1:0);
+                view.render(world);
+                if(!endbtn.isVisible()){
+                    break;
+                }
+            }
+
+
             if(!running) {
                 break;
             }
@@ -72,6 +90,7 @@ public abstract class GameLoop {
     protected abstract World getWorld();
     protected abstract Homepage getHome();
     protected abstract Pause getPause();
+    protected abstract EndButton getEnd();
     protected abstract void restart();
     protected abstract void setChoose(int c);
     protected abstract RoleSelect getRoleSelect();
@@ -102,5 +121,6 @@ public abstract class GameLoop {
         void render(RoleSelect roleselect);
         void addGame(Game game);
         void disposeParentFrame();
+        void addButton(JButton btn);
     }
 }

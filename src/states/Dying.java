@@ -20,7 +20,7 @@ public class Dying extends CyclicSequence {
 
     @Override
     public void update() {
-        System.out.println("Updating dying");
+        //System.out.println("Updating dying");
         super.update();
     }
 
@@ -32,6 +32,7 @@ public class Dying extends CyclicSequence {
     @Override
     protected void onSequenceEnd() {
         currentPosition = 0;
+        System.out.println("hhihihihihihihihihihihihihihihihihi");
         sprite.finishDying();
         stateMachine.reset();
     }

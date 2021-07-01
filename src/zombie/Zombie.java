@@ -14,6 +14,7 @@ import states.Idle;
 import states.Jumping;
 import states.Walking;
 import states.Dying;
+import states.Jumping;
 
 import java.awt.*;
 import java.util.Set;
@@ -31,11 +32,12 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
 public class Zombie extends HealthPointSprite {
     public static final int ZOMBIE_HP = 500;
     protected final HealthPointSprite target;
-    private final SpriteShape shape;
-    private final FiniteStateMachine fsm;
+    protected SpriteShape shape;
+    protected final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
     private final int damage = 10;
     public static final String AUDIO_DIE = "Die";
+    private boolean isDead = false;
 
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED, JUMP, DIE
@@ -48,7 +50,7 @@ public class Zombie extends HealthPointSprite {
         fsm = new FiniteStateMachine();
 
         ImageRenderer imageRenderer = new SpriteImageRenderer(this);
-        State idle, walking, attacking, dying;
+        State idle, walking, attacking, dying, jumping;
         
         idle = new WaitingPerFrame(4,
                 new Idle(imageStatesFromFolder(pathPrefix + "idle", imageRenderer)));
@@ -58,6 +60,8 @@ public class Zombie extends HealthPointSprite {
                 new Attacking(this, fsm, imageStatesFromFolder(pathPrefix + "attack", imageRenderer)));
         dying = new WaitingPerFrame(4, 
                 new Dying(this, fsm, imageStatesFromFolder(pathPrefix + "dead", imageRenderer)));
+        jumping = new WaitingPerFrame(4, 
+                new Jumping(this, fsm, imageStatesFromFolder(pathPrefix + "walk", imageRenderer)));
 
         fsm.setInitialState(idle);
         fsm.addTransition(from(idle).when(WALK).to(walking));
@@ -67,6 +71,9 @@ public class Zombie extends HealthPointSprite {
         fsm.addTransition(from(idle).when(DIE).to(dying));
         fsm.addTransition(from(walking).when(DIE).to(dying));
         fsm.addTransition(from(attacking).when(DIE).to(dying));
+        fsm.addTransition(from(walking).when(JUMP).to(jumping));
+        fsm.addTransition(from(idle).when(JUMP).to(jumping));
+        fsm.addTransition(from(attacking).when(JUMP).to(jumping));
     }
 
     public void attack() {
@@ -103,7 +110,10 @@ public class Zombie extends HealthPointSprite {
     }
 
     public void die() {
-        world.getBar().setF(10.0f);
+        if (!isDead) {
+            world.getBar().setF(50.0f);
+            isDead = true;
+        }
         fsm.trigger(DIE);
     }
 
@@ -129,7 +139,7 @@ public class Zombie extends HealthPointSprite {
             move(Direction.SLOW_RIGHT);
         else if (location.x > targetLocation.x + 50)
             move(Direction.SLOW_LEFT);
-        if (location.y > targetLocation.y + 50)
+        else if (location.y > targetLocation.y + 50)
             jump();
     }
 

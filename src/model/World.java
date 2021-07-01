@@ -43,6 +43,7 @@ public class World {
     private int bushidx = 0;
     private Random random_zombie_appear_time = new Random();
     private Random random_zombie_sex = new Random();
+    private Random random_zombie_appear_level = new Random();
     private int elapsed_time = 0, interval;
     private Image floor;
     private Sprite Boss;
@@ -70,12 +71,17 @@ public class World {
         return player;
     }
 
+    public HealthPointSprite getHero() {
+        return hero;
+    }
+
     public void update() {
         win = bar.isEnd();
         // bar.setF(-100.0f);
         if (win) {
             // System.out.println(setforboss);
             if (setforboss < 10) {
+                hero.clearB();
                 sprites.clear();
                 ob.clear();
                 backs.clear();
@@ -86,6 +92,10 @@ public class World {
                 Boss = new Boss(new Point(1200, 100), hero);
                 addSprite(Boss);
                 setforboss += 1;
+            }
+            if (setforboss == 11) {
+                if (sprites.isEmpty())
+                    end = true;
             }
             // if (sprites.isEmpty()) {
             //     addSprite(Boss);
@@ -109,12 +119,13 @@ public class World {
         if(elapsed_time > interval*67) {
             // around 67 ticks = 1 second
             interval = random_zombie_appear_time.nextInt(13) + 2;
+            int obstacle_level = random_zombie_appear_level.nextInt(3);
             elapsed_time = 0;
             if(random_zombie_sex.nextInt()%2 == 0) {
-                addSprite(new MaleZombie(new Point(1100, 500), hero));
+                addSprite(new MaleZombie(new Point(1100, obstacleY[obstacle_level]), hero));
             }
             else {
-                addSprite(new FemaleZombie(new Point(1100, 500), hero));
+                addSprite(new FemaleZombie(new Point(1100, obstacleY[obstacle_level]), hero));
             }
         }
         for (Sprite s : sprites) {
@@ -188,6 +199,10 @@ public class World {
         return offset.width * (to.getBody().getX() - from.getBody().getX()) > 0 ||
                 (offset.height > 0 && to.getBody().getY() > from.getBody().getY());
     }
+
+    private int getHeight(Sprite sprite) {
+        return sprite.getBodyOffset().height + sprite.getBodySize().height;
+    }
     
     public void move(Sprite from, Dimension offset) {
         int[] leftmostObstacle = new int[3];
@@ -204,6 +219,13 @@ public class World {
             leftmostObstacle[level] = Math.max(leftmostObstacle[level], body.x + body.width);
         }
 
+        for (Sprite to : sprites)
+            if (to != from && from.getBody().intersects(to.getBody()))
+                if (to instanceof Obstacle && collisionBlock(from, to, offset)) {
+                    from.setLocation(new Point(from.getX(), to.getY() - getHeight(from)));
+                    return;
+                }
+
         int dx = offset.width, dy = offset.height;
         if (from.getX() + dx < 0) {
             dx = -from.getX();
@@ -214,8 +236,8 @@ public class World {
         if (from.getY() + dy < 0) {
             dy = -from.getY();
         }
-        if (from.getY() + from.getBodyOffset().height + from.getBodySize().height + dy > floorY) {
-            dy = floorY - (from.getY() + from.getBodyOffset().height + from.getBodySize().height);
+        if (from.getY() + getHeight(from) + dy > floorY) {
+            dy = floorY - (from.getY() + getHeight(from));
         }
         if (win) {
             Point originalLocation = new Point(from.getLocation());
@@ -309,7 +331,12 @@ public class World {
             hero.render(g);
 
             for (Sprite sprite : sprites) {
-                sprite.render(g);
+                if(sprite.isDead()) {
+                    removeSprite(sprite);
+                }
+                else {
+                    sprite.render(g);
+                }
             }
             // int y = r1.nextInt(100);
             // if (y == 69)

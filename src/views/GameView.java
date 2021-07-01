@@ -8,6 +8,7 @@ import model.World;
 import model.Homepage;
 import model.RoleSelect;
 import model.Pause;
+import model.EndButton;
 import model.WorldButton;
 
 import javax.swing.*;
@@ -142,6 +143,7 @@ public class GameView extends JFrame {
         private Homepage home;
         private RoleSelect roleselect;
         private Pause pausepage;
+        private EndButton endButton;
         private Game game;
         int state;
         int ispause;
@@ -205,6 +207,11 @@ public class GameView extends JFrame {
         @Override
         public void addPanel(JPanel roleselect){
             this.add(roleselect);
+        }
+
+        @Override
+        public void addButton(JButton btn){
+            this.add(btn);
         }
 
         @Override

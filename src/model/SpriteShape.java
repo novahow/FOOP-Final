@@ -16,4 +16,11 @@ public class SpriteShape {
         this.bodyOffset = bodyOffset;
         this.bodySize = bodySize;
     }
+
+    public void setSize(int x, int y) {
+        size.width = x;
+        size.height = y;
+        bodySize.width = x;
+        bodySize.height = y - 50;
+    }
 }
