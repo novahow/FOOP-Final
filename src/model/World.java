@@ -176,6 +176,10 @@ public class World {
         isStop = true;
     }
 
+    public boolean isEnd(){
+        return end;
+    }
+
     public boolean isRunning() {
         if(isStop)
             return false;

@@ -11,7 +11,7 @@ public class Obstacle extends Sprite {
         shape = new SpriteShape(new Dimension(size - (size % 50), 50),
                 new Dimension(0, 0), new Dimension(size - (size % 50), 50));
         int tileidx = (int) (Math.random() * 3);
-        img = Tiles.tiles[world].get(tileidx);
+        img = Tiles.tiles.get(world).get(tileidx);
         
     }
 

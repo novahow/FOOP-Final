@@ -10,18 +10,19 @@ import javax.imageio.*;
 import java.nio.file.*;
 public abstract class Tiles 
 {
-    public static ArrayList<Image>[] tiles = new ArrayList[3];
-    
+    // public static ArrayList<Image>[] tiles = new ArrayList[3];
+    public static ArrayList<ArrayList<Image> > tiles = 
+                  new ArrayList<ArrayList<Image> >(3);
     private static void initTiles(){
         for(int i = 0; i < 3; i++){
-            tiles[i] = new ArrayList<Image>();
+            tiles.add(new ArrayList<Image>());
         }
     }
     
     private static String tileoffset = "./assets/obstacles/";
 
     private static void addTiles(String filename, int idx){
-        tiles[idx].add(loadImage(filename));
+        tiles.get(idx).add(loadImage(filename));
     }
 
     public static void setUp(){
@@ -65,7 +66,7 @@ public abstract class Tiles
     }
 
     public Image getTile(int index, int world){
-        return tiles[world].get(index);
+        return tiles.get(world).get(index);
     }
 
 }

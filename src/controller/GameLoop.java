@@ -66,7 +66,7 @@ public abstract class GameLoop {
             }
 
             EndButton endbtn = getEnd();
-            if(!world.isRunning()){
+            if(!world.isRunning() && world.isEnd()){
                 endbtn.setVisible(true);
             }
 
