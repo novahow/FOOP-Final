@@ -314,7 +314,12 @@ public class World {
             hero.render(g);
 
             for (Sprite sprite : sprites) {
-                sprite.render(g);
+                if(sprite.isDead()) {
+                    removeSprite(sprite);
+                }
+                else {
+                    sprite.render(g);
+                }
             }
             // int y = r1.nextInt(100);
             // if (y == 69)
