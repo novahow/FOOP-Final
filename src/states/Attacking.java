@@ -43,8 +43,8 @@ public class Attacking extends Sequence {
     public void render(Graphics g) {
         super.render(g);
         Rectangle damageArea = damageArea();
-        g.setColor(Color.BLUE);
-        g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
+        // g.setColor(Coldor.BLUE);
+        // g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
     }
 
     private void effectDamage() {

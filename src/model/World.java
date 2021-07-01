@@ -86,8 +86,12 @@ public class World {
                 sprites.clear();
                 ob.clear();
                 backs.clear();
-                addSprite(new Obstacle(100, obstacleY[0], 250, worldNum));
-                addSprite(new Obstacle(100, obstacleY[1], 250, worldNum));
+                Obstacle top = new Obstacle(100, obstacleY[0], 250, worldNum);
+                Obstacle bottom = new Obstacle(100, obstacleY[1], 250, worldNum);
+                addSprite(top);
+                addSprite(bottom);
+                ob.add(top);
+                ob.add(bottom);
                 // Boss = new Boss(new Point(1200, 100), hero);
                 setforboss += 1;
             }
@@ -217,8 +221,9 @@ public class World {
     
     public void move(Sprite from, Dimension offset) {
         int[] leftmostObstacle = new int[2];
+        int bound = bar.isEnd()? 1200: 600;
         for (Obstacle o : ob) {
-            if (from.getX() >= 600 && offset.width > 0) {
+            if (from.getX() >= bound && offset.width > 0) {
                 // move(o, new Dimension(-offset.width, 0));
                 o.setX(o.getX() - offset.width);
             }
@@ -244,7 +249,7 @@ public class World {
         if (from.getX() + dx < 0) {
             dx = -from.getX();
         }
-        int bound = bar.isEnd()? 800: 600;
+        
         if (from.getName() != "Zombie" && from.getX() + dx > bound) {
             dx = bound - from.getX();
         }
@@ -352,7 +357,7 @@ public class World {
             }
             hero.render(g);
             if (end) {
-                System.out.println("win");
+                // System.out.println("win");
             }
             if (end) 
                 hero.jump(obstacleAbove(hero.getLocation()));
@@ -436,7 +441,7 @@ public class World {
             int right = o.getX() + o.getBodySize().width;
             int x = location.x;
             int y = location.y;
-            if (left <= x && x <= right && y <= o.getY() + 100)
+            if (left <= x && x <= right && y <= o.getY() + 50)
                 return true;
         }
         return false;
