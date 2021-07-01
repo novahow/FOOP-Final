@@ -63,7 +63,7 @@ public class Hero extends HealthPointSprite {
         fsm.addTransition(from(walking).when(ATTACK).to(attacking));
         fsm.addTransition(from(idle).when(JUMP).to(jumping));
         fsm.addTransition(from(walking).when(JUMP).to(jumping));
-        
+        fsm.addTransition(from(jumping).when(STOP).to(idle));
 
     }
 

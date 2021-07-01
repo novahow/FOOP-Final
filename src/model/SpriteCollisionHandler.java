@@ -21,6 +21,7 @@ public class SpriteCollisionHandler implements CollisionHandler {
                 hero.setLocation(new Point(hero.getX(), hero.getY() + 10));
                 hero.getFsm().trigger(STOP);
             }
+            return;
         }
         
         Sprite toMove = (to instanceof Obstacle)? from: to;
