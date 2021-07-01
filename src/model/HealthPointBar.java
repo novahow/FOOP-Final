@@ -14,7 +14,7 @@ public class HealthPointBar extends Sprite {
     private Sprite owner;
     private int hp;
     private int damageCycle = -1, damageType = -1;
-    private int[] damamgeArr = {10, 20, 100};
+    private int[] damamgeArr = {10, 20, 50, 100};
     private HashMap<Integer, Image> damageMap = new HashMap<Integer, Image>();
     
     public HealthPointBar(int hp) {
