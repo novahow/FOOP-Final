@@ -48,7 +48,6 @@ public class HealthPointBar extends Sprite {
             damageCycle = -1;
         }
         else if(damageCycle >= 1){
-            // System.out.printf("drawing damage\n");
             g.drawImage(BarDamage.damageMap.get(damageType), range.x, range.y - 50, null);
         }
     }

@@ -97,7 +97,6 @@ public class CircleButton extends JButton{
 
     private int getDiameter(){
         int diameter = Math.min(getWidth(), getHeight());
-        // System.out.printf("wh = %d %d\n", getWidth(), getHeight());
         return diameter;
     }
     

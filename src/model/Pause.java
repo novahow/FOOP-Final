@@ -36,11 +36,9 @@ public class Pause extends JPanel{
             
             @Override
             public void mouseReleased(MouseEvent e){
-                System.out.printf("pressed\n");
                 int cnt = 0;
                 for(WorldButton c: worldButts){
                     if(c.getButt() == e.getSource()){
-                        // System.out.printf("%d is clicked\n", cnt);
                         clickedNum = cnt;
                         Component src = (Component) e.getSource();
                         while(src.getParent() != null){
@@ -50,9 +48,7 @@ public class Pause extends JPanel{
                                 break;
                             }
                         }
-                        System.out.printf("released %d %d %d\n",
-                         cnt, e.getX(), e.getY());
-                        // new MouseEvent(type, button, modifiers, x, y)
+
                         src.dispatchEvent(e);
                         c.trigger();
                         if(cnt == 0){

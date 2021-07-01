@@ -31,7 +31,6 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class Zombie extends HealthPointSprite {
-    public static final int ZOMBIE_HP = 500;
     protected final HealthPointSprite target;
     protected SpriteShape shape;
     protected final FiniteStateMachine fsm;
@@ -44,8 +43,8 @@ public class Zombie extends HealthPointSprite {
         WALK, STOP, ATTACK, DAMAGED, JUMP, DIE, UP
     }
 
-    public Zombie(String pathPrefix, Dimension size, Dimension bodyOffset, Dimension bodySize, HealthPointSprite target) {
-        super(ZOMBIE_HP);
+    public Zombie(int hp, String pathPrefix, Dimension size, Dimension bodyOffset, Dimension bodySize, HealthPointSprite target) {
+        super(hp);
         this.target = target;
         shape = new SpriteShape(size,bodyOffset, bodySize);
         fsm = new FiniteStateMachine();
@@ -188,9 +187,7 @@ public class Zombie extends HealthPointSprite {
     public void onDamaged(Rectangle damageArea, int damage) {
         hpBar.onDamaged(damageArea, damage);
         if (hpBar.noHP()) {
-            //world.removeSprite(this);
             AudioPlayer.playSounds(AUDIO_DIE);
-            System.out.println("Dying");
             die();
         }
     }

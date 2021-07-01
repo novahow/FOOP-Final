@@ -31,7 +31,7 @@ public class World {
     private List<Background> backs = new ArrayList<Background>();
     Random r1 = new Random(10);
     Random p = new Random(5);
-    private HealthPointSprite hero;
+    private HealthPointSprite hero = null;
     private boolean end = false;
     private boolean isPause = false;
     private boolean isStop = false;
@@ -42,10 +42,9 @@ public class World {
     private boolean win = false; 
     private int worldNum;
     private int bushidx = 0;
-    private Random random_zombie_appear_time = new Random();
-    private Random random_zombie_sex = new Random();
-    private Random random_zombie_appear_level = new Random();
-    private int elapsed_time = 0, interval;
+    private Random randomZombieAppearTime = new Random();
+    private Random randomZombieSex = new Random();
+    private int elapsedTime = 0, interval;
     private Image floor;
     private Sprite Boss;
     private int setforboss = 0;
@@ -80,7 +79,6 @@ public class World {
         win = bar.isEnd();
         // bar.setF(-100.0f);
         if (win) {
-            // System.out.println(setforboss);
             if (setforboss < 10) {
                 hero.clearB();
                 sprites.clear();
@@ -108,25 +106,21 @@ public class World {
                     s.update();
                 } 
             }
-            catch (Exception e) {
-                System.out.println("sorry");
-            }
+            catch (Exception e) {}
             gravity(hero);
             hero.update();
 
             return;
         }
-        elapsed_time += 1;
-        if(elapsed_time > interval*67) {
+        elapsedTime += 1;
+        if (elapsedTime > interval * 67) {
             // around 67 ticks = 1 second
-            interval = random_zombie_appear_time.nextInt(13) + 2;
-            int obstacle_level = random_zombie_appear_level.nextInt(2);
-            elapsed_time = 0;
-            if(random_zombie_sex.nextInt()%2 == 0) {
-                addSprite(new MaleZombie(new Point(1100, obstacleY[obstacle_level] - 176), hero));
-            }
-            else {
-                addSprite(new FemaleZombie(new Point(1100, obstacleY[obstacle_level] - 176), hero));
+            interval = randomZombieAppearTime.nextInt(13) + 2;
+            elapsedTime = 0;
+            if (randomZombieSex.nextInt() % 2 == 0) {
+                addSprite(new MaleZombie(new Point(1100, floorY - 176), hero));
+            } else {
+                addSprite(new FemaleZombie(new Point(1100, floorY - 176), hero));
             }
         }
         for (Sprite s : sprites) {
@@ -143,8 +137,9 @@ public class World {
 
     public void gravity(Sprite from) {
         int feet = from.getY() + from.getBodyOffset().height + from.getBodySize().height;
+        int x = from.getX() + (from.getBodySize().width) / 2;
         for (Sprite to : sprites)
-            if (to != from && to.getX() <= from.getX() && from.getX() <= to.getX() + to.getBodySize().width)
+            if (to != from && to.getX() <= x && x <= to.getX() + to.getBodySize().width)
                 if (to.getBody().getY() > feet)
                     return;
         from.gravity();
@@ -183,9 +178,11 @@ public class World {
     }
 
     public boolean isRunning() {
-        if(isStop)
+        if (isStop)
             return false;
         // end = bar.isEnd();
+        if (hero != null && !hero.isAlive())
+            end = true;
         return (!end);
     }
 
@@ -299,10 +296,8 @@ public class World {
                 it.remove();
             }
         }
-        // System.out.printf("%d %d\n", dx, dy);
         Point originalLocation = new Point(from.getLocation());
         from.getLocation().translate(dx, dy);
-        // System.out.printf("%d %d\n", from.getX(), from.getY());
         Rectangle body = from.getBody();
         // collision detection
         for (Sprite to : sprites) {
@@ -388,7 +383,6 @@ public class World {
                 sprite.render(g);
             }
         }
-        // System.out.printf("l = %d\n", buttons.size());
         for(WorldButton btn: buttons){
             btn.render(g);
         }
@@ -413,7 +407,6 @@ public class World {
 
     public void setWorldNum(int num){
         worldNum = num;
-        // System.out.printf("worldnum = %d\n", num);
         floor = new GetSizedImage("assets/background/floor" + 
             Integer.toString(num) + ".png", 120, 120).getImage();
 

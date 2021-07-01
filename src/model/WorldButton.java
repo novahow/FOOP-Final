@@ -102,7 +102,6 @@ public class WorldButton{
     }
 
     public void render(Graphics g){
-        // System.out.printf("pos, size = \n");
         g.drawImage(imgs.get(index), (int)pos.getWidth(), (int)pos.getHeight(), (int)size.getWidth(), (int)size.getHeight(), null);
     }
 

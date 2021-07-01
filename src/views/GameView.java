@@ -93,12 +93,12 @@ public class GameView extends JFrame {
             @Override
             public void keyReleased(KeyEvent keyEvent) {
                 switch (keyEvent.getKeyCode()) {
-                    case KeyEvent.VK_W:
-                        game.stopKnight(Direction.UP);
-                        break;
-                    case KeyEvent.VK_S:
-                        game.stopKnight(Direction.DOWN);
-                        break;
+                    // case KeyEvent.VK_W:
+                    //     game.stopKnight(Direction.UP);
+                    //     break;
+                    // case KeyEvent.VK_S:
+                    //     game.stopKnight(Direction.DOWN);
+                    //     break;
                     case KeyEvent.VK_A:
                         game.stopKnight(Direction.LEFT);
                         break;
@@ -108,9 +108,9 @@ public class GameView extends JFrame {
                     case KeyEvent.VK_I:
                         game.stopKnight(Direction.UP);
                         break;
-                    case KeyEvent.VK_K:
-                        game.stopKnight(Direction.DOWN);
-                        break;
+                    // case KeyEvent.VK_K:
+                    //     game.stopKnight(Direction.DOWN);
+                    //     break;
                     case KeyEvent.VK_J:
                         game.stopKnight(Direction.LEFT);
                         break;
@@ -124,7 +124,6 @@ public class GameView extends JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 game.clickButton(e.getX(), e.getY(), 0);
-                //System.out.printf("clicked at %d %d\n", e.getX(), e.getY());
             }
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -153,7 +152,6 @@ public class GameView extends JFrame {
                 @Override
                 public void mousePressed(MouseEvent e) {
                     game.clickButton(e.getX(), e.getY(), 0);
-                    //System.out.printf("clicked at %d %d\n", e.getX(), e.getY());
                 }
                 @Override
                 public void mouseReleased(MouseEvent e) {
@@ -162,7 +160,6 @@ public class GameView extends JFrame {
                         setVisible(false); //you can't see me!
                         disposeParentFrame();
                     }
-                    // System.out.printf("canvasclick\n");
                 }
             });
             
@@ -239,7 +236,6 @@ public class GameView extends JFrame {
                 ImageIcon i = new ImageIcon("assets/back.gif");
                 Image bg = i.getImage();
                 g.drawImage(bg, 0, 0, 1200, 800, null);
-                // System.out.printf("parentP\n");
             }
 
             else if(state == 2){

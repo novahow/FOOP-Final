@@ -35,6 +35,7 @@ import java.util.Iterator;
 import javax.swing.ImageIcon;
 
 public class Boss extends Zombie {
+    private static final int hp = 1500;
     private static Dimension size = new Dimension(400, 550);
     private static final Dimension bodyOffset = new Dimension(30, 30);
     private static final Dimension bodySize = new Dimension(410, 470);
@@ -43,7 +44,7 @@ public class Boss extends Zombie {
     private Random r1 = new Random(20);
 
     public Boss(Point location, HealthPointSprite target) {
-        super("assets/boss/", size, bodyOffset, bodySize, target);
+        super(1500, "assets/boss/", size, bodyOffset, bodySize, target);
         this.location = location;
     }
 
@@ -73,7 +74,6 @@ public class Boss extends Zombie {
             if (location.x <= 800)
                 location.x = 800;
         }
-        System.out.println(location.y);
         Iterator<bullet> it = bullets.iterator();
         while (it.hasNext()) {
             bullet b = it.next();
@@ -122,7 +122,6 @@ public class Boss extends Zombie {
         // if (location.x < targetLocation.x - 50 && location.x > 600)
         //     move(Direction.SLOW_RIGHT);
         if (location.x > targetLocation.x + 50 && location.x > 800){
-            // System.out.println(location.x);
             move(Direction.SLOW_LEFT);
         }
         // if (location.y > targetLocation.y + 50)

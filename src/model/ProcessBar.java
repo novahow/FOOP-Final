@@ -17,7 +17,6 @@ public class ProcessBar {
     public void setF(float x) {
         // System.out.println(x);
         f += x / length;
-        System.out.println(f);
         if (f <= 0) {
             f = 0;
         }

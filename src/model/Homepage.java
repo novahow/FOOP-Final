@@ -33,7 +33,6 @@ public class Homepage extends JPanel{
         mouseListener =  new MouseInputAdapter(){
             @Override
             public void mouseReleased(MouseEvent e){
-                // System.out.printf("fuck\n");
                 int cnt = 0;
                 for(CircleButton c: butts){
                     if(c == e.getSource()){
@@ -41,13 +40,11 @@ public class Homepage extends JPanel{
                         Component src = (Component) e.getSource();
                         while(src.getParent() != null){
                             src = src.getParent();
-                            System.out.printf("%s\n", src.getName());
                             if(src.getName() != null && src.getName().equals("canvas")){
                                 break;
                             }
                         }
 
-                        // new MouseEvent(type, button, modifiers, x, y)
                         src.dispatchEvent(e);
                         // leave();
                     }
@@ -145,7 +142,6 @@ public class Homepage extends JPanel{
             // add(buttonContainer);
         // super.setVisible(true);
         add(firstPage);
-        System.out.printf("firstpage added\n");
     }
     public void restart() {
         for(CircleButton e: butts){
@@ -169,7 +165,6 @@ public class Homepage extends JPanel{
     }
 
     public void paintComponent(Graphics g) {
-        // System.out.printf("paintme?\n");
         super.paintComponent(g);
     }
 
@@ -185,7 +180,6 @@ public class Homepage extends JPanel{
         tutor.setAlignmentX(Component.CENTER_ALIGNMENT);
         tutor.setMaximumSize(new Dimension(600, 600));
         add(tutor);        
-        // System.out.printf("tutor added\n");
     }
 
     public TutorPage getTutor(){
@@ -226,7 +220,6 @@ public class Homepage extends JPanel{
 
                 @Override
                 public void mouseReleased(MouseEvent me){
-                    System.out.printf("tutor clicked\n");
                     if(!tutor.isVisible()){
                         tutor.setVisible(true);
                         firstPage.setVisible(false);

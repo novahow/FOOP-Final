@@ -24,14 +24,14 @@ public class SpriteCollisionHandler implements CollisionHandler {
             return;
         }
         
-        Sprite toMove = (to instanceof Obstacle)? from: to;
-        Rectangle body = from.getBody();
-        int offsetLeft = to.getX() - body.x;
-        int offsetRight = body.x + body.width - to.getX();
-        if (offsetLeft < 0) {
-            toMove.setLocation(new Point(toMove.getX() - (toMove.getRange().width + offsetLeft) / 3, toMove.getY()));
-        } else {
-            toMove.setLocation(new Point(toMove.getX() + offsetRight / 3, toMove.getY()));
-        }
+        // Sprite toMove = (to instanceof Obstacle)? from: to;
+        // Rectangle body = from.getBody();
+        // int offsetLeft = to.getX() - body.x;
+        // int offsetRight = body.x + body.width - to.getX();
+        // if (offsetLeft < 0) {
+        //     toMove.setLocation(new Point(toMove.getX() - (toMove.getRange().width + offsetLeft) / 3, toMove.getY()));
+        // } else {
+        //     toMove.setLocation(new Point(toMove.getX() + offsetRight / 3, toMove.getY()));
+        // }
     }
 }

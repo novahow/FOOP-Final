@@ -42,7 +42,6 @@ public class RoleSelect extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 
-                System.out.printf("clicked1 at %d %d\n", e.getX(), e.getY());
             }
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -56,13 +55,10 @@ public class RoleSelect extends JPanel {
                         Component src = (Component) e.getSource();
                         while(src.getParent() != null){
                             src = src.getParent();
-                            System.out.printf("%s\n", src.getName());
                             if(src.getName() != null && src.getName().equals("canvas")){
                                 break;
                             }
                         }
-                        System.out.printf("released %d %d %d\n",
-                         cnt, e.getX(), e.getY());
                         clickedNum = cnt;
                         // leave();
                         // new MouseEvent(type, button, modifiers, x, y)
