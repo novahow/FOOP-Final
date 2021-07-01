@@ -172,7 +172,6 @@ public class Game extends GameLoop {
         if(world.isPause()) {
             if(release == 1) {
                 int res = pausepage.getClicked();    
-                System.out.printf("Clicked on box %d\n", res);
                 if(res == 1) {
                     world.setPause();
                 }

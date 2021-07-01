@@ -46,7 +46,7 @@ public class World {
     private Random randomZombieSex = new Random();
     private int elapsedTime = 0, interval;
     private Image floor;
-    private Sprite Boss;
+    private Sprite boss;
     private int setforboss = 0;
 
     public World(CollisionHandler collisionHandler, Sprite... sprites) {
@@ -80,7 +80,9 @@ public class World {
         // bar.setF(-100.0f);
         if (win) {
             if (setforboss < 10) {
-                hero.clearB();
+                try {
+                    hero.clearB();
+                } catch (Exception e) {}
                 sprites.clear();
                 ob.clear();
                 backs.clear();
@@ -90,12 +92,12 @@ public class World {
                 setforboss += 1;
             }
             if (setforboss == 10) {
-                Boss = new Boss(new Point(1200, 100), hero);
-                addSprite(Boss);
+                boss = new Boss(new Point(1200, 100), hero);
+                addSprite(boss);
                 setforboss += 1;
             }
             if (setforboss == 11) {
-                if (sprites.isEmpty())
+                if (!boss.isAlive())
                     end = true;
             }
             // if (sprites.isEmpty()) {
@@ -200,18 +202,18 @@ public class World {
         return bar;
     }
 
-    // private boolean collisionBlock(Sprite from, Sprite to, Dimension offset) {
-    //     return offset.width * (to.getBody().getX() - from.getBody().getX()) > 0 ||
-    //             (offset.height > 0 && to.getBody().getY() > from.getBody().getY());
-    // }
+    private boolean collisionBlock(Sprite from, Sprite to, Dimension offset) {
+        return offset.width * (to.getBody().getX() - from.getBody().getX()) > 0 ||
+                (offset.height > 0 && to.getBody().getY() > from.getBody().getY());
+    }
 
     private int getHeight(Sprite sprite) {
         return sprite.getBodyOffset().height + sprite.getBodySize().height;
     }
 
-    // private boolean inside(int left, int test, int offset) {
-    //     return left <= test && test <= left + offset;
-    // }
+    private boolean inside(int left, int test, int offset) {
+        return left <= test && test <= left + offset;
+    }
     
     public void move(Sprite from, Dimension offset) {
         int[] leftmostObstacle = new int[2];
@@ -228,16 +230,14 @@ public class World {
             leftmostObstacle[level] = Math.max(leftmostObstacle[level], body.x + body.width);
         }
 
-        // for (Obstacle o : ob) {
-        //     if (inside(o.getX(), from.getX(), o.getBodySize().width))
-        //         if (inside(from.getY() + getHeight(from), o.getY(), 10))
-        //             if (collisionBlock(from, o, offset))
-        //                 if (from instanceof Hero) {
-        //                     Hero hero = (Hero)from;
-        //                     hero.stop(hero.getFace());
-        //                     return;
-        //                 }
-        // }
+        for (Obstacle o : ob) {
+            if (inside(o.getX(), from.getX(), o.getBodySize().width))
+                if (inside(from.getY() + getHeight(from), o.getY(), 10))
+                    if (collisionBlock(from, o, offset) && offset.height != 0)
+                        if (!(from instanceof Obstacle)) {
+                            return;
+                        }
+        }
          
 
         int dx = offset.width, dy = offset.height;
@@ -436,7 +436,7 @@ public class World {
             int right = o.getX() + o.getBodySize().width;
             int x = location.x;
             int y = location.y;
-            if (left <= x && x <= right && y <= o.getY() + 150)
+            if (left <= x && x <= right && y <= o.getY() + 100)
                 return true;
         }
         return false;

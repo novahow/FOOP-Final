@@ -90,7 +90,12 @@ public class Zombie extends HealthPointSprite {
         return damage;
     }
 
+    public FiniteStateMachine getFsm() {
+        return fsm;
+    }
+
     public void move(Direction direction) {
+        stop(face);
         if(direction == Direction.SLOW_LEFT || direction == Direction.LEFT) {
             face = Direction.LEFT;
         }

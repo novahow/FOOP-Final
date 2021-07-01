@@ -3,6 +3,8 @@ package model;
 import java.awt.*;
 
 import hero.Hero;
+import zombie.Zombie;
+
 import static hero.Hero.Event.*;
 
 /**
@@ -11,15 +13,21 @@ import static hero.Hero.Event.*;
 public class SpriteCollisionHandler implements CollisionHandler {
     @Override
     public void handle(Point originalLocation, Sprite from, Sprite to) {
-        if (from.getClass().equals(to.getClass()))
+        if (from instanceof Zombie && to instanceof Zombie)
             return;
-        if (from instanceof Hero && to instanceof Obstacle) {
+        if (to instanceof Obstacle) {
             int toY = to.getY();
             int fromY = from.getY() + from.getBodyOffset().height + from.getBodySize().height;
-            Hero hero = (Hero)from;
-            if (fromY <= toY) {
-                hero.setLocation(new Point(hero.getX(), hero.getY() + 10));
-                hero.getFsm().trigger(STOP);
+            from.setLocation(new Point(from.getX(), from.getY() - 10));
+            if (from instanceof Hero) {
+                Hero hero = (Hero)from;
+                if (fromY <= toY) {
+                    hero.getFsm().trigger(STOP);
+                }
+            } else if (from instanceof Zombie) {
+                Zombie zombie = (Zombie)from;
+                if (fromY <= toY)
+                    zombie.getFsm().trigger(STOP);
             }
             return;
         }

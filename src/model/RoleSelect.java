@@ -60,8 +60,6 @@ public class RoleSelect extends JPanel {
                             }
                         }
                         clickedNum = cnt;
-                        // leave();
-                        // new MouseEvent(type, button, modifiers, x, y)
                         src.dispatchEvent(e);
                         break;
                     }
@@ -91,7 +89,6 @@ public class RoleSelect extends JPanel {
             e.setVisible(false);
         }
         setVisible(false);
-        System.out.printf("nowChar = %d\n", clickedNum);
         running = false;
 
     }

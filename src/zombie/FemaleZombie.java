@@ -7,8 +7,8 @@ import model.HealthPointSprite;
 
 public class FemaleZombie extends Zombie {
     private static final int hp = 500;
-    private static final Dimension size = new Dimension(146, 176);
-    private static final Dimension bodyOffset = new Dimension(42, 35);
+    private static final Dimension size = new Dimension(146, 146);
+    private static final Dimension bodyOffset = new Dimension(42, 5);
     private static final Dimension bodySize = new Dimension(85, 136);
 
     public FemaleZombie(Point location, HealthPointSprite target) {

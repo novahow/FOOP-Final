@@ -15,9 +15,10 @@ public class Cowgirl extends Hero {
     public static final int DAMAGE = 100;
     private final int bullet_damage = 20;
     private ArrayList<bullet> bullets = new ArrayList<bullet>();
-    private static final Dimension size = new Dimension(146, 176);
-    private static final Dimension bodyOffset = new Dimension(28, 16);
-    private static final Dimension bodySize = new Dimension(68, 149);
+    private static final Dimension size = new Dimension(146, 152);
+    private static final Dimension bodyOffset = new Dimension(28, 0);
+    private static final Dimension bodySize = new Dimension(68, 141);
+    private int period = 0;
 
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED, JUMP, SHOOT
@@ -32,6 +33,9 @@ public class Cowgirl extends Hero {
     @Override
     public void shoot() {
         super.shoot();
+        if (period < 75)
+            return;
+        period = 0;
         bullet bu = new bullet(getX() + 90, getY() + 50, face, bullet_damage);
         bullets.add(bu);
     }
@@ -44,11 +48,12 @@ public class Cowgirl extends Hero {
     @Override
     public void update() {
         super.update();
+        period += 1;
         Iterator<bullet> it = bullets.iterator();
         while (it.hasNext()) {
             bullet b = it.next();
             if (b.getHit()) {
-                if(b.getStage() != 9)
+                if (b.getStage() != 9)
                     continue;
                 else {
                     it.remove();
