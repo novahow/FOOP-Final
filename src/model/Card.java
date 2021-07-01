@@ -14,13 +14,14 @@ public class Card{
     private String name;
     private JLabel cardBox;
     private int charNum;
+    private String shoot;
 
-    public Card(String filename, String s, String skill, int charNum){
+    public Card(String filename, String s, String skill, int charNum, String shoot){
         name = s;
         this.filename = "./assets/Sprites/" + filename;
         this.skill = skill;
         this.charNum = charNum;
-
+        this.shoot = shoot;
         System.out.printf("%s\n", this.filename);
         ImageIcon imageIcon = new ImageIcon("./assets/Sprites/cardB.png"); // load the image to a imageIcon
         Image image = imageIcon.getImage(); // transform it 
@@ -54,7 +55,13 @@ public class Card{
         temp2.setVgap(10);
         // box2.setBorder(BorderFactory.createLineBorder(Color.black));
         textLabel.setFont(textLabel.getFont ().deriveFont (20.0f));
-        textLabel.setText("<html>Name: " + name + "<br>Skill: " + skill + "</html>");
+        if(this.shoot != null){
+            textLabel.setText("<html>Skill1: " + skill + "<br>Skill2: " + shoot + "</html>");
+        }
+        else{
+            textLabel.setText("<html>Skill1: " + skill + "</html>");
+        }
+        
         box2.setBackground(Color.lightGray);
         // box2.setOpaque(true);
         textLabel.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -95,7 +102,7 @@ public class Card{
             super.paintComponent(g);
             g.setColor(Color.BLACK);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
-            g.drawString(name, 140, 175);
+            g.drawString(name, 140 + 25 - (3 * name.length()), 175);
         }
     }
 }

@@ -22,12 +22,12 @@ public class RoleSelect extends JPanel {
     public RoleSelect(){
         setName("role");
         cards = new ArrayList<>();
-        cards.add(new Card("0.png", "cowgirl", "S1", 0));
-        cards.add(new Card("1.png", "ninjagirl", "S2", 1)); 
-        cards.add(new Card("2.png", "robot", "S3", 2)); 
-        cards.add(new Card("3.png", "santa", "S4", 3)); 
-        cards.add(new Card("4.png", "cowboy", "S5", 4)); 
-        cards.add(new Card("5.png", "ninja", "S6", 5)); 
+        cards.add(new Card("0.png", "cowgirl", "牛刀小試", 0, "火球潘"));
+        cards.add(new Card("1.png", "ninjagirl", "女力覺醒", 1, null)); 
+        cards.add(new Card("2.png", "robot", "刀光劍影", 2, "機槍上膛")); 
+        cards.add(new Card("3.png", "santa", "鏟球高手", 3, null)); 
+        cards.add(new Card("4.png", "cowboy", "白金右腳", 4, null)); 
+        cards.add(new Card("5.png", "ninja", "倚天屠龍", 5, null)); 
 
         for(int i = 0; i < cards.size(); i++){
             this.add(cards.get(i).getCard());
