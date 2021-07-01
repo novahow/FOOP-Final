@@ -52,8 +52,9 @@ public abstract class GameLoop {
             running = true;
             World world = getWorld();
             Pause pausepage = getPause();
+            pausepage.restart();
             while (world.isRunning() && running) {
-                if(world.isPause()) {
+                if(world.isPause() && pausepage.getPause()) {
                     view.render(pausepage);
                     delay(100);
                 }

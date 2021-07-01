@@ -91,6 +91,10 @@ public class Pause extends JPanel{
         if(!paused){
             setVisible(false);
         }
+
+        else{
+            setVisible(true);
+        }
     }
 
     public boolean getPause(){
@@ -101,8 +105,9 @@ public class Pause extends JPanel{
         for(CircleButton e: butts){
             e.setVisible(true);
         }
-        setVisible(true);
-        running = true;
+        setVisible(false);
+        paused = false;
+        worldButts.get(0).setMute();
     }
 
     public void leave(){
