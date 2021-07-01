@@ -91,7 +91,7 @@ public class RoleSelect extends JPanel {
             e.setVisible(false);
         }
         setVisible(false);
-        System.out.printf("nowChar = %d\n", clickedNum);
+        // System.out.printf("nowChar = %d\n", clickedNum);
         running = false;
 
     }
@@ -104,7 +104,7 @@ public class RoleSelect extends JPanel {
         for(Card e: cards){
             e.setVisible(true);
         }
-        setVisible(true);
+        setVisible(false);
         running = true;        
     }
 
