@@ -319,7 +319,10 @@ public class World {
     // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,679,lightblue);
         if (win) {
+            floor = new GetSizedImage("assets/background/fireground.png", 200, 200).getImage();
             g.setColor(Color.black);
             g.fillRect(0, 0, 1200, 800);
             if (setforboss < 10) {
@@ -327,12 +330,25 @@ public class World {
                 Image bg = object.getImage();
                 g.drawImage(bg ,0, 0, 1200, 800, null);
             }
+            else {
+                ImageIcon object = new ImageIcon("assets/background/bosslevel.gif");
+                Image bg = object.getImage();
+                g.drawImage(bg ,0, 0, 1200, 800, null);
+            }
             // ImageIcon object = new ImageIcon("assets/background/firework.gif");
             // Image bg = object.getImage();
             // g.drawImage(bg ,0, 0, 1200, 800, null);
             // if (hero.getY() + hero.getBodyOffset().height + hero.getBodySize().height >= floorY)
-                // hero.jump();
+            //     hero.jump();
+            for(int i = 0; i < 10; i++){
+                g2.drawImage(floor, 120 * i, 580, null);
+            }
             hero.render(g);
+            if (end) {
+                System.out.println("win");
+            }
+            if (end) 
+                hero.jump();
 
             for (Sprite sprite : sprites) {
                 if(sprite.isDead()) {
@@ -342,13 +358,13 @@ public class World {
                     sprite.render(g);
                 }
             }
+            
             // int y = r1.nextInt(100);
             // if (y == 69)
             //     end = true;
             return;
         }
-        Graphics2D g2 = (Graphics2D) g;
-        GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,679,lightblue);
+        // GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,679,lightblue);
         g2.setPaint(gradient);
         g2.fillRect(0, 0, 1200, 679);
 
