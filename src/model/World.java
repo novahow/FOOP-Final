@@ -221,18 +221,19 @@ public class World {
     
     public void move(Sprite from, Dimension offset) {
         int[] leftmostObstacle = new int[2];
-        int bound = bar.isEnd()? 1200: 600;
-        for (Obstacle o : ob) {
-            if (from.getX() >= bound && offset.width > 0) {
-                // move(o, new Dimension(-offset.width, 0));
-                o.setX(o.getX() - offset.width);
+        if (!win) {
+            for (Obstacle o : ob) {
+                if (from.getX() >= 600 && offset.width > 0) {
+                    // move(o, new Dimension(-offset.width, 0));
+                    o.setX(o.getX() - offset.width);
+                }
+                if (o.getX() + o.getBodySize().width < 0) {
+                    removeSprite(o);
+                }
+                Rectangle body = o.getBody();
+                int level = getObstacleLevel(body.y);
+                leftmostObstacle[level] = Math.max(leftmostObstacle[level], body.x + body.width);
             }
-            if (o.getX() + o.getBodySize().width < 0) {
-                removeSprite(o);
-            }
-            Rectangle body = o.getBody();
-            int level = getObstacleLevel(body.y);
-            leftmostObstacle[level] = Math.max(leftmostObstacle[level], body.x + body.width);
         }
 
         for (Obstacle o : ob) {
@@ -250,8 +251,8 @@ public class World {
             dx = -from.getX();
         }
         
-        if (from.getName() != "Zombie" && from.getX() + dx > bound) {
-            dx = bound - from.getX();
+        if (from.getName() != "Zombie" && from.getX() + dx > 600) {
+            dx = 600 - from.getX();
         }
         if (from.getY() + dy < 0) {
             dy = -from.getY();
@@ -357,7 +358,7 @@ public class World {
             }
             hero.render(g);
             if (end) {
-                // System.out.println("win");
+                System.out.println("win");
             }
             if (end) 
                 hero.jump(obstacleAbove(hero.getLocation()));
