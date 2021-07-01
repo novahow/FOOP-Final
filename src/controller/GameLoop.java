@@ -80,6 +80,13 @@ public abstract class GameLoop {
             if(!running) {
                 break;
             }
+
+            home = getHome();
+            pausepage = getPause();
+            roleselect = getRoleSelect();
+            home.setVisible(false);
+            pausepage.setVisible(false);
+            roleselect.setVisible(false);
             restart();
         }
 
