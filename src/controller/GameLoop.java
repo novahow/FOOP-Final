@@ -52,8 +52,9 @@ public abstract class GameLoop {
             running = true;
             World world = getWorld();
             Pause pausepage = getPause();
+            pausepage.restart();
             while (world.isRunning() && running) {
-                if(world.isPause()) {
+                if(world.isPause() && pausepage.getPause()) {
                     view.render(pausepage);
                     delay(100);
                 }
@@ -80,6 +81,13 @@ public abstract class GameLoop {
             if(!running) {
                 break;
             }
+
+            home = getHome();
+            pausepage = getPause();
+            roleselect = getRoleSelect();
+            home.setVisible(false);
+            pausepage.setVisible(false);
+            roleselect.setVisible(false);
             restart();
         }
 

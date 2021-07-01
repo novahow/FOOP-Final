@@ -147,7 +147,7 @@ public class Homepage extends JPanel{
         for(CircleButton e: butts){
             e.setVisible(true);
         }
-        setVisible(true);
+        setVisible(false);
         running = true;
     }
 

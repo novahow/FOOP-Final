@@ -181,6 +181,7 @@ public class Game extends GameLoop {
                 else if(res == 3) {
                     stop();
                 }
+
             }            
         }
 
@@ -193,4 +194,5 @@ public class Game extends GameLoop {
             }
         }
     }
+
 }
