@@ -119,13 +119,9 @@ public class Boss extends Zombie {
             return;
         }
         Point targetLocation = target.getLocation();
-        // if (location.x < targetLocation.x - 50 && location.x > 600)
-        //     move(Direction.SLOW_RIGHT);
         if (location.x > targetLocation.x + 50 && location.x > 800){
             move(Direction.SLOW_LEFT);
         }
-        // if (location.y > targetLocation.y + 50)
-        //     jump();
     }
 
     public class bullet{

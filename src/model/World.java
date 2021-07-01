@@ -84,6 +84,8 @@ public class World {
                 sprites.clear();
                 ob.clear();
                 backs.clear();
+                addSprite(new Obstacle(100, obstacleY[0], 250, worldNum));
+                addSprite(new Obstacle(100, obstacleY[1], 250, worldNum));
                 // Boss = new Boss(new Point(1200, 100), hero);
                 setforboss += 1;
             }
@@ -243,7 +245,7 @@ public class World {
             dx = -from.getX();
         }
         int bound = bar.isEnd()? 800: 600;
-        if (from.getName() != "Zombie" && from.getX()+ dx > bound) {
+        if (from.getName() != "Zombie" && from.getX() + dx > bound) {
             dx = bound - from.getX();
         }
         if (from.getY() + dy < 0) {
@@ -326,11 +328,16 @@ public class World {
     // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,679,lightblue);
         if (win) {
-            g.setColor(Color.black);
-            g.fillRect(0, 0, 1200, 800);
+            floor = new GetSizedImage("assets/background/fireground.png", 200, 200).getImage();
             if (setforboss < 10) {
                 ImageIcon object = new ImageIcon("assets/background/warning.gif");
+                Image bg = object.getImage();
+                g.drawImage(bg ,0, 0, 1200, 800, null);
+            } else {
+                ImageIcon object = new ImageIcon("assets/background/bosslevel.gif");
                 Image bg = object.getImage();
                 g.drawImage(bg ,0, 0, 1200, 800, null);
             }
@@ -339,7 +346,16 @@ public class World {
             // g.drawImage(bg ,0, 0, 1200, 800, null);
             // if (hero.getY() + hero.getBodyOffset().height + hero.getBodySize().height >= floorY)
                 // hero.jump();
+
+            for(int i = 0; i < 10; i++){
+                g2.drawImage(floor, 120 * i, 580, null);
+            }
             hero.render(g);
+            if (end) {
+                System.out.println("win");
+            }
+            if (end) 
+                hero.jump(obstacleAbove(hero.getLocation()));
 
             for (Sprite sprite : sprites) {
                 if(sprite.isDead()) {
@@ -354,8 +370,6 @@ public class World {
             //     end = true;
             return;
         }
-        Graphics2D g2 = (Graphics2D) g;
-        GradientPaint gradient=new GradientPaint(0, 0, Color.BLUE,0,679,lightblue);
         g2.setPaint(gradient);
         g2.fillRect(0, 0, 1200, 679);
 
@@ -364,7 +378,7 @@ public class World {
         }
         gradient=new GradientPaint(0, 679, lightgreen,0,965,darkgreen);
         g2.setPaint(gradient);
-        // g2.fillRect(0, 679, 1200, 300);
+
         for(int i = 0; i < 10; i++){
             g2.drawImage(floor, 120 * i, 679, null);
         }
@@ -374,7 +388,6 @@ public class World {
         g2.fillOval(70, 70, 100, 100);bar.render(g);
         g.setColor(Color.BLACK);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-        // g.drawString("Press esc to pause.", 10, 30);
         for (Sprite sprite : sprites) {
             if(sprite.isDead()) {
                 removeSprite(sprite);

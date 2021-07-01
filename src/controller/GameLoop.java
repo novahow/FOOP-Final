@@ -54,7 +54,6 @@ public abstract class GameLoop {
             Pause pausepage = getPause();
             while (world.isRunning() && running) {
                 if(world.isPause()) {
-                    //view.render(world);
                     view.render(pausepage);
                     delay(100);
                 }
@@ -71,7 +70,6 @@ public abstract class GameLoop {
             }
 
             while(endbtn.isVisible()){
-                // System.out.printf("end btn = %d\n", endbtn.isVisible()?1:0);
                 view.render(world);
                 if(!endbtn.isVisible()){
                     break;
@@ -84,7 +82,7 @@ public abstract class GameLoop {
             }
             restart();
         }
-        System.out.println("exited");
+
     }
 
     protected abstract World getWorld();

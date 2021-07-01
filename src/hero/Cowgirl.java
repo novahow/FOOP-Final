@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Iterator;
 
 public class Cowgirl extends Hero {
-    public static final int HP = 500;
+    public static final int HP = 1000;
     public static final int DAMAGE = 100;
     private final int bullet_damage = 20;
     private ArrayList<bullet> bullets = new ArrayList<bullet>();

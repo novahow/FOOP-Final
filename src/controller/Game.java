@@ -162,7 +162,6 @@ public class Game extends GameLoop {
         if(roleselect.isRunning()){
             if(release == 1){
                 int res = roleselect.getClicked();
-                // System.out.p
                 if(res >= 0){
                     this.setChoose(res);
                     roleselect.leave();

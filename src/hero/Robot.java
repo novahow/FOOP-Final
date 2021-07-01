@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Iterator;
 
 public class Robot extends Hero {
-    public static final int HP = 500;
+    public static final int HP = 1000;
     public static final int DAMAGE = 100;
-    private final int bullet_damage = 20;
+    private final int bulletDamage = 20;
     private ArrayList<bullet> bullets = new ArrayList<bullet>();
     private static final Dimension size = new Dimension(146, 176);
     private static final Dimension bodyOffset = new Dimension(33, 16);
@@ -32,7 +32,7 @@ public class Robot extends Hero {
     @Override
     public void shoot() {
         super.shoot();
-        bullet bu = new bullet(getX() + 90, getY() + 50, face, bullet_damage);
+        bullet bu = new bullet(getX() + 90, getY() + 50, face, bulletDamage);
         bullets.add(bu);
     }
 

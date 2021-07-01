@@ -130,7 +130,7 @@ public class Zombie extends HealthPointSprite {
     }
     private Rectangle damageArea() {
         return getArea(new Dimension(87, 70),
-                new Dimension(55, 88));
+                new Dimension(35, 88));
     }
     protected void decideAction() {
         if (!target.isAlive()) {
