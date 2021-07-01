@@ -141,9 +141,10 @@ public class World {
     }
 
     public void gravity(Sprite from) {
+        int feet = from.getY() + from.getBodyOffset().height + from.getBodySize().height;
         for (Sprite to : sprites)
-            if (to != from && from.getBody().intersects(to.getBody()))
-                if (to.getBody().getY() > from.getBody().getY())
+            if (to != from && to.getX() <= from.getX() && from.getX() <= to.getX() + to.getBodySize().width)
+                if (to.getBody().getY() > feet)
                     return;
         from.gravity();
     }
@@ -223,19 +224,15 @@ public class World {
             leftmostObstacle[level] = Math.max(leftmostObstacle[level], body.x + body.width);
         }
 
-        for (Sprite to : sprites)
-            if (to != from && from.getBody().intersects(to.getBody()))
-                if (to instanceof Obstacle && collisionBlock(from, to, offset)) {
-                    from.setLocation(new Point(from.getX(), to.getY() - getHeight(from)));
-                    return;
-                }
+         
 
         int dx = offset.width, dy = offset.height;
         if (from.getX() + dx < 0) {
             dx = -from.getX();
         }
-        if (from.getName() != "Zombie" && from.getX()+ dx > 600) {
-            dx = 600 - from.getX();
+        int bound = bar.isEnd()? 800: 600;
+        if (from.getName() != "Zombie" && from.getX()+ dx > bound) {
+            dx = bound - from.getX();
         }
         if (from.getY() + dy < 0) {
             dy = -from.getY();
